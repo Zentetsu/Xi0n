@@ -66,17 +66,17 @@ public class Robot {
 	public void update() {
 
 		if (Gdx.input.isKeyPressed(Input.Keys.Z)) {
-			this.setPosition(this.position.x, this.position.y + 3);
+			this.setPosition(this.getDirectionX(3), this.getDirectionY(3));
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-			this.setPosition(this.position.x, this.position.y - 3);
+			this.setPosition(this.getDirectionX(-3), this.getDirectionY(3));
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-			this.setPosition(this.position.x + this.getDirectionX(3), this.position.y + this.getDirectionY(3));
+			this.setPosition(this.getDirectionX(3), this.getDirectionY(3));
 			this.setRotation(2);
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-			this.setPosition(this.position.x + 3, this.position.y);
+			this.setPosition(this.getDirectionX(3), this.getDirectionY(3));
 			this.setRotation(-2);
 		}
 	}
