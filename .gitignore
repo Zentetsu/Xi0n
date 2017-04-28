@@ -32,3 +32,6 @@ lib/*
 # Debug files
 *.dSYM/
 *.su
+
+# Project
+*classpath
