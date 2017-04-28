@@ -1,3 +1,4 @@
+package view;
 import java.awt.Toolkit;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
