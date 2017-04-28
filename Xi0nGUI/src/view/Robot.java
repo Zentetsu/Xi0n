@@ -26,7 +26,7 @@ public class Robot {
 											   WIDTH_2 - 10, HEIGHT_2, 
 											   WIDTH_2, HEIGHT_2 - 10, 
 											   WIDTH_2, -HEIGHT_2, });
-		this.sensor = new Circle(x, y + HEIGHT_2, 10);
+		this.sensor = new Circle(x, y + HEIGHT_2, 5);
 		this.rotation = 0;
 	}
 
@@ -35,10 +35,6 @@ public class Robot {
 		sr.circle(this.sensor.x, this.sensor.y, this.sensor.radius);
 		sr.setColor(Color.GREEN);
 		sr.polygon(this.body.getTransformedVertices());
-		sr.setColor(Color.BLUE);
-		sr.line(this.position.x, this.position.y, this.getDirectionX(60), this.getDirectionY(60));
-		sr.setColor(Color.RED);
-		sr.line(this.position.x, this.position.y, this.getDirectionX(-60), this.getDirectionY(-60));
 	}
 
 	private float getDirectionX(float value) {
@@ -56,7 +52,7 @@ public class Robot {
 	public void setPosition(float x, float y) {
 		this.position.x = x;
 		this.position.y = y;
-		this.sensor.setPosition(x, y + HEIGHT_2);
+		this.sensor.setPosition(this.getDirectionX(WIDTH_2), this.getDirectionY(HEIGHT_2));
 		this.body.setPosition(x, y);
 	}
 
