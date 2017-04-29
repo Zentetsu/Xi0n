@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class Robot {
@@ -23,6 +22,7 @@ public class Robot {
 	private Vector2 position;
 	private Polygon body;
 	private Circle sensor;
+	private Polygon sensor2;
 	private float rotation;
 	private RobotMode mode;
 	private int speed;
@@ -33,7 +33,9 @@ public class Robot {
 		this.position = new Vector2(x, y);
 		this.body = new Polygon(new float[] { -WIDTH_2, -HEIGHT_2, -WIDTH_2, HEIGHT_2 - 10, -WIDTH_2 + 10, HEIGHT_2,
 				WIDTH_2 - 10, HEIGHT_2, WIDTH_2, HEIGHT_2 - 10, WIDTH_2, -HEIGHT_2, });
+		
 		this.sensor = new Circle(x, y + HEIGHT_2, 5);
+		this.sensor2 = new Polygon(new float[] {x, y + HEIGHT_2, x -10, y+HEIGHT_2 + 40, x + 10, y + HEIGHT_2 + 40});
 
 		this.match = new HashMap<>();
 		this.match.put(Direction.FORWARD, 1);
@@ -60,7 +62,8 @@ public class Robot {
 
 	public void render(ShapeRenderer sr) {
 		sr.setColor(Color.RED);
-		sr.circle(this.sensor.x, this.sensor.y, this.sensor.radius);
+		//sr.circle(this.sensor.x, this.sensor.y, this.sensor.radius);
+		sr.polygon(this.sensor2.getTransformedVertices());
 		sr.setColor(Color.GREEN);
 		sr.polygon(this.body.getTransformedVertices());
 	}
@@ -86,13 +89,14 @@ public class Robot {
 	public void setPosition(float x, float y) {
 		this.position.x = x;
 		this.position.y = y;
-		this.sensor.setPosition(this.getDirectionX(WIDTH_2), this.getDirectionY(HEIGHT_2));
+		this.sensor2.setPosition(this.getDirectionX(0), this.getDirectionY(0));
 		this.body.setPosition(x, y);
 	}
 
 	public void setRotation(float angle) {
 		this.rotation += angle;
 		this.body.rotate(angle);
+		this.sensor2.rotate(angle);
 	}
 
 	public void update(float distance) {
