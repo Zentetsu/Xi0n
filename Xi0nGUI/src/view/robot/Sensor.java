@@ -14,8 +14,8 @@ public class Sensor {
 	private int sens;
 
 	public Sensor(float x, float y) {
-		this.cone = new Polygon(new float[] { x, y + RobotConstant.HEIGHT_2, x - 10, y + RobotConstant.HEIGHT_2 + 40,
-				x + 10, y + RobotConstant.HEIGHT_2 + 40 });
+		this.cone = new Polygon(new float[] { x, y + RobotConstant.HEIGHT_2, x - 10*6, y +RobotConstant.HEIGHT_2*8 + 40,
+				x + 10*6, y + RobotConstant.HEIGHT_2*8 + 40});
 		this.sens = 1;
 		this.angle = 0;
 	}
