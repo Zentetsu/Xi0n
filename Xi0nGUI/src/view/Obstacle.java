@@ -6,12 +6,11 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Obstacle {
 
-	private final float WIDTH = 5;
 
 	private Rectangle obstacle;
 
-	public Obstacle(float x, float y, float height) {
-		this.obstacle = new Rectangle(x, y, WIDTH, height);
+	public Obstacle(float x, float y, float width, float height) {
+		this.obstacle = new Rectangle(x, y, width, height);
 	}
 
 	public boolean collide(Rectangle rectangle) {
@@ -24,6 +23,10 @@ public class Obstacle {
 
 	public Vector2 getPosition() {
 		return null;
+	}
+	
+	public Rectangle getBoundingRectangle(){
+		return obstacle;
 	}
 
 }
