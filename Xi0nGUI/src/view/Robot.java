@@ -7,8 +7,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class Robot {
@@ -21,7 +21,6 @@ public class Robot {
 	private Map<Direction, Integer> match;
 	private Vector2 position;
 	private Polygon body;
-	private Circle sensor;
 	private Polygon sensor2;
 	private float rotation;
 	private RobotMode mode;
@@ -35,7 +34,6 @@ public class Robot {
 		this.body = new Polygon(new float[] { -WIDTH_2, -HEIGHT_2, -WIDTH_2, HEIGHT_2 - 10, -WIDTH_2 + 10, HEIGHT_2,
 				WIDTH_2 - 10, HEIGHT_2, WIDTH_2, HEIGHT_2 - 10, WIDTH_2, -HEIGHT_2, });
 		
-		this.sensor = new Circle(x, y + HEIGHT_2, 5);
 		this.sensor2 = new Polygon(new float[] {x, y + HEIGHT_2, x -10, y+HEIGHT_2 + 40, x + 10, y + HEIGHT_2 + 40});
 
 		this.match = new HashMap<>();
