@@ -28,6 +28,7 @@ public class Robot {
 	private int speed;
 	private Direction direction;
 	private Axe axe;
+	private boolean destroyed;
 
 	public Robot(float x, float y) {
 		this.position = new Vector2(x, y);
@@ -43,6 +44,7 @@ public class Robot {
 
 		this.rotation = 0;
 		this.speed = 3;
+		this.destroyed = false;
 
 		// this.mode = RobotMode.AUTOMATIC;
 		this.mode = RobotMode.MANUAL;
@@ -104,9 +106,13 @@ public class Robot {
 		if (Gdx.input.isKeyPressed(Input.Keys.T)) {
 			Gdx.app.exit();
 		}
-
+		
+		//If it hits a wall
+		if(this.destroyed){
+			this.speed = 0;
+		}
 		// Auto Mode
-		if (this.mode == RobotMode.AUTOMATIC) {
+		else if (this.mode == RobotMode.AUTOMATIC) {
 			if (distance < 30) {
 				this.axe = Axe.LEFT;
 			} else {
@@ -165,6 +171,10 @@ public class Robot {
 		}
 
 	}
+	
+	public boolean collide(Vector2 pos) {
+		return this.body.contains(pos);
+	}
 
 	public void accelerate(int acceleration) {
 		if (this.speed + acceleration > -10 && this.speed + acceleration < 10) {
@@ -195,5 +205,13 @@ public class Robot {
 
 	public void setManualMode() {
 		this.mode = RobotMode.MANUAL;
+	}
+
+	public void crash() {
+		this.destroyed = true;
+	}
+
+	public Rectangle getHitbox() {
+		return this.body.getBoundingRectangle();
 	}
 }

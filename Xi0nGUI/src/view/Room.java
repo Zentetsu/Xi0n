@@ -3,6 +3,7 @@ package view;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -27,6 +28,10 @@ public class Room {
 		sr.rect(-500, -500, 1000, 1000);
 		for(Obstacle obstacle : this.obstacles){
 			obstacle.render(sr);
+			if(obstacle.collide(this.robot.getHitbox())){
+				this.robot.crash();
+				Gdx.app.error("Robot", "destroyed");
+			}
 		}
 		this.robot.render(sr);
 	}
