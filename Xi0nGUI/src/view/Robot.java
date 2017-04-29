@@ -104,6 +104,10 @@ public class Robot {
 		if (Gdx.input.isKeyPressed(Input.Keys.T)) {
 			Gdx.app.exit();
 		}
+		if (Gdx.input.isKeyPressed(Input.Keys.R)) {
+			this.destroyed = false;
+			this.speed = 3;
+		}
 		
 		//If it hits a wall
 		if(this.destroyed){
