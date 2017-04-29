@@ -60,14 +60,14 @@ public class Robot {
 		this.destroyed = false;
 
 		this.mode = RobotMode.AUTOMATIC;
-		 this.mode = RobotMode.MANUAL;
+		this.mode = RobotMode.MANUAL;
 
 		this.direction = Direction.NONE;
 		this.axe = Axe.NONE;
 
 		if (this.mode == RobotMode.AUTOMATIC) {
 			try {
-				Thread.sleep(2*1000);
+				Thread.sleep(2 * 1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
