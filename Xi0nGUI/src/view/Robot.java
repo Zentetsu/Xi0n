@@ -206,4 +206,8 @@ public class Robot {
 	public void crash() {
 		this.destroyed = true;
 	}
+
+	public Rectangle getHitbox() {
+		return this.body.getBoundingRectangle();
+	}
 }

@@ -14,8 +14,8 @@ public class Obstacle {
 		this.obstacle = new Rectangle(x, y, WIDTH, height);
 	}
 
-	public boolean collide(Vector2 pos) {
-		return this.obstacle.contains(pos);
+	public boolean collide(Rectangle rectangle) {
+		return this.obstacle.overlaps(rectangle);
 	}
 
 	public void render(ShapeRenderer sr) {

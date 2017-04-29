@@ -28,7 +28,7 @@ public class Room {
 		sr.rect(-500, -500, 1000, 1000);
 		for(Obstacle obstacle : this.obstacles){
 			obstacle.render(sr);
-			if(obstacle.collide(this.robot.getPosition())){
+			if(obstacle.collide(this.robot.getHitbox())){
 				this.robot.crash();
 				Gdx.app.error("Robot", "destroyed");
 			}
