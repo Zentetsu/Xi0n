@@ -61,8 +61,7 @@ public class Robot {
 	}
 
 	public void render(ShapeRenderer sr) {
-		sr.setColor(Color.RED);
-		//sr.circle(this.sensor.x, this.sensor.y, this.sensor.radius);
+		sr.setColor(200, 0, 0, 0.5f);
 		sr.polygon(this.sensor2.getTransformedVertices());
 		sr.setColor(Color.GREEN);
 		sr.polygon(this.body.getTransformedVertices());
