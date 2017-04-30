@@ -34,7 +34,6 @@ public class Sensor {
 		}
 		this.angle += this.speed * this.sens;
 		this.cone.rotate(this.speed * this.sens);
-		System.out.println(this.angle);
 	}
 
 	public void render(ShapeRenderer sr) {

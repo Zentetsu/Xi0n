@@ -3,15 +3,12 @@ package view.robot;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-import view.Axe;
 import view.Direction;
 import view.Obstacle;
 import view.RobotMode;
@@ -19,32 +16,29 @@ import view.Room;
 
 public class Robot {
 
-	private final float lateralSpeed = 3;
+	public InputManager input;
 	private Map<Direction, Integer> match;
 	private Vector2 position;
 	private Polygon body;
 	private Sensor sensor;
 	private float rotation;
 	private RobotMode mode;
-	private int speed;
+	private float speed;
 	private Direction direction;
-	private Axe axe;
 	private boolean destroyed;
 	private Room room;
 
 	public Robot(Room room, float x, float y) {
-
+		this.input = new InputManager(this, Mode.KEYBOARD);
 		this.room = room;
 		this.match = new HashMap<>();
 		this.match.put(Direction.FORWARD, 1);
 		this.match.put(Direction.BACKWARD, -1);
 		this.match.put(Direction.NONE, 1);
-
 		this.initialise(x, y);
-
 	}
 
-	private void initialise(float x, float y) {
+	public void initialise(float x, float y) {
 
 		this.position = new Vector2(x, y);
 
@@ -56,14 +50,13 @@ public class Robot {
 		this.sensor = new Sensor(x, y);
 
 		this.rotation = 0;
-		this.speed = 3;
+		this.speed = 0;
 		this.destroyed = false;
 
-		this.mode = RobotMode.AUTOMATIC;
+		//this.mode = RobotMode.AUTOMATIC;
 		this.mode = RobotMode.MANUAL;
 
 		this.direction = Direction.NONE;
-		this.axe = Axe.NONE;
 
 		if (this.mode == RobotMode.AUTOMATIC) {
 			try {
@@ -81,9 +74,7 @@ public class Robot {
 
 	public void render(ShapeRenderer sr) {
 		sr.setColor(Color.RED);
-		// sr.circle(this.sensor.x, this.sensor.y, this.sensor.radius);
 		this.sensor.render(sr);
-
 		sr.setColor(Color.GREEN);
 		sr.polygon(this.body.getTransformedVertices());
 	}
@@ -113,66 +104,34 @@ public class Robot {
 		this.body.setPosition(x, y);
 	}
 
-	public void setRotation(float angle) {
+	public void setRotation(float speed) {
+		float angle = 3*speed * this.match.get(this.direction);
 		this.rotation += angle;
 		this.body.rotate(angle);
 		this.sensor.rotate(angle);
 	}
 
-	public void update(float distance) {
-
-		this.sensor.update();
-
-		if (Gdx.input.isKeyPressed(Input.Keys.T)) {
-			Gdx.app.exit();
-		}
-		if (Gdx.input.isKeyPressed(Input.Keys.R)) {
-			this.initialise(0, 0);
-		}
-
-		// If it hits a wall
-		if (this.destroyed) {
-			this.speed = 0;
-		}
-		// Auto Mode
-		else if (this.mode == RobotMode.AUTOMATIC) {
-			if (this.detect()) {
-				this.axe = Axe.LEFT;
-			} else {
-				this.axe = Axe.NONE;
-			}
-			// Manual Mode
-		} else {
-			this.getDirection();
-		}
-
-		switch (this.axe) {
-		case LEFT:
-			this.setRotation(this.lateralSpeed * this.match.get(this.direction));
-			this.axe = Axe.NONE;
-			break;
-		case RIGHT:
-			this.setRotation(-this.lateralSpeed * this.match.get(this.direction));
-			this.axe = Axe.NONE;
-			break;
-		case NONE:
-			break;
-		}
-
-		switch (this.direction) {
-		case FORWARD:
-			this.setPosition(this.getDirectionX(this.speed), this.getDirectionY(this.speed));
-			break;
-		case BACKWARD:
-			this.setPosition(this.getDirectionX(this.speed), this.getDirectionY(this.speed));
-			break;
-		case NONE:
-			break;
-		default:
-			break;
-		}
-
+	private void updateInputs() {
+		this.input.update();
 	}
+	
+	private void updatePosition() {
+		this.speed = this.input.AXIS_Y * 3;
+		this.setPosition(this.getDirectionX(this.speed), this.getDirectionY(this.speed));
+	}
+	
+	private void updateRotation() {
+		this.setRotation(this.input.AXIS_X/2);
+	}
+	
+	public void update(float distance) {
+		this.updateInputs();
+		this.updatePosition();
+		this.updateRotation();
+		this.sensor.update();
+	}
+
+	
 
 	public boolean detect() {
 		for (Obstacle obstacle : this.room.getObstacles()) {
@@ -187,26 +146,9 @@ public class Robot {
 		return this.body.contains(pos);
 	}
 
-	public void accelerate(int acceleration) {
+	public void accelerate(float acceleration) {
 		if (this.speed + acceleration > -5 && this.speed + acceleration < 5) {
 			this.speed += acceleration;
-		}
-	}
-
-	private void getDirection() {
-		if (Gdx.input.isKeyPressed(Input.Keys.Z)) {
-			this.direction = Direction.FORWARD;
-			this.accelerate(1);
-		}
-		if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-			this.direction = Direction.BACKWARD;
-			this.accelerate(-1);
-		}
-		if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-			this.axe = Axe.LEFT;
-		}
-		if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-			this.axe = Axe.RIGHT;
 		}
 	}
 

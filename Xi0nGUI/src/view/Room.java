@@ -22,11 +22,10 @@ public class Room {
 	}
 	
 	private void initialize(){
-		this.obstacles.add(new Obstacle(50, 50, 5, 200));
-		this.obstacles.add(new Obstacle(-500, -500, 1000, 5));
-		this.obstacles.add(new Obstacle(-500, -500, 5, 1000));
-		this.obstacles.add(new Obstacle(-500, 500, 1000, 5));
-		this.obstacles.add(new Obstacle(500, -500, 5, 1000));
+		this.obstacles.add(new Obstacle(-500, -500, 1000, 20));
+		this.obstacles.add(new Obstacle(-520, -500, 20, 1000));
+		this.obstacles.add(new Obstacle(-520, 500, 1000, 20));
+		this.obstacles.add(new Obstacle(480, -480, 20, 1000));
 	}
 
 	public void render(ShapeRenderer sr) {
@@ -53,6 +52,10 @@ public class Room {
 
 	public Vector2 getCameraPosition() {
 		return this.robot.getPosition();
+	}
+
+	public Robot getRobot() {
+		return this.robot;
 	}
 
 }

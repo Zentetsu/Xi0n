@@ -12,13 +12,13 @@ public class Xi0nSimulation implements ApplicationListener {
 	private ShapeRenderer sr;
 	private OrthographicCamera camera;
 	private Room room;
-	
+
 	@Override
 	public void create() {
 		this.camera = new OrthographicCamera();
 		this.camera.setToOrtho(false);
-		this.sr = new ShapeRenderer();
 		this.room = new Room();
+		this.sr = new ShapeRenderer();		
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class Xi0nSimulation implements ApplicationListener {
 		Gdx.gl.glClearColor(0.95f, 0.95f, 0.95f, 0.95f);
 		this.camera.position.set(this.room.getCameraPosition(), 0);
 		this.camera.update();
-		
+
 		this.room.update();
 		this.sr.begin(ShapeType.Line);
 		this.sr.setProjectionMatrix(this.camera.combined);
@@ -58,5 +58,4 @@ public class Xi0nSimulation implements ApplicationListener {
 		// TODO Auto-generated method stub
 
 	}
-
 }
