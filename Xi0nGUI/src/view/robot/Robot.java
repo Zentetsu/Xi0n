@@ -1,40 +1,27 @@
 package view.robot;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-import view.Direction;
-import view.Obstacle;
-import view.RobotMode;
 import view.Room;
 
 public class Robot {
 
 	public InputManager input;
-	private Map<Direction, Integer> match;
 	private Vector2 position;
 	private Polygon body;
 	private Sensor sensor;
 	private float rotation;
-	private RobotMode mode;
 	private float speed;
-	private Direction direction;
 	private boolean destroyed;
 	private Room room;
 
 	public Robot(Room room, float x, float y) {
-		this.input = new InputManager(this, Mode.KEYBOARD);
+		this.input = new InputManager(this, Mode.CONTROLLER);
 		this.room = room;
-		this.match = new HashMap<>();
-		this.match.put(Direction.FORWARD, 1);
-		this.match.put(Direction.BACKWARD, -1);
-		this.match.put(Direction.NONE, 1);
 		this.initialise(x, y);
 	}
 
@@ -53,29 +40,20 @@ public class Robot {
 		this.speed = 0;
 		this.destroyed = false;
 
-		//this.mode = RobotMode.AUTOMATIC;
-		this.mode = RobotMode.MANUAL;
-
-		this.direction = Direction.NONE;
-
-		if (this.mode == RobotMode.AUTOMATIC) {
+		if (this.input.isMode(Mode.AUTOMATIC)) {
 			try {
 				Thread.sleep(2 * 1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			this.start();
 		}
-	}
-
-	private void start() {
-		this.direction = Direction.FORWARD;
 	}
 
 	public void render(ShapeRenderer sr) {
 		sr.setColor(Color.RED);
 		this.sensor.render(sr);
-		sr.setColor(Color.GREEN);
+		if (!this.destroyed)
+			sr.setColor(Color.GREEN);
 		sr.polygon(this.body.getTransformedVertices());
 	}
 
@@ -91,12 +69,6 @@ public class Robot {
 		return this.position;
 	}
 
-	public void rotate(float angle) {
-		if (Math.abs(angle) < 5) {
-			this.setRotation(this.rotation + angle);
-		}
-	}
-
 	public void setPosition(float x, float y) {
 		this.position.x = x;
 		this.position.y = y;
@@ -104,36 +76,43 @@ public class Robot {
 		this.body.setPosition(x, y);
 	}
 
-	public void setRotation(float speed) {
-		float angle = 3*speed * this.match.get(this.direction);
+	private void updateInputs() {
+		this.input.update();
+	}
+
+	private void updatePosition() {
+		this.speed = this.input.AXIS_Y;
+		this.setPosition(this.getDirectionX(this.speed * 2), this.getDirectionY(this.speed * 2));
+	}
+
+	private void updateRotation() {
+		float angle = this.input.AXIS_X * this.speed;
 		this.rotation += angle;
 		this.body.rotate(angle);
 		this.sensor.rotate(angle);
 	}
 
-	private void updateInputs() {
-		this.input.update();
-	}
-	
-	private void updatePosition() {
-		this.speed = this.input.AXIS_Y * 3;
-		this.setPosition(this.getDirectionX(this.speed), this.getDirectionY(this.speed));
-	}
-	
-	private void updateRotation() {
-		this.setRotation(this.input.AXIS_X/2);
-	}
-	
-	public void update(float distance) {
+	public void update() {
 		this.updateInputs();
 		this.updatePosition();
 		this.updateRotation();
 		this.sensor.update();
 	}
 
-	
+	public boolean collide(Vector2 pos) {
+		return this.body.contains(pos);
+	}
 
-	public boolean detect() {
+	public void crash() {
+		this.destroyed = true;
+	}
+
+	public Rectangle getBodyHitbox() {
+		return this.body.getBoundingRectangle();
+	}
+	
+	/*
+	private boolean detect() {
 		for (Obstacle obstacle : this.room.getObstacles()) {
 			if (this.sensor.collide(obstacle.getBoundingRectangle())) {
 				return true;
@@ -141,30 +120,5 @@ public class Robot {
 		}
 		return false;
 	}
-
-	public boolean collide(Vector2 pos) {
-		return this.body.contains(pos);
-	}
-
-	public void accelerate(float acceleration) {
-		if (this.speed + acceleration > -5 && this.speed + acceleration < 5) {
-			this.speed += acceleration;
-		}
-	}
-
-	public void setAutomaticMode() {
-		this.mode = RobotMode.AUTOMATIC;
-	}
-
-	public void setManualMode() {
-		this.mode = RobotMode.MANUAL;
-	}
-
-	public void crash() {
-		this.destroyed = true;
-	}
-
-	public Rectangle getHitbox() {
-		return this.body.getBoundingRectangle();
-	}
+	*/
 }

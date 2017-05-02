@@ -30,10 +30,9 @@ public class Room {
 
 	public void render(ShapeRenderer sr) {
 		sr.setColor(Color.BLACK);
-		//sr.rect(-500, -500, 1000, 1000);
 		for(Obstacle obstacle : this.obstacles){
 			obstacle.render(sr);
-			if(obstacle.collide(this.robot.getHitbox())){
+			if(obstacle.collide(this.robot.getBodyHitbox())){
 				this.robot.crash();
 				Gdx.app.error("Robot", "destroyed");
 			}
@@ -47,7 +46,7 @@ public class Room {
 
 	public void update() {
 		//TODO: Calculate the distance between the obstacle and the sensor to simulate it before mathieu's work
-		this.robot.update(0);
+		this.robot.update();
 	}
 
 	public Vector2 getCameraPosition() {

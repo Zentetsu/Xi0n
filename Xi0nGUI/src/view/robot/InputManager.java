@@ -22,6 +22,7 @@ public class InputManager {
 		this.inputs = new HashMap<>();
 		this.inputs.put(Mode.CONTROLLER, new ControllerInput(robot));
 		this.inputs.put(Mode.KEYBOARD, new KeyboardInput(robot));
+		this.inputs.put(Mode.AUTOMATIC, new DecisionInput(robot));
 		this.setMode(currentMode);
 	}
 	
@@ -30,7 +31,11 @@ public class InputManager {
 	}
 
 	public void update() {
-		this.inputs.get(currentMode).updateInput();
+		this.inputs.get(this.currentMode).updateInput();
+	}
+
+	public boolean isMode(Mode mode) {
+		return this.currentMode == mode;
 	}
 }
 

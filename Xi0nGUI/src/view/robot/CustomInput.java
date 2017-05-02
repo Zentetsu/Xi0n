@@ -1,6 +1,14 @@
 package view.robot;
 
-public interface CustomInput {
+public class CustomInput {
 
-	public abstract void updateInput();
+	protected Robot robot;
+
+	public CustomInput(Robot robot) {
+		this.robot = robot;
+	}
+	
+	public void updateInput() {
+		// Do nothing by default
+	}
 }
