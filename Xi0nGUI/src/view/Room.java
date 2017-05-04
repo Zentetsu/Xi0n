@@ -22,10 +22,14 @@ public class Room {
 	}
 	
 	private void initialize(){
+		
+		//walls
 		this.obstacles.add(new Obstacle(-500, -500, 1000, 20));
 		this.obstacles.add(new Obstacle(-520, -500, 20, 1000));
 		this.obstacles.add(new Obstacle(-520, 500, 1000, 20));
 		this.obstacles.add(new Obstacle(480, -480, 20, 1000));
+		
+		this.obstacles.add(new Obstacle(0, -480, 20, 150));
 	}
 
 	public void render(ShapeRenderer sr) {

@@ -12,8 +12,8 @@ import view.robot.Robot;
 
 public class ControllerInput extends CustomInput implements ControllerListener {
 	
-	public ControllerInput(Robot robot) {
-		super(robot);
+	public ControllerInput(Robot robot, Room room) {
+		super(robot, room);
 		Controllers.addListener(this);
 	}
 	

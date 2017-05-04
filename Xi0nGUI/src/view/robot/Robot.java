@@ -1,11 +1,16 @@
 package view.robot;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import view.Obstacle;
 import view.Room;
 
 public class Robot {
@@ -17,17 +22,28 @@ public class Robot {
 	private float rotation;
 	private float speed;
 	private boolean destroyed;
+	private RotableRectangle crazyWheel;
+	private RotableRectangle leftWheel;
+	private RotableRectangle rightWheel;
 	private Room room;
+	private List<Circle> visited;
 
 	public Robot(Room room, float x, float y) {
-		this.input = new InputManager(this, Mode.AUTOMATIC);
+		this.input = new InputManager(this, Mode.AUTOMATIC, room);
 		this.room = room;
 		this.initialise(x, y);
 	}
 
 	public void initialise(float x, float y) {
 
+		this.visited = new ArrayList<>();
 		this.position = new Vector2(x, y);
+
+		this.crazyWheel = new RotableRectangle(x - 2, y - 20, RobotConstant.WIDTH_2 / 2, RobotConstant.WIDTH_2 / 4);
+
+		this.leftWheel = new RotableRectangle(x - 8 - RobotConstant.WIDTH_2 / 2, y - 6, RobotConstant.WIDTH_2,
+				RobotConstant.WIDTH_2 / 2);
+		this.rightWheel = new RotableRectangle(x + 8, y - 6, RobotConstant.WIDTH_2, RobotConstant.WIDTH_2 / 2);
 
 		this.body = new Polygon(new float[] { -RobotConstant.WIDTH_2, -RobotConstant.HEIGHT_2, -RobotConstant.WIDTH_2,
 				RobotConstant.HEIGHT_2 - 10, -RobotConstant.WIDTH_2 + 10, RobotConstant.HEIGHT_2,
@@ -50,11 +66,19 @@ public class Robot {
 	}
 
 	public void render(ShapeRenderer sr) {
+		sr.setColor(Color.YELLOW);
+		for (Circle circle : this.visited) {
+			sr.circle(circle.x, circle.y, circle.radius);
+		}
 		sr.setColor(Color.RED);
 		this.sensor.render(sr);
 		if (!this.destroyed)
 			sr.setColor(Color.GREEN);
 		sr.polygon(this.body.getTransformedVertices());
+		this.leftWheel.render(sr);
+		this.rightWheel.render(sr);
+		this.crazyWheel.render(sr);
+		
 	}
 
 	private float getDirectionX(float value) {
@@ -74,6 +98,10 @@ public class Robot {
 		this.position.y = y;
 		this.sensor.setPosition(this.getDirectionX(0), this.getDirectionY(0));
 		this.body.setPosition(x, y);
+		this.leftWheel.setPosition(x, y);
+		this.rightWheel.setPosition(x, y);
+		this.crazyWheel.setPosition(x, y);
+		this.visited.add(new Circle(this.position.x, this.position.y, 3));
 	}
 
 	private void updateInputs() {
@@ -89,7 +117,10 @@ public class Robot {
 		float angle = this.input.AXIS_X * this.speed;
 		this.rotation += angle;
 		this.body.rotate(angle);
+		this.leftWheel.rotate(angle);
+		this.rightWheel.rotate(angle);
 		this.sensor.rotate(angle);
+		this.crazyWheel.rotate(angle);
 	}
 
 	public void update() {
@@ -110,15 +141,19 @@ public class Robot {
 	public Rectangle getBodyHitbox() {
 		return this.body.getBoundingRectangle();
 	}
-	
-	/*
-	private boolean detect() {
-		for (Obstacle obstacle : this.room.getObstacles()) {
-			if (this.sensor.collide(obstacle.getBoundingRectangle())) {
-				return true;
-			}
-		}
-		return false;
+
+	public boolean detect(Obstacle obstacle) {
+		return this.sensor.collide(obstacle.getBoundingRectangle());
 	}
-	*/
+
+	public float getSensorAngle() {
+		return this.sensor.getAngle();
+	}
+
+	/*
+	 * private boolean detect() { for (Obstacle obstacle :
+	 * this.room.getObstacles()) { if
+	 * (this.sensor.collide(obstacle.getBoundingRectangle())) { return true; } }
+	 * return false; }
+	 */
 }

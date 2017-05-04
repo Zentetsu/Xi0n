@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import view.ControllerInput;
+import view.Room;
 
 public class InputManager {
 
@@ -18,11 +19,11 @@ public class InputManager {
 	private Map<Mode, CustomInput> inputs;
 	private Mode currentMode;
 	
-	public InputManager(Robot robot, Mode currentMode) {
+	public InputManager(Robot robot, Mode currentMode, Room room) {
 		this.inputs = new HashMap<>();
-		this.inputs.put(Mode.CONTROLLER, new ControllerInput(robot));
-		this.inputs.put(Mode.KEYBOARD, new KeyboardInput(robot));
-		this.inputs.put(Mode.AUTOMATIC, new DecisionInput(robot));
+		this.inputs.put(Mode.CONTROLLER, new ControllerInput(robot, room));
+		this.inputs.put(Mode.KEYBOARD, new KeyboardInput(robot, room));
+		this.inputs.put(Mode.AUTOMATIC, new DecisionInput(robot, room));
 		this.setMode(currentMode);
 	}
 	

@@ -3,10 +3,12 @@ package view.robot;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
+import view.Room;
+
 public class KeyboardInput extends CustomInput {
 	
-	public KeyboardInput(Robot robot) {
-		super(robot);
+	public KeyboardInput(Robot robot, Room room) {
+		super(robot, room);
 	}
 	
 	@Override

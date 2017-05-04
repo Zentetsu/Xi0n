@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class Sensor {
 
-	private final float speed = (float) 1.5;
+	private final float speed = (float) 1.5*3;
 	private final int maxAngle = 45;
 
 	private Polygon cone;
@@ -14,8 +14,8 @@ public class Sensor {
 	private int sens;
 
 	public Sensor(float x, float y) {
-		this.cone = new Polygon(new float[] { x, y + RobotConstant.HEIGHT_2, x - 10*6, y +RobotConstant.HEIGHT_2*8 + 40,
-				x + 10*6, y + RobotConstant.HEIGHT_2*8 + 40});
+		this.cone = new Polygon(new float[] { x, y + RobotConstant.HEIGHT_2, x - 10*2, y +RobotConstant.HEIGHT_2*8 + 40,
+				x + 10*2, y + RobotConstant.HEIGHT_2*8 + 40});
 		this.sens = 1;
 		this.angle = 0;
 	}
@@ -42,6 +42,10 @@ public class Sensor {
 
 	public void rotate(float angle) {
 		this.cone.rotate(angle);
+	}
+
+	public float getAngle() {
+		return this.angle;
 	}
 
 }
