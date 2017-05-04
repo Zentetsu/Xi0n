@@ -20,7 +20,7 @@ public class Robot {
 	private Room room;
 
 	public Robot(Room room, float x, float y) {
-		this.input = new InputManager(this, Mode.CONTROLLER);
+		this.input = new InputManager(this, Mode.AUTOMATIC);
 		this.room = room;
 		this.initialise(x, y);
 	}
