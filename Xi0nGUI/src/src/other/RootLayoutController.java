@@ -35,7 +35,7 @@ public class RootLayoutController {
 
 	@FXML
 	private void saveButtonHandler() {
-		double value = slider.getValue();
+		double value = this.slider.getValue();
 		// Do whatever you want to do !
 	}
 
