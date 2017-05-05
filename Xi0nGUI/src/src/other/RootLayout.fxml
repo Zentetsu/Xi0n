@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.other.RootLayoutController">
+   <children>
+      <Slider fx:id="slider" layoutX="180.0" layoutY="143.0" prefHeight="14.0" prefWidth="240.0" showTickLabels="true" showTickMarks="true" value="50.0" />
+      <Button layoutX="422.0" layoutY="138.0" mnemonicParsing="false" onAction="#moreButtonHandler" prefHeight="30.0" prefWidth="30.0" text="+" />
+      <Button layoutX="461.0" layoutY="138.0" mnemonicParsing="false" onAction="#lessButtonHandler" prefHeight="30.0" prefWidth="30.0" text="-" />
+      <Label fx:id="label" layoutX="284.0" layoutY="190.0" text="value">
+         <font>
+            <Font size="17.0" />
+         </font></Label>
+      <Label layoutX="150.0" layoutY="63.0" text="Etalonneur pseudo-individualiste de qualité remarquable" />
+      <Button layoutX="275.0" layoutY="254.0" mnemonicParsing="false" text="Save" />
+   </children>
+</AnchorPane>

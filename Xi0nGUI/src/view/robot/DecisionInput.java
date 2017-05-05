@@ -42,7 +42,7 @@ public class DecisionInput extends CustomInput {
 				// Turn right
 				if(this.robot.getSensorAngle()<-15){
 					System.out.println("Slow down");
-					this.robot.input.AXIS_Y = (float) 0.1;
+					this.robot.input.AXIS_Y = (float) 1;
 				}
 				this.robot.input.AXIS_X = 1;
 				found = true;
