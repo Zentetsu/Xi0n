@@ -18,14 +18,20 @@ public class Robot {
 	public InputManager input;
 	private Vector2 position;
 	private Polygon body;
-	private Sensor sensor;
+
+	private FrontalSensor frontalSensor;
+	private LateralSensor lateralSensor;
+
 	private float rotation;
 	private float speed;
 	private boolean destroyed;
+
 	private RotableRectangle crazyWheel;
 	private RotableRectangle leftWheel;
 	private RotableRectangle rightWheel;
+
 	private Room room;
+
 	private List<Circle> visited;
 
 	public Robot(Room room, float x, float y) {
@@ -40,7 +46,6 @@ public class Robot {
 		this.position = new Vector2(x, y);
 
 		this.crazyWheel = new RotableRectangle(x - 2, y - 20, RobotConstant.WIDTH_2 / 2, RobotConstant.WIDTH_2 / 4);
-
 		this.leftWheel = new RotableRectangle(x - 8 - RobotConstant.WIDTH_2 / 2, y - 6, RobotConstant.WIDTH_2,
 				RobotConstant.WIDTH_2 / 2);
 		this.rightWheel = new RotableRectangle(x + 8, y - 6, RobotConstant.WIDTH_2, RobotConstant.WIDTH_2 / 2);
@@ -50,7 +55,8 @@ public class Robot {
 				RobotConstant.WIDTH_2 - 10, RobotConstant.HEIGHT_2, RobotConstant.WIDTH_2, RobotConstant.HEIGHT_2 - 10,
 				RobotConstant.WIDTH_2, -RobotConstant.HEIGHT_2, });
 
-		this.sensor = new Sensor(x, y);
+		this.frontalSensor = new FrontalSensor(x, y + RobotConstant.HEIGHT_2);
+		this.lateralSensor = new LateralSensor(x + RobotConstant.HEIGHT_2 - 5, y + 5);
 
 		this.rotation = 0;
 		this.speed = 0;
@@ -71,14 +77,15 @@ public class Robot {
 			sr.circle(circle.x, circle.y, circle.radius);
 		}
 		sr.setColor(Color.RED);
-		this.sensor.render(sr);
+		this.frontalSensor.render(sr);
+		this.lateralSensor.render(sr);
 		if (!this.destroyed)
 			sr.setColor(Color.GREEN);
 		sr.polygon(this.body.getTransformedVertices());
 		this.leftWheel.render(sr);
 		this.rightWheel.render(sr);
 		this.crazyWheel.render(sr);
-		
+
 	}
 
 	private float getDirectionX(float value) {
@@ -96,11 +103,16 @@ public class Robot {
 	public void setPosition(float x, float y) {
 		this.position.x = x;
 		this.position.y = y;
-		this.sensor.setPosition(this.getDirectionX(0), this.getDirectionY(0));
+
+		this.frontalSensor.setPosition(this.getDirectionX(0), this.getDirectionY(0));
+		this.lateralSensor.setPosition(this.getDirectionX(0), this.getDirectionY(0));
+
 		this.body.setPosition(x, y);
+
 		this.leftWheel.setPosition(x, y);
 		this.rightWheel.setPosition(x, y);
 		this.crazyWheel.setPosition(x, y);
+
 		this.visited.add(new Circle(this.position.x, this.position.y, 3));
 	}
 
@@ -117,9 +129,12 @@ public class Robot {
 		float angle = this.input.AXIS_X * this.speed;
 		this.rotation += angle;
 		this.body.rotate(angle);
+
+		this.frontalSensor.rotate(angle);
+		this.lateralSensor.rotate(angle);
+
 		this.leftWheel.rotate(angle);
 		this.rightWheel.rotate(angle);
-		this.sensor.rotate(angle);
 		this.crazyWheel.rotate(angle);
 	}
 
@@ -127,7 +142,7 @@ public class Robot {
 		this.updateInputs();
 		this.updatePosition();
 		this.updateRotation();
-		this.sensor.update();
+		this.frontalSensor.update();
 	}
 
 	public boolean collide(Vector2 pos) {
@@ -142,12 +157,27 @@ public class Robot {
 		return this.body.getBoundingRectangle();
 	}
 
-	public boolean detect(Obstacle obstacle) {
-		return this.sensor.collide(obstacle.getBoundingRectangle());
+	public boolean detect(Obstacle obstacle, SensorType type) {
+		switch (type) {
+		case FRONTAL:
+			return this.frontalSensor.collide(obstacle.getBoundingRectangle());
+		case LATERAL:
+			return this.lateralSensor.collide(obstacle.getBoundingRectangle());
+		default:
+			return false;
+		}
 	}
 
 	public float getSensorAngle() {
-		return this.sensor.getAngle();
+		return this.frontalSensor.getAngle();
+	}
+
+	public int getLateralDistance(Rectangle rectangle) {
+		return this.lateralSensor.getDistance(rectangle);
+	}
+
+	public int getFrontalDistance(Rectangle rectangle) {
+		return this.frontalSensor.getDistance(rectangle);
 	}
 
 	/*

@@ -19,28 +19,55 @@ public class DecisionInput extends CustomInput {
 
 	@Override
 	public void updateInput() {
+		super.updateInput();
 		this.cpt += 1;
-		
-		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-			Gdx.app.exit();
-		}
-		if (Gdx.input.isKeyPressed(Input.Keys.R)) {
-			this.robot.initialise(0, 0);
-		}
 
+		this.oldSensorAlgorithm();
+
+	}
+	
+	private void newAlgorithm() {
 		// Move forward
 		this.robot.input.AXIS_Y = 1;
 		this.robot.input.AXIS_X = 0;
 		// Don't turn yet
 		System.out.println(this.robot.getSensorAngle());
-		if (this.found && /*this.cpt % 3 == 0 &&*/ this.robot.getSensorAngle()<10) {
+		if (this.found && /* this.cpt % 3 == 0 && */ this.robot.getSensorAngle() < 10) {
 			this.robot.input.AXIS_X = -1;
 		}
 
 		for (Obstacle obstacle : this.room.getObstacles()) {
-			if (this.robot.detect(obstacle)) {
+			if (this.robot.detect(obstacle, SensorType.FRONTAL)) {
+				int distance = this.robot.getFrontalDistance(obstacle.getBoundingRectangle());
 				// Turn right
-				if(this.robot.getSensorAngle()<-15){
+				/*if (this.robot.getSensorAngle() < -15) {
+					System.out.println("Slow down");
+					this.robot.input.AXIS_Y = 1;
+				}*/
+				//this.robot.input.AXIS_X = 1;
+				found = true;
+			}else if (this.robot.detect(obstacle, SensorType.LATERAL)) {
+				if(this.robot.getLateralDistance(obstacle.getBoundingRectangle())<20){
+					this.robot.input.AXIS_X = 1;
+				}
+			}
+		}
+	}
+
+	private void oldSensorAlgorithm() {
+		// Move forward
+		this.robot.input.AXIS_Y = 1;
+		this.robot.input.AXIS_X = 0;
+		// Don't turn yet
+		System.out.println(this.robot.getSensorAngle());
+		if (this.found && /* this.cpt % 3 == 0 && */ this.robot.getSensorAngle() < 10) {
+			this.robot.input.AXIS_X = -1;
+		}
+
+		for (Obstacle obstacle : this.room.getObstacles()) {
+			if (this.robot.detect(obstacle, SensorType.FRONTAL)) {
+				// Turn right
+				if (this.robot.getSensorAngle() < -15) {
 					System.out.println("Slow down");
 					this.robot.input.AXIS_Y = (float) 1;
 				}

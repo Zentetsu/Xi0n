@@ -1,51 +1,19 @@
 package view.robot;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Sensor {
+public abstract class Sensor {
 
-	private final float speed = (float) 1.5*3;
-	private final int maxAngle = 45;
+	public static SensorType type;
 
-	private Polygon cone;
-	private float angle;
-	private int sens;
+	public abstract void setPosition(float x, float y);
 
-	public Sensor(float x, float y) {
-		this.cone = new Polygon(new float[] { x, y + RobotConstant.HEIGHT_2, x - 10*2, y +RobotConstant.HEIGHT_2*8 + 40,
-				x + 10*2, y + RobotConstant.HEIGHT_2*8 + 40});
-		this.sens = 1;
-		this.angle = 0;
-	}
+	public abstract boolean collide(Rectangle rectangle);
 
-	public void setPosition(float x, float y) {
-		this.cone.setPosition(x, y);
-	}
-	
-	public boolean collide(Rectangle rectangle){
-		return this.cone.getBoundingRectangle().overlaps(rectangle);
-	}
+	public abstract void render(ShapeRenderer sr);
 
-	public void update() {
-		if (Math.abs(this.angle) > this.maxAngle) {
-			this.sens *= -1;
-		}
-		this.angle += this.speed * this.sens;
-		this.cone.rotate(this.speed * this.sens);
-	}
+	public abstract void rotate(float angle);
 
-	public void render(ShapeRenderer sr) {
-		sr.polygon(this.cone.getTransformedVertices());
-	}
-
-	public void rotate(float angle) {
-		this.cone.rotate(angle);
-	}
-
-	public float getAngle() {
-		return this.angle;
-	}
-
+	public abstract int getDistance(Rectangle rectangle);
 }

@@ -1,6 +1,10 @@
 package view.robot;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+
 import view.Room;
+import view.ScreenshotFactory;
 
 public class CustomInput {
 
@@ -11,8 +15,18 @@ public class CustomInput {
 		this.room = room;
 		this.robot = robot;
 	}
-	
+
 	public void updateInput() {
-		// Do nothing by default
+		// Standard actions
+		
+		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+			Gdx.app.exit();
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.R)) {
+			this.robot.initialise(0, 0);
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.F12)) {
+			//ScreenshotFactory.saveScreenshot();
+		}
 	}
 }

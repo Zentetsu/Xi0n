@@ -1,16 +1,17 @@
 package view;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
+
+import view.robot.RotableRectangle;
 
 public class Obstacle {
 
-
-	private Rectangle obstacle;
+	private RotableRectangle obstacle;
 
 	public Obstacle(float x, float y, float width, float height) {
-		this.obstacle = new Rectangle(x, y, width, height);
+		this.obstacle = new RotableRectangle(x, y, width, height);
 	}
 
 	public boolean collide(Rectangle rectangle) {
@@ -18,15 +19,16 @@ public class Obstacle {
 	}
 
 	public void render(ShapeRenderer sr) {
-		sr.rect(this.obstacle.x, this.obstacle.y, this.obstacle.width, this.obstacle.height);
+		sr.rect(this.obstacle.getRectangle().x, this.obstacle.getRectangle().y, this.obstacle.getRectangle().width,
+				this.obstacle.getRectangle().height);
 	}
 
-	public Vector2 getPosition() {
-		return null;
+	public Rectangle getBoundingRectangle() {
+		return this.obstacle.getRectangle();
 	}
 	
-	public Rectangle getBoundingRectangle(){
-		return obstacle;
+	public Polygon getPolygon(){
+		return this.obstacle.getPolygon();
 	}
 
 }
