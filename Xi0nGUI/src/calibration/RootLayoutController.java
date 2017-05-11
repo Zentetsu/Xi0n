@@ -1,4 +1,4 @@
-package src.other;
+package calibration;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;

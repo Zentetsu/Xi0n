@@ -30,13 +30,10 @@ public class Robot {
 	private RotableRectangle leftWheel;
 	private RotableRectangle rightWheel;
 
-	private Room room;
-
 	private List<Circle> visited;
 
 	public Robot(Room room, float x, float y) {
-		this.input = new InputManager(this, Mode.AUTOMATIC, room);
-		this.room = room;
+		this.input = new InputManager(this, Mode.CONTROLLER, room);
 		this.initialise(x, y);
 	}
 
