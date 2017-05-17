@@ -46,7 +46,6 @@ public class Robot {
 	}
 
 	public void initialize(float x, float y) {
-System.out.println("0 0");
 		this.visited = new ArrayList<>();
 		this.position = new Vector2(x, y);
 

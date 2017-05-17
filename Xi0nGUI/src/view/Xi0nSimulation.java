@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
+import view.robot.Robot;
 import view.ui.QuitButton;
 import view.ui.RestartButton;
 import view.ui.StartButton;
@@ -22,10 +23,11 @@ public enum Xi0nSimulation implements ApplicationListener {
 	INSTANCE;
 
 	private ShapeRenderer sr;
+	private ShapeRenderer shud;
 	private OrthographicCamera camera;
 	private Room room;
 	private Stage stage;
-	private Texture bar;
+	private Texture HUD;
 	private SpriteBatch batch;
 
 	@Override
@@ -34,12 +36,13 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.camera.setToOrtho(false);
 		this.room = new Room();
 		this.sr = new ShapeRenderer();
+		this.shud = new ShapeRenderer();
 		this.stage = new Stage();
 		this.batch = new SpriteBatch();
-		this.bar = new Texture("assets/test3.png");
+		this.HUD = new Texture("assets/HUD.png");
 
 		Gdx.input.setInputProcessor(this.stage);
-		this.stage.addActor(new StartButton(30, 30));
+		this.stage.addActor(new StartButton(500, 30));
 		this.stage.addActor(new RestartButton(30, 130));
 		this.stage.addActor(new QuitButton(1860, 1025));
 	}
@@ -79,10 +82,34 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.sr.begin(ShapeType.Line);
 		this.sr.setProjectionMatrix(this.camera.combined);
 		this.room.render(this.sr);
-		this.sr.rect(500, 200, 700, 50, Color.ORANGE, Color.ORANGE, Color.ORANGE, Color.ORANGE);
 		this.sr.end();
+		// TODO: extract
+		Robot robot = this.room.getRobot();
+		
+		float left = robot.input.AXIS_Y;
+		float right = robot.input.AXIS_Y;
+		this.shud.begin(ShapeType.Filled);
+		this.shud.rect(800, 40, 500, 100, Color.GRAY, Color.GRAY, Color.GRAY, Color.GRAY);
+		if (left > 0){
+			Color forwardLeft = new Color(right/4, right, right/4, 0);
+			this.shud.rect(1060, 105, left*250, 30, forwardLeft, forwardLeft, forwardLeft, forwardLeft);
+		}
+		else if (left < 0){
+			Color backwardLeft = new Color(-right, -right/4, -right/4, 0);
+			this.shud.rect(1050+left*250, 105, -left*250, 30, backwardLeft, backwardLeft, backwardLeft, backwardLeft);
+		}
+		if (right > 0){
+			Color forwardRight = new Color(right/4, right, right/4, 0);
+			this.shud.rect(1060, 40, right*250, 30, forwardRight, forwardRight, forwardRight, forwardRight);
+		}
+		else if (right < 0){
+			Color backwardRight = new Color(-right, -right/4, -right/4, 0);
+			this.shud.rect(1050+right*250, 40, -right*250, 30, backwardRight, backwardRight, backwardRight, backwardRight);
+		}
+		this.shud.rect(1050, 40, 10, 100, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK);
+		this.shud.end();
 		this.batch.begin();
-		this.batch.draw(this.bar, 0, 0);
+		this.batch.draw(this.HUD, 0, 0);
 		this.batch.end();
 		this.stage.draw();
 	}
