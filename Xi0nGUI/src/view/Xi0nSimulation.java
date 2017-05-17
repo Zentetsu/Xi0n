@@ -3,16 +3,9 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class Xi0nSimulation implements ApplicationListener {
 
@@ -31,26 +24,8 @@ public class Xi0nSimulation implements ApplicationListener {
 		
 		
         Gdx.input.setInputProcessor(this.stage);
-        BitmapFont font = new BitmapFont();
-        Skin skin = new Skin();
-        TextureAtlas buttonAtlas = new TextureAtlas(Gdx.files.internal("assets/statusui.atlas"));
-        skin.addRegions(buttonAtlas);
-        TextButtonStyle textButtonStyle = new TextButtonStyle();
-        textButtonStyle.font = font;
-        textButtonStyle.up = skin.getDrawable("dialog");
-        textButtonStyle.down = skin.getDrawable("dialog");
-        textButtonStyle.checked = skin.getDrawable("dialog");
-        Button button = new Button(textButtonStyle);
-        button.setPosition(500, 20);
-        button.addListener( new ClickListener() {
-            @Override
-            public void clicked(InputEvent input,float x,float y )
-            {
-                System.out.println("hiii");
-            }
-            
-        } );
-        this.stage.addActor(button);
+        
+        this.stage.addActor(new StartButton(30, 30, 200, 50).getButton());
 	}
 
 	@Override
