@@ -38,7 +38,7 @@ public class Xi0nSimulation implements ApplicationListener {
         this.stage.addActor(new StartButton(30, 30).getButton());
         this.stage.addActor(new PauseButton(30, 80).getButton());
         this.stage.addActor(new RestartButton(30, 130).getButton());
-        this.stage.addActor(new QuitButton(30, 180).getButton());
+        this.stage.addActor(new QuitButton(1860, 1025).getButton());
 	}
 
 	@Override
@@ -65,10 +65,10 @@ public class Xi0nSimulation implements ApplicationListener {
 		this.sr.setProjectionMatrix(this.camera.combined);
 		this.room.render(this.sr);
 		this.sr.end();
-		this.stage.draw();
 		this.batch.begin();
 		this.batch.draw(this.bar, 0, 0);
 		this.batch.end();
+		this.stage.draw();
 	}
 
 	@Override
