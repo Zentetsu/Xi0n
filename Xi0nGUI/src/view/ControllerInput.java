@@ -45,7 +45,7 @@ public class ControllerInput extends CustomInput implements ControllerListener {
 		if (buttonIndex == 1)
 			this.robot.input.EST = true;
 		if (buttonIndex == 9)
-			this.robot.initialise(0, 0);
+			this.robot.initialize(0, 0);
 		return true;
 	}
 	

@@ -16,7 +16,7 @@ public class Room {
 	private List<Obstacle> obstacles;
 
 	public Room() {
-		this.robot = new Robot(this, 0, 0);
+		this.robot = Robot.getInstance(this);
 		this.obstacles = new ArrayList<Obstacle>();
 		this.initialize();
 	}

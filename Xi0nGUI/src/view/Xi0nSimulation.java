@@ -7,6 +7,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
+import view.ui.QuitButton;
+import view.ui.RestartButton;
+import view.ui.StartButton;
+import view.ui.PauseButton;
+
 public class Xi0nSimulation implements ApplicationListener {
 
 	private ShapeRenderer sr;
@@ -24,8 +29,10 @@ public class Xi0nSimulation implements ApplicationListener {
 		
 		
         Gdx.input.setInputProcessor(this.stage);
-        
-        this.stage.addActor(new StartButton(30, 30, 200, 50).getButton());
+        this.stage.addActor(new StartButton(30, 30).getButton());
+        this.stage.addActor(new PauseButton(30, 80).getButton());
+        this.stage.addActor(new RestartButton(30, 130).getButton());
+        this.stage.addActor(new QuitButton(30, 180).getButton());
 	}
 
 	@Override

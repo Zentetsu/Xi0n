@@ -14,7 +14,7 @@ import view.Obstacle;
 import view.Room;
 
 public class Robot {
-
+	
 	public InputManager input;
 	private Vector2 position;
 	private Polygon body;
@@ -31,14 +31,22 @@ public class Robot {
 	private RotableRectangle rightWheel;
 
 	private List<Circle> visited;
+	private static Robot instance;
 
-	public Robot(Room room, float x, float y) {
-		this.input = new InputManager(this, Mode.CONTROLLER, room);
-		this.initialise(x, y);
+	private Robot(Room room, float x, float y) {
+		this.input = new InputManager(this, Mode.KEYBOARD, room);
+		this.initialize(x, y);
+	}
+	
+	public static Robot getInstance(Room room){
+		if(instance == null){
+			instance =  new Robot(room, 0, 0);
+		}
+		return instance;
 	}
 
-	public void initialise(float x, float y) {
-
+	public void initialize(float x, float y) {
+System.out.println("0 0");
 		this.visited = new ArrayList<>();
 		this.position = new Vector2(x, y);
 

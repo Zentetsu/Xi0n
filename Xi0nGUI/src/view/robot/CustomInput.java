@@ -23,7 +23,7 @@ public class CustomInput {
 			Gdx.app.exit();
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.R)) {
-			this.robot.initialise(0, 0);
+			this.robot.initialize(0, 0);
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.F12)) {
 			//ScreenshotFactory.saveScreenshot();
