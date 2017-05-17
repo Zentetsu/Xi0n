@@ -2,6 +2,7 @@ package view;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -78,6 +79,7 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.sr.begin(ShapeType.Line);
 		this.sr.setProjectionMatrix(this.camera.combined);
 		this.room.render(this.sr);
+		this.sr.rect(500, 200, 700, 50, Color.ORANGE, Color.ORANGE, Color.ORANGE, Color.ORANGE);
 		this.sr.end();
 		this.batch.begin();
 		this.batch.draw(this.bar, 0, 0);
