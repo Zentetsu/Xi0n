@@ -131,7 +131,7 @@ System.out.println("0 0");
 	}
 
 	private void updateRotation() {
-		float angle = this.input.AXIS_X * this.speed;
+		float angle = this.input.AXIS_X;
 		this.rotation += angle;
 		this.body.rotate(angle);
 
