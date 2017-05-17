@@ -15,7 +15,6 @@ import view.ui.QuitButton;
 import view.ui.RestartButton;
 import view.ui.StartButton;
 import view.ui.UIButton;
-import view.ui.PauseButton;
 
 public enum Xi0nSimulation implements ApplicationListener {
 
@@ -41,7 +40,7 @@ public enum Xi0nSimulation implements ApplicationListener {
 		Gdx.input.setInputProcessor(this.stage);
 		this.stage.addActor(new StartButton(30, 30));
 		this.stage.addActor(new RestartButton(30, 130));
-		this.stage.addActor(new QuitButton(30, 180));
+		this.stage.addActor(new QuitButton(1860, 1025));
 	}
 
 	public void addButton(UIButton button) {
