@@ -3,17 +3,17 @@
 
 #include "Arduino.h"
 
-#include <string>
-#include <iostream>
-
 
 class InfraRedSensor {
 	public:
-		InfraRedSensor();
+		InfraRedSensor(int init_sensor_Pin);
 		~InfraRedSensor();
 
-	private:
+		float getDistance();
 
+	private:
+		int sensor_Pin;
+		
 };
 
 #endif

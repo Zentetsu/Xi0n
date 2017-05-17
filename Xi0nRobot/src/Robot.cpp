@@ -1,3 +1,5 @@
+#include "Arduino.h"
+
 #include "./../include/Robot.h"
 
 using namespace std;
@@ -14,5 +16,5 @@ Robot::~Robot() {
 	delete mobility;
 	delete sensor;
 
-	cout << "delete" << endl;
+	cout << "delete Robot" << endl;
 }

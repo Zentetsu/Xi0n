@@ -1,3 +1,5 @@
+#include "Arduino.h"
+
 #include "./../../include/Sensor/AllOrNothingSensor.h"
 
 using namespace std;

@@ -3,8 +3,6 @@
 
 #include "Arduino.h"
 
-#include <string>
-#include <iostream>
 #include "./Ultrason.h"
 #include "./InfraRedSensor.h"
 #include "./AllOrNothingSensor.h"
@@ -19,6 +17,7 @@ class Sensor {
 		AllOrNothingSensor *allOrNothingSensor;
 		InfraRedSensor *infraRedSensor;
 		Ultrason *ultrason;
+		
 };
 
 #endif
