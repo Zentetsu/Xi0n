@@ -3,6 +3,8 @@ package view.ui;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import view.Xi0nSimulation;
+
 public class PauseButton extends UIButton {
 
 	private final static String GRAPHIC_ELEMENT = "pause.png";
@@ -14,8 +16,13 @@ public class PauseButton extends UIButton {
 	private class StartButtonListener extends ClickListener {
 		@Override
 		public void clicked(InputEvent input, float x, float y) {
-			System.out.println("click on button");
+			Xi0nSimulation.INSTANCE.removeButton("pause");
+			Xi0nSimulation.INSTANCE.addButton(new StartButton(getX(), getY()));
 		}
+	}
+
+	public String toString() {
+		return "pause";
 	}
 
 	@Override

@@ -1,4 +1,5 @@
 package view;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -7,14 +8,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import view.ui.QuitButton;
 import view.ui.RestartButton;
 import view.ui.StartButton;
+import view.ui.UIButton;
 import view.ui.PauseButton;
 
-public class Xi0nSimulation implements ApplicationListener {
+public enum Xi0nSimulation implements ApplicationListener {
+
+	INSTANCE;
 
 	private ShapeRenderer sr;
 	private OrthographicCamera camera;
@@ -32,13 +37,23 @@ public class Xi0nSimulation implements ApplicationListener {
 		this.stage = new Stage();
 		this.batch = new SpriteBatch();
 		this.bar = new Texture("assets/test3.png");
-		
-		
-        Gdx.input.setInputProcessor(this.stage);
-        this.stage.addActor(new StartButton(30, 30).getButton());
-        this.stage.addActor(new PauseButton(30, 80).getButton());
-        this.stage.addActor(new RestartButton(30, 130).getButton());
-        this.stage.addActor(new QuitButton(30, 180).getButton());
+
+		Gdx.input.setInputProcessor(this.stage);
+		this.stage.addActor(new StartButton(30, 30));
+		this.stage.addActor(new RestartButton(30, 130));
+		this.stage.addActor(new QuitButton(30, 180));
+	}
+
+	public void addButton(UIButton button) {
+		this.stage.addActor(button);
+	}
+
+	public void removeButton(String name) {
+		for (Actor actor : this.stage.getActors()) {
+			if (actor.toString().equals(name)) {
+				actor.remove();
+			}
+		}
 	}
 
 	@Override
