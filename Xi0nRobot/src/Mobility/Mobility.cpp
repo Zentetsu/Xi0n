@@ -1,3 +1,5 @@
+#include "Arduino.h"
+
 #include "./../../include/Mobility/Mobility.h"
 
 using namespace std;
@@ -11,4 +13,6 @@ Mobility::Mobility() {
 Mobility::~Mobility() {
 	delete rightMotor;
 	delete leftMotor;
+
+	cout << "delete Mobility" << endl;
 }

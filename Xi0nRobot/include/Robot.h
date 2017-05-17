@@ -1,6 +1,8 @@
 #ifndef DEF_ROBOT
 #define DEF_ROBOT
 
+#include "Arduino.h"
+
 #include <string>
 #include <iostream>
 #include "./Communication/Communication.h"

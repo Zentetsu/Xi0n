@@ -1,3 +1,5 @@
+#include "Arduino.h"
+
 #include "./../../include/Sensor/InfraRedSensor.h"
 
 using namespace std;

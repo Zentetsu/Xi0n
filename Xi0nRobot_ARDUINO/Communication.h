@@ -3,9 +3,6 @@
 
 #include "Arduino.h"
 
-#include <string>
-#include <iostream>
-
 
 class Communication {
 	public:

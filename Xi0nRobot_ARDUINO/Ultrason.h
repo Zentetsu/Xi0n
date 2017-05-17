@@ -3,17 +3,17 @@
 
 #include "Arduino.h"
 
-#include <string>
-#include <iostream>
-
 
 class Ultrason {
 	public:
-		Ultrason();
+		Ultrason(int new_echo_Pin, int new_trigger_Pin);
 		~Ultrason();
 
-	private:
+		float getDistance();
 
+	private:
+		int echo_Pin;
+		int trigger_Pin;
 };
 
 #endif
