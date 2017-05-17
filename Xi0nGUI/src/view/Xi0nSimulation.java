@@ -3,6 +3,8 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -13,6 +15,8 @@ public class Xi0nSimulation implements ApplicationListener {
 	private OrthographicCamera camera;
 	private Room room;
 	private Stage stage;
+	private Texture bar;
+	private SpriteBatch batch;
 
 	@Override
 	public void create() {
@@ -21,6 +25,8 @@ public class Xi0nSimulation implements ApplicationListener {
 		this.room = new Room();
 		this.sr = new ShapeRenderer();
 		this.stage = new Stage();
+		this.batch = new SpriteBatch();
+		this.bar = new Texture("assets/test3.png");
 		
 		
         Gdx.input.setInputProcessor(this.stage);
@@ -53,6 +59,9 @@ public class Xi0nSimulation implements ApplicationListener {
 		this.room.render(this.sr);
 		this.sr.end();
 		this.stage.draw();
+		this.batch.begin();
+		this.batch.draw(this.bar, 0, 0);
+		this.batch.end();
 	}
 
 	@Override
