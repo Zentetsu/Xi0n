@@ -2,17 +2,13 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="/home/twarz/git/Xi0n/lib/libgdx/gdx.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="file:/home/twarz/git/Xi0n/lib/libgdx/docs/api/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/home/twarz/git/Xi0n/lib/libgdx/gdx-backend-lwjgl.jar"/>
-	<classpathentry kind="lib" path="/home/twarz/git/Xi0n/lib/libgdx/extensions/gdx-controllers/gdx-controllers.jar"/>
-	<classpathentry kind="lib" path="/home/twarz/git/Xi0n/lib/libgdx/gdx-natives.jar"/>
-	<classpathentry kind="lib" path="/home/twarz/git/Xi0n/lib/libgdx/gdx-backend-lwjgl-natives.jar"/>
-	<classpathentry kind="lib" path="/home/twarz/git/Xi0n/lib/libgdx/extensions/gdx-controllers/gdx-controllers-lwjgl3.jar"/>
-	<classpathentry kind="lib" path="/home/twarz/git/Xi0n/lib/libgdx/extensions/gdx-controllers/gdx-controllers-desktop.jar"/>
-	<classpathentry kind="lib" path="/home/twarz/git/Xi0n/lib/libgdx/extensions/gdx-controllers/gdx-controllers-desktop-natives.jar"/>
+	<classpathentry kind="lib" path="assets/lib/gdx-backend-lwjgl-natives.jar"/>
+	<classpathentry kind="lib" path="assets/lib/gdx-backend-lwjgl.jar"/>
+	<classpathentry kind="lib" path="assets/lib/gdx-controllers-desktop-natives.jar"/>
+	<classpathentry kind="lib" path="assets/lib/gdx-controllers-desktop.jar"/>
+	<classpathentry kind="lib" path="assets/lib/gdx-controllers-lwjgl3.jar"/>
+	<classpathentry kind="lib" path="assets/lib/gdx-controllers.jar"/>
+	<classpathentry kind="lib" path="assets/lib/gdx-natives.jar"/>
+	<classpathentry kind="lib" path="assets/lib/gdx.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
