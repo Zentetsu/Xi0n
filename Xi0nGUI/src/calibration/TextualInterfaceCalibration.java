@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import tools.Keyboard;
+import view.robot.RobotConfig;
+
 /* Description de la classe ===============
 Interface textuelle du programme permettant
 la création du fichier d'étalonnage
@@ -132,7 +135,7 @@ public class TextualInterfaceCalibration {
 	*/
 	public boolean executeCom ( String com ) {
 		
-		Clavier clavierTest = new Clavier ();
+		Keyboard keyboardTest = new Keyboard ();
 		String parameter;
 		String parameter1;
 		String parameter2;
@@ -151,7 +154,7 @@ public class TextualInterfaceCalibration {
 			}
 			else {
 				if ( motorParrallelCalibration.size() != 0 ) {
-					boolean testEntier = clavierTest.isEntier ( parameter );
+					boolean testEntier = keyboardTest.isInteger ( parameter );
 					if (!testEntier)
 						System.out.println("INTEGER PARAMTER EXPECTED");
 					else {
@@ -171,11 +174,11 @@ public class TextualInterfaceCalibration {
 			parameter = com.substring (4);
 			parameter1 = separateGet1 ( parameter );
 			parameter2 = separateGet2 ( parameter );
-			if ( !clavierTest.isEntier( parameter1 ) )
+			if ( !keyboardTest.isInteger( parameter1 ) )
 				System.out.println("INTEGER FIRST PARAMTER EXPECTED");
 			else
 			{
-				boolean testFloat = clavierTest.isFloat ( parameter2 );
+				boolean testFloat = keyboardTest.isFloat ( parameter2 );
 				if (!testFloat)
 					System.out.println("FLOAT SECOND PARAMTER EXPECTED");
 				else {
@@ -256,7 +259,7 @@ public class TextualInterfaceCalibration {
 					System.out.println("NO CALIBRATION TRIAL TO DELETE");
 			}
 			else {
-				boolean testEntier = clavierTest.isEntier ( parameter );
+				boolean testEntier = keyboardTest.isInteger ( parameter );
 				if (!testEntier)
 					System.out.println("INTEGER PARAMTER EXPECTED");
 				else {
@@ -306,7 +309,7 @@ public class TextualInterfaceCalibration {
 		// Execute lp
 		else if ( com.startsWith("lp ")) {
 			parameter = com.substring (3);
-			boolean testFloat = clavierTest.isFloat ( parameter );
+			boolean testFloat = keyboardTest.isFloat ( parameter );
 			if (!testFloat)
 				System.out.println("FLOAT PARAMTER EXPECTED");
 			else {
@@ -334,7 +337,7 @@ public class TextualInterfaceCalibration {
 		// Execute rp
 		else if ( com.startsWith("rp ")) {
 			parameter = com.substring (3);
-			boolean testFloat = clavierTest.isFloat ( parameter );
+			boolean testFloat = keyboardTest.isFloat ( parameter );
 			if (!testFloat)
 				System.out.println("FLOAT PARAMTER EXPECTED");
 			else {
@@ -389,12 +392,12 @@ public class TextualInterfaceCalibration {
 			parameter = com.substring (8);
 			parameter1 = separateGet1 ( parameter );
 			parameter2 = separateGet2 ( parameter );
-			if ( !clavierTest.isEntier( parameter1 ) )
+			if ( !keyboardTest.isInteger( parameter1 ) )
 				System.out.println("INTEGER FIRST PARAMTER EXPECTED");
 			else
 			{
 				int type = Integer.parseInt(parameter1);
-				boolean testFloat = clavierTest.isFloat ( parameter2 );
+				boolean testFloat = keyboardTest.isFloat ( parameter2 );
 				if (!testFloat)
 					System.out.println("FLOAT SECOND PARAMTER EXPECTED");
 				else {
@@ -441,12 +444,12 @@ public class TextualInterfaceCalibration {
 			parameter = com.substring (7);
 			parameter1 = separateGet1 ( parameter );
 			parameter2 = separateGet2 ( parameter );
-			if ( !clavierTest.isEntier( parameter1 ) )
+			if ( !keyboardTest.isInteger( parameter1 ) )
 				System.out.println("INTEGER FIRST PARAMTER EXPECTED");
 			else
 			{
 				int type = Integer.parseInt(parameter1);
-				boolean testFloat = clavierTest.isFloat ( parameter2 );
+				boolean testFloat = keyboardTest.isFloat ( parameter2 );
 				if (!testFloat)
 					System.out.println("FLOAT SECOND PARAMTER EXPECTED");
 				else {
@@ -630,7 +633,7 @@ public class TextualInterfaceCalibration {
 	*/
 	private boolean generate () {
 		order();
-		File f = new File ( "./src/files/calibration.txt" );
+		File f = new File ( "assets/calibration/calibration.txt" );
 		
 		try {
 			f.createNewFile();
@@ -825,17 +828,31 @@ public class TextualInterfaceCalibration {
 	programme étalon à la classe pour le
 	déplacement du robot
 	*/
-	private Calibration pCtoC ( ParrallelCalibration pC ) {
+	private RobotConfig pCtoC ( ParrallelCalibration pC ) {
 		int leftPower0to255 = powerToInt ( pC.getPowerLeft() );
 		int rightPower0to255 = powerToInt ( pC.getPowerRight() );
-		return ( new Calibration ( leftPower0to255, rightPower0to255, pC.getME() ));
+		switch ( pC.getME() ) {
+		case STAND:
+			return ( new RobotConfig ( leftPower0to255, rightPower0to255, 0, 0 ));
+		case FORWARD :
+			return ( new RobotConfig ( leftPower0to255, rightPower0to255, 1, 1 ));
+		case BACK :
+			return ( new RobotConfig ( leftPower0to255, rightPower0to255, -1, -1 ));
+		case ROTATIONLEFT :
+			return ( new RobotConfig ( leftPower0to255, rightPower0to255, -1, 1 ));
+		case ROTATIONRIGHT :
+			return ( new RobotConfig ( leftPower0to255, rightPower0to255, 1, -1 ));
+		default :
+			return ( new RobotConfig ( leftPower0to255, rightPower0to255, 0, 0 ));
+		}
+		
 	}
 	
 	/* Description de la fonction ---------
 	retourne l'étalon pour le tester
 	sur le robot
 	*/
-	public Calibration getSelectedCalibration () {
+	public RobotConfig getSelectedCalibration () {
 		return pCtoC ( getSelectedPC() );
 	}
 	
@@ -844,11 +861,11 @@ public class TextualInterfaceCalibration {
 	sur le robot, renvoi un étalon nul si
 	le run est nul
 	*/
-	public Calibration getCalibrationToRun () {
+	public RobotConfig getCalibrationToRun () {
 		if ( run )
 			return ( getSelectedCalibration () );
 		else
-			return ( new Calibration ( 0, 0, MovementEnum.STAND ));
+			return ( new RobotConfig ( 0, 0, 0, 0 ) );
 	}
 	
 	/* Description de la fonction ---------
@@ -863,7 +880,7 @@ public class TextualInterfaceCalibration {
 // MAIN PROGRAMME
 	
 	public static void main(String[] args) {
-		Clavier clavier = new Clavier ();
+		Keyboard keyboard = new Keyboard ();
 		TextualInterfaceCalibration textualInterfaceCalibration = new TextualInterfaceCalibration();
 		
 		textualInterfaceCalibration.addnew(MovementEnum.FORWARD, true, (float)0.45, (float)0.4);
@@ -880,7 +897,7 @@ public class TextualInterfaceCalibration {
 			boolean comCorrect;
 			do {
 				System.out.print ( ">> " );
-				String com = clavier.entrerClavierString ();
+				String com = keyboard.entrerKeyboardString ();
 				comCorrect = textualInterfaceCalibration.executeCom ( com );
 			} while ( !comCorrect );
 			/* EFFACER LE SHELL : CETTE VERSION LA NE FONCTIONNE PAS

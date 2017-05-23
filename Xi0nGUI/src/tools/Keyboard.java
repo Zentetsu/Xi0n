@@ -1,4 +1,4 @@
-package calibration;
+package tools;
 
 /* Import de bibliothèques =============*/
 import java.util.ArrayList;
@@ -8,19 +8,19 @@ import java.util.Scanner;
 Classe qui permet la capture entrée par
 l'utilisateur au clavier
 =========================================*/
-public class Clavier {
+public class Keyboard {
 
 // ========================================
 // ATTRIBUTS
 	
 	private Scanner scanner = new Scanner(System.in);
-    private ArrayList<String> listeEntier = new ArrayList<String>();
+    private ArrayList<String> listeInteger = new ArrayList<String>();
     
  // ========================================	
  // CONSTRUCTOR
     
-    public Clavier () {
-    	this.remplirListEntier();
+    public Keyboard () {
+    	this.fillListInteger();
     }
     
 // ========================================	
@@ -34,7 +34,7 @@ public class Clavier {
 	fonction de capture des chaines de
 	carctères
 	*/
-    public String entrerClavierString ()
+    public String entrerKeyboardString ()
     {
         return this.scanner.nextLine();
     }
@@ -44,16 +44,16 @@ public class Clavier {
 	*/
     public int entrerClavierInt ()
     {
-    	this.remplirListEntier();
+    	this.fillListInteger();
     	String string = new String();
     	int y = 0;
     	do
     	{
     		string=this.scanner.next();
-    		if(isEntier(string))
+    		if(isInteger(string))
     			y = Integer.parseInt(string);
     	}
-    	while(!isEntier(string));
+    	while(!isInteger(string));
     	return y;
     }
     
@@ -61,10 +61,10 @@ public class Clavier {
 	fonction d'adaption de la liste
 	d'entiers
 	*/
-    private void remplirListEntier ()
+    private void fillListInteger ()
     {
     	for(Integer i = 0;i<10;i++){
-    		listeEntier.add(new String(i.toString()));
+    		listeInteger.add(new String(i.toString()));
     	}
     }
    
@@ -73,13 +73,13 @@ public class Clavier {
 	caractère qui peut être adaptée pour
 	être transformée en entier
 	*/
-    public boolean isEntier ( String chaine )
+    public boolean isInteger ( String s )
     {
-    	if(chaine.isEmpty()){
+    	if(s.isEmpty()){
     		return false;
     	}
-    	for(int i = 0 ; i< chaine.length() ; i++){
-    		if(!listeEntier.contains(chaine.substring(i, i+1))){
+    	for(int i = 0 ; i< s.length() ; i++){
+    		if(!listeInteger.contains(s.substring(i, i+1))){
     			return false;
     		}
     	}
@@ -91,18 +91,18 @@ public class Clavier {
 	caractère qui peut être adaptée pour
 	être transformée en float
 	*/
-    public boolean isFloat ( String chaine )
+    public boolean isFloat ( String s )
     {
     	boolean testPoint = false;
-    	if(chaine.isEmpty()){
+    	if(s.isEmpty()){
     		return false;
     	}
-    	for(int i = 0 ; i< chaine.length() ; i++)
+    	for(int i = 0 ; i< s.length() ; i++)
     	{
-    		if (!listeEntier.contains(chaine.substring(i, i+1)))
+    		if (!listeInteger.contains(s.substring(i, i+1)))
     		{
     			if ( !testPoint ) {
-    				if ( chaine.substring(i, i+1).equals(".") )
+    				if ( s.substring(i, i+1).equals(".") )
     					testPoint = true;
     				else
     					return false;
@@ -112,18 +112,6 @@ public class Clavier {
     		}
     	}
     	return true;
-    }
-    
-    /* Description de la fonction ---------
- 	fonction qui permet d'effectuer une
- 	pause avant de continuer le programme
- 	*/
-    public void continuer ()
-    {
-    	System.out.println("Entrer 0 pour continuer");
-    	String temp = "";
-    	while ( !(temp.equals("0")) )
-    		temp = this.scanner.next();
     }
     
     /* Description de la fonction ---------

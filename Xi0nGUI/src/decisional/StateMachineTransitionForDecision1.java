@@ -1,7 +1,7 @@
 package decisional;
 
 /* Import de bibliothèques =============*/
-
+import view.robot.RobotConfig;
 
 /* Description de la classe ===============
 Machine à état pour la prise de Décision
@@ -15,12 +15,12 @@ public class StateMachineTransitionForDecision1 {
 	// PARAMETERS -------------------------
     // ------------------------------------
 	
-	public static final Calibration WALL_FINDER_SPEED = new Calibration ( 200, 200, 1, 1 );
-	public static final Calibration WALL_RIDER_SPEED = new Calibration ( 200, 200, 1, 1 );
-	public static final Calibration EMERGENCY_STANDING_STILL = new Calibration ( 0, 0, 2, 2 );
-	public static final Calibration STANDING_STILL = new Calibration ( 0, 0, 0, 0 );
-	public static final Calibration STANDING_LEFT_ROTATION = new Calibration ( 200, 200, -1, 1 );
-	public static final Calibration STANDING_RIGHT_ROTATION = new Calibration ( 200, 200, 1, -1 );
+	public static final RobotConfig WALL_FINDER_SPEED = new RobotConfig ( 200, 200, 1, 1 );
+	public static final RobotConfig WALL_RIDER_SPEED = new RobotConfig ( 200, 200, 1, 1 );
+	public static final RobotConfig EMERGENCY_STANDING_STILL = new RobotConfig ( 0, 0, 2, 2 );
+	public static final RobotConfig STANDING_STILL = new RobotConfig ( 0, 0, 0, 0 );
+	public static final RobotConfig STANDING_LEFT_ROTATION = new RobotConfig ( 200, 200, -1, 1 );
+	public static final RobotConfig STANDING_RIGHT_ROTATION = new RobotConfig ( 200, 200, 1, -1 );
 	
 	// ------------------------------------
     // SENSORS ----------------------------
@@ -40,14 +40,14 @@ public class StateMachineTransitionForDecision1 {
     // STATE MEMORY -----------------------
     // ------------------------------------
 	
-	private StateMachineTransmissionEnum pS;
-	private StateMachineTransmissionEnum nS;
+	private State pS;
+	private State nS;
 	
 	// ------------------------------------
     // OUTPUTS ----------------------------
     // ------------------------------------
 	
-	private Calibration speeds = new Calibration ( 0,0,0,0 );
+	private RobotConfig speeds = new RobotConfig ( 0,0,0,0 );
 	
 // ========================================	
 // CONSTRUCTOR
@@ -56,8 +56,8 @@ public class StateMachineTransitionForDecision1 {
 		
 		readSensors();
 		
-		pS = StateMachineTransmissionEnum.WALL_FINDER;
-		nS = StateMachineTransmissionEnum.WALL_FINDER;
+		pS = State.WALL_FINDER;
+		nS = State.WALL_FINDER;
 	}
 	
 // ========================================	
@@ -78,8 +78,12 @@ public class StateMachineTransitionForDecision1 {
 		}
 	}
 	
-	public Calibration getSpeeds () {
+	public RobotConfig getRobotConfig () {
 		return ( speeds );
+	}
+	
+	public State getState () {
+		return ( pS );
 	}
 	
 	/*public boolean isDifferent ( Calibration speeds ) {
@@ -98,44 +102,44 @@ public class StateMachineTransitionForDecision1 {
 		
 		// état d'erreur majeur : la machine est piégée dans cet état
 		case EMERGENCY_STANDING_STILL :
-			nS = StateMachineTransmissionEnum.EMERGENCY_STANDING_STILL;
+			nS = State.EMERGENCY_STANDING_STILL;
 			break;
 		
 		// état d'erreur mineur : la machine est piégée dans cet état
 		case STANDING_STILL :
-			nS = StateMachineTransmissionEnum.STANDING_STILL;
+			nS = State.STANDING_STILL;
 			break;
 			
 		// état d'erreur mineur : le robot ne peut pas prendre seul une décision, il doit passr en mode manuel pour être extrait de sa position
 		case MANUAL :
-			nS = StateMachineTransmissionEnum.MANUAL;
+			nS = State.MANUAL;
 			break;
 		
 		// état permettant d'aller droit jusqu'à trouver un mur pour démarrer la cartographie
 		case WALL_FINDER :
-			nS = StateMachineTransmissionEnum.WALL_RIDER;
+			nS = State.WALL_RIDER;
 			break;
 		
 		// POUR LE TEST
 		case WALL_RIDER :
 			if ( frontSensor == 1 )
-				nS = StateMachineTransmissionEnum.WALL_FINDER;
+				nS = State.WALL_FINDER;
 			else
-				nS = StateMachineTransmissionEnum.WALL_RIDER;
+				nS = State.WALL_RIDER;
 			break;
 			
 		case FRONT_WALL_RIDER_ROTATION :
-			nS = StateMachineTransmissionEnum.FRONT_WALL_RIDER_ROTATION;
+			nS = State.FRONT_WALL_RIDER_ROTATION;
 			break;
 			
 		case NO_RIGHT_WALL_RIDER_ROTATION :
-			nS = StateMachineTransmissionEnum.NO_RIGHT_WALL_RIDER_ROTATION;
+			nS = State.NO_RIGHT_WALL_RIDER_ROTATION;
 			break;
 			
 			
 		// En cas d'erreur sur le typage on passe dans l'état des erreurs majeurs	
 		default :
-			nS = StateMachineTransmissionEnum.EMERGENCY_STANDING_STILL;
+			nS = State.EMERGENCY_STANDING_STILL;
 			break;
 		}
 	}
@@ -157,7 +161,7 @@ public class StateMachineTransitionForDecision1 {
 	vitesses de chaque roue associé à
 	l'état proposé
 	*/
-	public Calibration GBloc () {
+	public RobotConfig GBloc () {
 		switch ( pS ) {
 		
 		// état d'erreur majeur : la machine est piégée dans cet état
@@ -212,8 +216,8 @@ public class StateMachineTransitionForDecision1 {
 		// DECLARATION 
 		StateMachineTransitionForDecision1 SMT = new StateMachineTransitionForDecision1 ();
 		FilterCalibration FT = new FilterCalibration();
-		Calibration speeds = new Calibration (0,0,0,0);
-		Calibration calibratedSpeeds = new Calibration ( FT.filter(speeds) );
+		RobotConfig speeds = new RobotConfig (0,0,0,0);
+		RobotConfig calibratedSpeeds = new RobotConfig ( FT.filter(speeds) );
 		//Calibration previousCalibratedSpeeds = new Calibration ( calibratedSpeeds );
 			
 		// CHARGEMENT DE L'ETALONNAGE

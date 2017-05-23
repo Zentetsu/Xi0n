@@ -7,7 +7,7 @@ package decisional;
 Enueration des états pour la machine à
 état de la prise de décision.
 =========================================*/
-public enum StateMachineTransmissionEnum {
+public enum State {
 
 // ========================================
 //ENUMERATION 
