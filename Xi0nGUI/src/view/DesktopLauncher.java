@@ -12,5 +12,5 @@ public class DesktopLauncher {
 		config.height = Toolkit.getDefaultToolkit().getScreenSize().height;
 		config.fullscreen = true;
 		new LwjglApplication(Xi0nSimulation.INSTANCE, config);
-	} // 
+	}
 }
