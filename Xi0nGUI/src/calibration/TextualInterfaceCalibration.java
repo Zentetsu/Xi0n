@@ -116,7 +116,7 @@ public class TextualInterfaceCalibration {
 			System.out.println ( " * >> showcal [type] [power]                                                                 *" );
 			System.out.println ( " * >> trycal [type] [power]                                                                  *" );
 			System.out.println ( " * >> run                                                                                    *" );
-			System.out.println ( " * >> runcont //TODO                                                                         *" );
+			System.out.println ( " * >> runcon //TODO                                                                         *" );
 			System.out.println ( " * >> stop                                                                                   *" );
 			System.out.println ( " * >> generate                                                                               *" );
 			System.out.println ( " * >> order                                                                                  *" );
@@ -880,6 +880,7 @@ public class TextualInterfaceCalibration {
 // MAIN PROGRAMME
 	
 	public static void main(String[] args) {
+		
 		Keyboard keyboard = new Keyboard ();
 		TextualInterfaceCalibration textualInterfaceCalibration = new TextualInterfaceCalibration();
 		
@@ -906,7 +907,8 @@ public class TextualInterfaceCalibration {
 			}
 			catch ( Exception e ) {} */
 			System.out.print ( "\n\n\n\n\n\n\n\n\n\n" );
-		}	
+		}
+		
 	}
 
 // ========================================    
