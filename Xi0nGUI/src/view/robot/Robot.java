@@ -14,7 +14,7 @@ import view.Obstacle;
 import view.Room;
 
 public class Robot {
-	
+
 	public InputManager input;
 	private Vector2 position;
 	private Polygon body;
@@ -32,21 +32,23 @@ public class Robot {
 
 	private List<Circle> visited;
 	private static Robot instance;
+	
+	private Room room;
 
 	private Robot(Room room, float x, float y) {
-		this.input = new InputManager(this, Mode.KEYBOARD, room);
+		this.room = room;
+		this.setMode(Mode.KEYBOARD);
 		this.initialize(x, y);
 	}
-	
-	public static Robot getInstance(Room room){
-		if(instance == null){
-			instance =  new Robot(room, 0, 0);
+
+	public static Robot getInstance(Room room) {
+		if (instance == null) {
+			instance = new Robot(room, 0, 0);
 		}
 		return instance;
 	}
 
 	public void initialize(float x, float y) {
-System.out.println("0 0");
 		this.visited = new ArrayList<>();
 		this.position = new Vector2(x, y);
 
@@ -183,6 +185,10 @@ System.out.println("0 0");
 
 	public int getFrontalDistance(Rectangle rectangle) {
 		return this.frontalSensor.getDistance(rectangle);
+	}
+	
+	public void setMode(Mode mode){
+		this.input = new InputManager(this, mode, this.room);
 	}
 
 	/*

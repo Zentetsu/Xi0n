@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class QuitButton extends UIButton {
 
-	private final static String GRAPHIC_ELEMENT = "quit.png";
+	private final static String GRAPHIC_ELEMENT = "quit";
 
 	public QuitButton(float x, float y) {
 		super(x, y, GRAPHIC_ELEMENT);
