@@ -174,8 +174,8 @@ public enum Xi0nSimulation implements ApplicationListener {
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
-
-	}
+  
+	} 
 
 	public void setMode(Mode mode) {
 		this.room.getRobot().setMode(mode);
