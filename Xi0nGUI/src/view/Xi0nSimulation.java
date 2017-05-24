@@ -83,7 +83,9 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.buttonGroup.setMinCheckCount(1);
 		this.buttonGroup.setUncheckLast(true);
 		
-		this.stage.addActor(new CellBar(320, 13));
+		
+		
+		//this.stage.addActor(new CellBar(320, 13));
 		this.stage.addActor(this.xbeeLogo);
 		
 		this.connected = false;
