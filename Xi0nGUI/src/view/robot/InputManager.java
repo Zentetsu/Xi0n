@@ -3,7 +3,7 @@ package view.robot;
 import java.util.HashMap;
 import java.util.Map;
 
-import decisional.State1;
+import decisional.State2;
 import view.Room;
 
 public class InputManager {
@@ -18,7 +18,7 @@ public class InputManager {
 
 	private Map<Mode, CustomInput> inputs;
 	private Mode currentMode;
-	public State1 STATE;
+	public State2 STATE;
 
 	public InputManager(Robot robot, Mode currentMode, Room room) {
 		this.inputs = new HashMap<>();

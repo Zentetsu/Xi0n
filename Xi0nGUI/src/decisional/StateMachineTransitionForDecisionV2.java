@@ -40,8 +40,8 @@ public class StateMachineTransitionForDecisionV2 {
     // STATE MEMORY -----------------------
     // ------------------------------------
 	
-	private State1 pS;
-	private State1 nS;
+	private State2 pS;
+	private State2 nS;
 	
 	// ------------------------------------
     // OUTPUTS ----------------------------
@@ -54,8 +54,8 @@ public class StateMachineTransitionForDecisionV2 {
 	
 	public StateMachineTransitionForDecisionV2 () {
 		readSensors();
-		pS = State1.WALL_FINDER;
-		nS = State1.WALL_FINDER;
+		pS = State2.WALL_FINDER;
+		nS = State2.WALL_FINDER;
 	}
 	
 // ========================================	
@@ -64,6 +64,12 @@ public class StateMachineTransitionForDecisionV2 {
 	// ------------------------------------
     // FONCTIONS PRINCIPALES --------------
     // ------------------------------------
+	
+	public void reset () {
+		readSensors();
+		pS = State2.WALL_FINDER;
+		nS = State2.WALL_FINDER;
+	}
 	
 	public void readSensors () {
 		rightSideDistance = Xi0nSimulation.INSTANCE.getLateralDistance();
@@ -74,7 +80,7 @@ public class StateMachineTransitionForDecisionV2 {
 		return ( speeds );
 	}
 	
-	public State1 getState () {
+	public State2 getState () {
 		return ( pS );
 	}
 	
@@ -91,76 +97,82 @@ public class StateMachineTransitionForDecisionV2 {
 		
 		// ï¿½tat d'erreur majeur : la machine est piï¿½gï¿½e dans cet ï¿½tat
 		case EMERGENCY_STANDING_STILL :
-			nS = State1.EMERGENCY_STANDING_STILL;
+			nS = State2.EMERGENCY_STANDING_STILL;
 			break;
 		
 		// ï¿½tat d'erreur mineur : la machine est piï¿½gï¿½e dans cet ï¿½tat
 		case STANDING_STILL :
-			nS = State1.STANDING_STILL;
+			nS = State2.STANDING_STILL;
 			break;
 			
 		// ï¿½tat d'erreur mineur : le robot ne peut pas prendre seul une dï¿½cision, il doit passr en mode manuel pour ï¿½tre extrait de sa position
 		case MANUAL :
 			// TODO : Waiting for controler command
-			nS = State1.MANUAL;
+			nS = State2.MANUAL;
 			break;
 		
 		// ï¿½tat permettant d'aller droit jusqu'ï¿½ trouver un mur pour dï¿½marrer la cartographie
 		case WALL_FINDER :
 			if ( frontalDistance <= RobotConstant.HEIGHT )
-				nS = State1.FRONT_WALL_RIDER_ROTATION_POST_FINDER;
+				nS = State2.FRONT_WALL_RIDER_ROTATION_POST_FINDER;
 			// TODO
 			//else if ( rightSideValues.get(rightSideValues.size()-2) < thresholdNoRightWallMaxFinder && rightSideSensor >= thresholdNoRightWallMaxFinder )
 			//	nS = State.NO_RIGHT_WALL_RIDER_ROTATION_1;
 			else
-				nS = State1.WALL_FINDER;
+				nS = State2.WALL_FINDER;
 			break;
 		
 		// état de suvit des murs
 		case WALL_RIDER :
 			if ( frontalDistance <= 50 )
-				nS = State1.FRONT_WALL_RIDER_ROTATION_2;
+				nS = State2.FRONT_WALL_RIDER_ROTATION_2;
+			/*
 			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
 				nS = State1.NO_RIGHT_WALL_RIDER_ROTATION_1;
+			*/
 			else
-				nS = State1.WALL_RIDER;
+				nS = State2.WALL_RIDER;
 			break;
 		
 		//ï¿½tat pour tourner ï¿½ GAUCHE lorsque on rencontre un mur en face aprï¿½s le wall finder
 		case FRONT_WALL_RIDER_ROTATION_POST_FINDER :
-			if ( rightSideDistance < LateralSensor.WARNING_LENGTH && rightSideDistance >= LateralSensor.WARNING_LENGTH )
-				nS = State1.FRONT_WALL_RIDER_ROTATION_2;
+			if ( rightSideDistance < LateralSensor.WARNING_LENGTH && rightSideDistance >= LateralSensor.STOP_LENGTH )
+				nS = State2.FRONT_WALL_RIDER_ROTATION_2;
 			else
-				nS = State1.FRONT_WALL_RIDER_ROTATION_POST_FINDER;
+				nS = State2.FRONT_WALL_RIDER_ROTATION_POST_FINDER;
 			break;
 
 		//état pour tourner à GAUCHE lorsque on rencontre un mur en face
 		case FRONT_WALL_RIDER_ROTATION_2 :
 			if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
-				nS = State1.WALL_RIDER;
+				nS = State2.FRONT_WALL_RIDER_ROTATION_TEMP;
 			else
-				nS = State1.FRONT_WALL_RIDER_ROTATION_2;
+				nS = State2.FRONT_WALL_RIDER_ROTATION_2;
 			break;
+		
+		case FRONT_WALL_RIDER_ROTATION_TEMP :
+			
+		case FRONT_WALL_RIDER_ROTATION_3 :
 			
 		//ï¿½tat pour tourner ï¿½ DROITE lorsque on perd le mur sur notre droite ï¿½tape 1
 		case NO_RIGHT_WALL_RIDER_ROTATION_1 :
-			if ( rightSideDistance < LateralSensor.WARNING_LENGTH && rightSideDistance >= LateralSensor.WARNING_LENGTH )
-				nS = State1.NO_RIGHT_WALL_RIDER_ROTATION_2;
+			if ( rightSideDistance < LateralSensor.WARNING_LENGTH && rightSideDistance >= LateralSensor.STOP_LENGTH )
+				nS = State2.NO_RIGHT_WALL_RIDER_ROTATION_2;
 			else
-				nS = State1.NO_RIGHT_WALL_RIDER_ROTATION_1;
+				nS = State2.NO_RIGHT_WALL_RIDER_ROTATION_1;
 			break;
 		
 		//ï¿½tat pour tourner ï¿½ DROITE lorsque on perd le mur sur notre droite ï¿½tape 2
 		case NO_RIGHT_WALL_RIDER_ROTATION_2 :
 			if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
-				nS = State1.WALL_RIDER;
+				nS = State2.WALL_RIDER;
 			else
-				nS = State1.NO_RIGHT_WALL_RIDER_ROTATION_2;
+				nS = State2.NO_RIGHT_WALL_RIDER_ROTATION_2;
 			break;
 			
 		// En cas d'erreur sur le typage on passe dans l'ï¿½tat des erreurs majeurs	
 		default :
-			nS = State1.EMERGENCY_STANDING_STILL;
+			nS = State2.EMERGENCY_STANDING_STILL;
 			break;
 		}
 	}
