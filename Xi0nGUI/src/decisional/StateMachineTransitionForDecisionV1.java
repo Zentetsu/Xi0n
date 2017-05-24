@@ -1,12 +1,13 @@
 package decisional;
 
 /* Import de bibliothèques =============*/
+import java.util.ArrayList;
 import view.robot.RobotConfig;
 
 /* Description de la classe ===============
 Machine à état pour la prise de Décision
 =========================================*/
-public class StateMachineTransitionForDecision1 {
+public class StateMachineTransitionForDecisionV1 {
 	
 // ========================================
 // ATTRIBUTS
@@ -22,6 +23,13 @@ public class StateMachineTransitionForDecision1 {
 	public static final RobotConfig STANDING_LEFT_ROTATION = new RobotConfig ( 200, 200, -1, 1 );
 	public static final RobotConfig STANDING_RIGHT_ROTATION = new RobotConfig ( 200, 200, 1, -1 );
 	
+	public static float thresholdWallFinderFront = 20 ;
+	public static float thresholdMaxRightSide = 50;
+	public static float thresholdMinFront = 15;
+	public static float thresholdFrontWallRotationRightSide = 10;
+	public static float thresholdNoRightWallRotationRightSide = 10;
+	public static float thresholdFrontWallPostFinder = 20;
+	
 	// ------------------------------------
     // SENSORS ----------------------------
     // ------------------------------------
@@ -34,7 +42,7 @@ public class StateMachineTransitionForDecision1 {
     // SENSORS MEMORY ---------------------
     // ------------------------------------
 	
-	
+	private float previousRightSideSensor;
 	
 	// ------------------------------------
     // STATE MEMORY -----------------------
@@ -52,10 +60,8 @@ public class StateMachineTransitionForDecision1 {
 // ========================================	
 // CONSTRUCTOR
 	
-	public StateMachineTransitionForDecision1 () {
-		
+	public StateMachineTransitionForDecisionV1 () {
 		readSensors();
-		
 		pS = State.WALL_FINDER;
 		nS = State.WALL_FINDER;
 	}
@@ -112,30 +118,58 @@ public class StateMachineTransitionForDecision1 {
 			
 		// état d'erreur mineur : le robot ne peut pas prendre seul une décision, il doit passr en mode manuel pour être extrait de sa position
 		case MANUAL :
+			// TODO : Waiting for controler command
 			nS = State.MANUAL;
 			break;
 		
 		// état permettant d'aller droit jusqu'à trouver un mur pour démarrer la cartographie
 		case WALL_FINDER :
-			nS = State.WALL_RIDER;
+			if ( frontSensor < thresholdWallFinderFront )
+				nS = State.FRONT_WALL_RIDER_ROTATION_POST_FINDER;
+			else
+				nS = State.WALL_FINDER;
 			break;
 		
 		// POUR LE TEST
 		case WALL_RIDER :
-			if ( frontSensor == 1 )
-				nS = State.WALL_FINDER;
+			if ( frontSensor < thresholdMinFront )
+				nS = State.FRONT_WALL_RIDER_ROTATION;
+			else if ( rightSideSensor >= thresholdMaxRightSide )
+				nS = State.NO_RIGHT_WALL_RIDER_ROTATION_1;
 			else
 				nS = State.WALL_RIDER;
 			break;
+		
+		//état pour tourner à GAUCHE lorsque on rencontre un mur en face après le wall finder
+		case FRONT_WALL_RIDER_ROTATION_POST_FINDER :
+			if ( rightSideSensor < thresholdFrontWallPostFinder )
+				nS = State.NO_RIGHT_WALL_RIDER_ROTATION_2;
+			else
+				nS = State.FRONT_WALL_RIDER_ROTATION_POST_FINDER;
+			break;
 			
+		//état pour tourner à GAUCHE lorsque on rencontre un mur en face
 		case FRONT_WALL_RIDER_ROTATION :
-			nS = State.FRONT_WALL_RIDER_ROTATION;
+			if ( rightSideSensor > rightSideSensor + thresholdFrontWallRotationRightSide )
+				nS = State.WALL_RIDER;
+			else
+				nS = State.FRONT_WALL_RIDER_ROTATION;
 			break;
 			
-		case NO_RIGHT_WALL_RIDER_ROTATION :
-			nS = State.NO_RIGHT_WALL_RIDER_ROTATION;
+		//état pour tourner à DROITE lorsque on perd le mur sur notre droite étape 1
+		case NO_RIGHT_WALL_RIDER_ROTATION_1 :
+			if ( rightSideSensor < thresholdMaxRightSide )
+				nS = State.NO_RIGHT_WALL_RIDER_ROTATION_2;
+			else
+				nS = State.NO_RIGHT_WALL_RIDER_ROTATION_1;
 			break;
-			
+		
+		//état pour tourner à DROITE lorsque on perd le mur sur notre droite étape 2
+		case NO_RIGHT_WALL_RIDER_ROTATION_2 :
+			if ( previousRightSideSensor > rightSideSensor + thresholdNoRightWallRotationRightSide )
+				nS = State.WALL_RIDER;
+			else
+				nS = State.NO_RIGHT_WALL_RIDER_ROTATION_2;
 			
 		// En cas d'erreur sur le typage on passe dans l'état des erreurs majeurs	
 		default :
@@ -152,6 +186,7 @@ public class StateMachineTransitionForDecision1 {
 	executions du bloc F et G
 	*/
 	public void MBloc () {
+		previousRightSideSensor = rightSideSensor;
 		pS = nS;
 	}
 	
@@ -179,8 +214,8 @@ public class StateMachineTransitionForDecision1 {
 			// TODO : Waiting for controler command
 			speeds = STANDING_STILL;
 			return ( STANDING_STILL );
-			
-		// état permettant d'aller droit jusqu'à trouver un mur pour démarrer la cartographie
+		
+			// état permettant d'aller droit jusqu'à trouver un mur pour démarrer la cartographie
 		case WALL_FINDER :
 			speeds = WALL_FINDER_SPEED;
 			return ( WALL_FINDER_SPEED );
@@ -190,13 +225,21 @@ public class StateMachineTransitionForDecision1 {
 			speeds = WALL_RIDER_SPEED;
 			return ( WALL_RIDER_SPEED );
 		
+		case FRONT_WALL_RIDER_ROTATION_POST_FINDER :
+			speeds = STANDING_LEFT_ROTATION;
+			
+			
 		//état pour tourner à GAUCHE lorsque on rencontre un mur en face
 		case FRONT_WALL_RIDER_ROTATION :
 			speeds = STANDING_LEFT_ROTATION;
 			return ( STANDING_LEFT_ROTATION );
 			
 		//état pour tourner à DROITE lorsque on perd le mur sur notre droite
-		case NO_RIGHT_WALL_RIDER_ROTATION :
+		case NO_RIGHT_WALL_RIDER_ROTATION_1 :
+			speeds = STANDING_RIGHT_ROTATION;
+			return ( STANDING_RIGHT_ROTATION );
+			
+		case NO_RIGHT_WALL_RIDER_ROTATION_2 :
 			speeds = STANDING_RIGHT_ROTATION;
 			return ( STANDING_RIGHT_ROTATION );
 		
@@ -214,7 +257,7 @@ public class StateMachineTransitionForDecision1 {
 	public static void main(String[] args) {
 			
 		// DECLARATION 
-		StateMachineTransitionForDecision1 SMT = new StateMachineTransitionForDecision1 ();
+		StateMachineTransitionForDecisionV1 SMT = new StateMachineTransitionForDecisionV1 ();
 		FilterCalibration FT = new FilterCalibration();
 		RobotConfig speeds = new RobotConfig (0,0,0,0);
 		RobotConfig calibratedSpeeds = new RobotConfig ( FT.filter(speeds) );

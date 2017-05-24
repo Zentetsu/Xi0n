@@ -3,6 +3,8 @@ package view.robot;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
+import decisional.FilterCalibration;
+import decisional.StateMachineTransitionForDecisionV1;
 import view.Obstacle;
 import view.Room;
 
@@ -10,20 +12,36 @@ public class DecisionInput extends CustomInput {
 
 	private boolean found;
 	private int cpt;
+	StateMachineTransitionForDecisionV1 SMT;
+	FilterCalibration FT;
 
 	public DecisionInput(Robot robot, Room room) {
 		super(robot, room);
 		this.found = false;
 		this.cpt = 0;
+		SMT = new StateMachineTransitionForDecisionV1 ();
+		FT = new FilterCalibration();
+		boolean testLoad = FT.loadCalibrationFile();
 	}
 
 	@Override
 	public void updateInput() {
 		super.updateInput();
+		briceAlgorithm ();
+		
 		this.cpt += 1;
-
 		this.oldSensorAlgorithm();
 
+	}
+	
+	private RobotConfig briceAlgorithm () {
+		RobotConfig speeds = new RobotConfig (0,0,0,0);;
+		RobotConfig calibratedSpeeds = new RobotConfig ( FT.filter(speeds) );
+		SMT.readSensors ();
+		SMT.FBloc();
+		SMT.MBloc();
+		speeds = SMT.GBloc();
+		return ( FT.filter(speeds) ) ;
 	}
 	
 	private void newAlgorithm() {

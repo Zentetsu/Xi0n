@@ -14,12 +14,7 @@ public class KeyboardInput extends CustomInput {
 	@Override
 	public void updateInput() {
 		
-		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-			Gdx.app.exit();
-		}
-		if (Gdx.input.isKeyPressed(Input.Keys.R)) {
-			this.robot.initialize(0, 0);
-		}
+		super.updateInput();
 		
 		if (Gdx.input.isKeyPressed(Input.Keys.Z)) {
 			this.robot.input.AXIS_Y = 1;
