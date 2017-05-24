@@ -25,12 +25,11 @@ public class ControllerInput extends CustomInput implements ControllerListener {
 
 		this.robot.input.LEFT = 0;
 		this.robot.input.RIGHT = 0;
-
 		// LEFT AND RIGHT
-		if (axisIndex == 0){
+		if (axisIndex == 2){
 			if (Math.abs(value) > 0.2){
-				this.robot.input.LEFT = value * 255 * this.robot.input.DIRECTION;
-				this.robot.input.RIGHT = -value * 255 * this.robot.input.DIRECTION;
+				this.robot.input.LEFT = value * 255;
+				this.robot.input.RIGHT = -value * 255;
 			}
 		}
 

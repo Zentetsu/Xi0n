@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 import view.Room;
-import view.ScreenshotFactory;
 
 public class CustomInput {
 
@@ -18,6 +17,10 @@ public class CustomInput {
 		this.paused = true;
 	}
 
+	public void reset(){
+		System.out.println("restart");
+	}
+	
 	public void updateInput() {
 		// Standard actions
 		

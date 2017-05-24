@@ -17,7 +17,6 @@ public class RestartButton extends UIButton {
 		@Override
 		public void clicked(InputEvent input, float x, float y) {
 			Robot.getInstance(null).initialize(0, 0);
-			System.out.println("Restart");
 		}
 	}
 

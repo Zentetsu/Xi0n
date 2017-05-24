@@ -39,6 +39,18 @@ public class InputManager {
 	public boolean isMode(Mode mode) {
 		return this.currentMode == mode;
 	}
+	
+	public void reset(){
+		this.DIRECTION = 0;
+		this.LEFT = 0;
+		this.RIGHT = 0;
+		this.NORTH = false;
+		this.START = false;
+		for (CustomInput input : this.inputs.values()) {
+			input.reset();
+		}
+		
+	}
 
 	public void pause() {
 		for (CustomInput input : this.inputs.values()) {
