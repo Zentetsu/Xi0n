@@ -28,22 +28,10 @@ public class StateMachineTransitionForDecisionV1 {
 	
 	public static final float thresholdFrontWallMinFinder = 20 ;
 	public static final float thresholdFrontWallMin = 20 ;
-	
 	public static final float thresholdNoRightWallMaxFinder = 50;
 	public static final float thresholdNoRightWallMax = 50;
-	
-	public static final float thresholdFrontWallRotationRightSide = 15;
-	
-	
-	
+	public static final float thresholdFrontWallRotationRightSide = 20;
 	public static final float avarageDistanceRightWall = 15;
-	
-	
-	public static final float thresholdNoRightWallRotationRightSide = 3;
-	public static final float thresholdFrontWallRotationPostFinder = 20;
-	
-	
-	//public static final float maxDistanceRightWall = 30;
 	
 	// ------------------------------------
     // SENSORS ----------------------------
@@ -64,8 +52,8 @@ public class StateMachineTransitionForDecisionV1 {
     // STATE MEMORY -----------------------
     // ------------------------------------
 	
-	private State pS;
-	private State nS;
+	private State1 pS;
+	private State1 nS;
 	
 	// ------------------------------------
     // OUTPUTS ----------------------------
@@ -78,8 +66,8 @@ public class StateMachineTransitionForDecisionV1 {
 	
 	public StateMachineTransitionForDecisionV1 () {
 		readSensors();
-		pS = State.WALL_FINDER;
-		nS = State.WALL_FINDER;
+		pS = State1.WALL_FINDER;
+		nS = State1.WALL_FINDER;
 		rightSideValues = new SensorValues ( rightSideSizeMemory, rightSideSensor );
 		frontValues = new SensorValues ( frontSizeMemory, rightSideSensor );
 	}
@@ -103,21 +91,40 @@ public class StateMachineTransitionForDecisionV1 {
 			rightSideSensor = 1000;
 			servoRotorPosition = 1000;
 			break;
+		// WALL FINDER
 		case 220 :
 			frontSensor = 15;
 			rightSideSensor = 1000;
 			break;
-		case 309 :
+		// LEFT ROT POST WALL FINDER
+		case 280 :
 			frontSensor = 1000;
 			rightSideSensor = 17;
 			break;
+		// LEFT ROT
+		case 310 :
+			frontSensor = 1000;
+			rightSideSensor = 22;
+			break;
+		// WALL RIDER
 		case 520 :
-			frontSensor = 15;
-			rightSideSensor = 1000;
+			frontSensor = 17;
+			rightSideSensor = 15;
 			break;
-		case 709 :
+		// LEFT ROT
+		case 610 :
 			frontSensor = 1000;
-			rightSideSensor = 17;
+			rightSideSensor = 22;
+			break;
+		// WALL RINDER
+		case 900 :
+			frontSensor = 17;
+			rightSideSensor = 15;
+			break;
+		// LEFT ROT
+		case 990 :
+			frontSensor = 1000;
+			rightSideSensor = 22;
 			break;
 		}
 			
@@ -127,7 +134,7 @@ public class StateMachineTransitionForDecisionV1 {
 		return ( speeds );
 	}
 	
-	public State getState () {
+	public State1 getState () {
 		return ( pS );
 	}
 	
@@ -155,46 +162,10 @@ public class StateMachineTransitionForDecisionV1 {
 		this.servoRotorPosition = servoRotorPosition;
 	}
 	
-	/*public boolean isDifferent ( Calibration speeds ) {
-		// TODO : TO DELETE
-		return ( this.speeds.equals(speeds) );
-	}*/
-	
-	/*
-	private RobotConfig speedAdaptation () {
-		
-		float maxDiff = maxDistanceRightWall - avarageDistanceRightWall;
-		float adaptedRightSideSensor = rightSideSensor;
-		if ( adaptedRightSideSensor > maxDistanceRightWall )
-			adaptedRightSideSensor = maxDistanceRightWall;
-		else if ( adaptedRightSideSensor < 0 )
-			adaptedRightSideSensor = 0;
-		float diff = adaptedRightSideSensor - avarageDistanceRightWall;
-		
-		if ( diff == 0 )
-			return ( speeds );
-		if ( diff > 0 )
-			return ( new RobotConfig (  ) )
-	}*/
-	
-	/*
-	public float generateX () {
-		float maxDiff = maxDistanceRightWall - avarageDistanceRightWall;
-		float adaptedRightSideSensor = rightSideSensor;
-		if ( adaptedRightSideSensor > maxDistanceRightWall )
-			adaptedRightSideSensor = maxDistanceRightWall;
-		else if ( adaptedRightSideSensor < 0 )
-			adaptedRightSideSensor = 0;
-		float diff = adaptedRightSideSensor - avarageDistanceRightWall;
-		
-		float X = ((float)0.5)*(diff / maxDiff);
-		
-		return ( X );
-	}*/
-	
 	// ------------------------------------
     // MAE BLOCS --------------------------
     // ------------------------------------
+	
 	
 	/* Description des fonctions ----------
 	Dï¿½termine le nouvel ï¿½tat de la machine
@@ -204,73 +175,78 @@ public class StateMachineTransitionForDecisionV1 {
 		
 		// ï¿½tat d'erreur majeur : la machine est piï¿½gï¿½e dans cet ï¿½tat
 		case EMERGENCY_STANDING_STILL :
-			nS = State.EMERGENCY_STANDING_STILL;
+			nS = State1.EMERGENCY_STANDING_STILL;
 			break;
 		
 		// ï¿½tat d'erreur mineur : la machine est piï¿½gï¿½e dans cet ï¿½tat
 		case STANDING_STILL :
-			nS = State.STANDING_STILL;
+			nS = State1.STANDING_STILL;
 			break;
 			
 		// ï¿½tat d'erreur mineur : le robot ne peut pas prendre seul une dï¿½cision, il doit passr en mode manuel pour ï¿½tre extrait de sa position
 		case MANUAL :
 			// TODO : Waiting for controler command
-			nS = State.MANUAL;
+			nS = State1.MANUAL;
 			break;
 		
 		// ï¿½tat permettant d'aller droit jusqu'ï¿½ trouver un mur pour dï¿½marrer la cartographie
 		case WALL_FINDER :
 			if ( frontSensor < thresholdFrontWallMinFinder )
-				nS = State.FRONT_WALL_RIDER_ROTATION_POST_FINDER;
-			else if ( rightSideSensor >= thresholdNoRightWallMaxFinder )
-				nS = State.WALL_FINDER;
+				nS = State1.FRONT_WALL_RIDER_ROTATION_POST_FINDER;
+			
+			// TODO
+			//else if ( rightSideValues.get(rightSideValues.size()-2) < thresholdNoRightWallMaxFinder && rightSideSensor >= thresholdNoRightWallMaxFinder )
+			//	nS = State.NO_RIGHT_WALL_RIDER_ROTATION_1;
+			else
+				nS = State1.WALL_FINDER;
 			break;
 		
-		// POUR LE TEST
+		// état de suvit des murs
 		case WALL_RIDER :
 			if ( frontSensor < thresholdFrontWallMin )
-				nS = State.FRONT_WALL_RIDER_ROTATION_2;
+				nS = State1.FRONT_WALL_RIDER_ROTATION_2;
 			else if ( rightSideSensor >= thresholdNoRightWallMax )
-				nS = State.NO_RIGHT_WALL_RIDER_ROTATION_1;
+				nS = State1.NO_RIGHT_WALL_RIDER_ROTATION_1;
 			else
-				nS = State.WALL_RIDER;
+				nS = State1.WALL_RIDER;
 			break;
 		
 		//ï¿½tat pour tourner ï¿½ GAUCHE lorsque on rencontre un mur en face aprï¿½s le wall finder
 		case FRONT_WALL_RIDER_ROTATION_POST_FINDER :
-			if ( rightSideSensor < thresholdFrontWallRotationPostFinder )
-				nS = State.FRONT_WALL_RIDER_ROTATION_2;
+			if ( rightSideSensor < thresholdFrontWallRotationRightSide )
+
+				nS = State1.FRONT_WALL_RIDER_ROTATION_2;
 			else
-				nS = State.FRONT_WALL_RIDER_ROTATION_POST_FINDER;
+				nS = State1.FRONT_WALL_RIDER_ROTATION_POST_FINDER;
 			break;
-			
-		//ï¿½tat pour tourner ï¿½ GAUCHE lorsque on rencontre un mur en face
+
+		//état pour tourner à GAUCHE lorsque on rencontre un mur en face
 		case FRONT_WALL_RIDER_ROTATION_2 :
 			if ( rightSideSensor > thresholdFrontWallRotationRightSide )
-				nS = State.WALL_RIDER;
+				nS = State1.WALL_RIDER;
 			else
-				nS = State.FRONT_WALL_RIDER_ROTATION_2;
+				nS = State1.FRONT_WALL_RIDER_ROTATION_2;
 			break;
 			
 		//ï¿½tat pour tourner ï¿½ DROITE lorsque on perd le mur sur notre droite ï¿½tape 1
 		case NO_RIGHT_WALL_RIDER_ROTATION_1 :
 			if ( rightSideSensor < thresholdNoRightWallMax )
-				nS = State.NO_RIGHT_WALL_RIDER_ROTATION_2;
+				nS = State1.NO_RIGHT_WALL_RIDER_ROTATION_2;
 			else
-				nS = State.NO_RIGHT_WALL_RIDER_ROTATION_1;
+				nS = State1.NO_RIGHT_WALL_RIDER_ROTATION_1;
 			break;
 		
 		//ï¿½tat pour tourner ï¿½ DROITE lorsque on perd le mur sur notre droite ï¿½tape 2
 		case NO_RIGHT_WALL_RIDER_ROTATION_2 :
 			if ( rightSideSensor > thresholdNoRightWallMax )
-				nS = State.WALL_RIDER;
+				nS = State1.WALL_RIDER;
 			else
-				nS = State.NO_RIGHT_WALL_RIDER_ROTATION_2;
+				nS = State1.NO_RIGHT_WALL_RIDER_ROTATION_2;
 			break;
 			
 		// En cas d'erreur sur le typage on passe dans l'ï¿½tat des erreurs majeurs	
 		default :
-			nS = State.EMERGENCY_STANDING_STILL;
+			nS = State1.EMERGENCY_STANDING_STILL;
 			break;
 		}
 	}
@@ -327,7 +303,7 @@ public class StateMachineTransitionForDecisionV1 {
 			speeds = STANDING_LEFT_ROTATION_SPEED;
 			return ( STANDING_LEFT_ROTATION_SPEED );
 				
-		//ï¿½tat pour tourner ï¿½ GAUCHE lorsque on rencontre un mur en face
+		//état pour tourner à GAUCHE lorsque on rencontre un mur en face
 		case FRONT_WALL_RIDER_ROTATION_2 :
 			speeds = STANDING_LEFT_ROTATION_SPEED;
 			return ( STANDING_LEFT_ROTATION_SPEED );

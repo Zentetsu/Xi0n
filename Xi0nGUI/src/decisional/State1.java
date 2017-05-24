@@ -7,7 +7,7 @@ package decisional;
 Enueration des �tats pour la machine �
 �tat de la prise de d�cision.
 =========================================*/
-public enum State {
+public enum State1 {
 
 // ========================================
 //ENUMERATION 

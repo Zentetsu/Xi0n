@@ -23,29 +23,24 @@ public class DecisionInput extends CustomInput {
 
 	@Override
 	public void updateInput() {
-
 		super.updateInput();
-
 		if (this.paused) {
 			this.robot.input.LEFT = 0;
 			this.robot.input.RIGHT = 0;
 			return;
 		}
-
 		this.cpt += 1;
 		//this.oldSensorAlgorithm();
 		//this.newAlgorithm();
 		this.decisionAlgorithm();
-
 	}
 
 	private void decisionAlgorithm() {
-		//RobotConfig calibratedSpeeds = new RobotConfig(FT.filter(speeds));
 		this.SMT.readSensorsSimulation(cpt_simu);
 		this.SMT.FBloc();
 		this.SMT.MBloc();
 		RobotConfig speeds = SMT.GBloc();
-		//calibratedSpeeds = FT.filter(speeds);
+		RobotConfig calibratedSpeeds = new RobotConfig(FT.filter(speeds));
 		this.robot.input.RIGHT = speeds.getRightPower0to255() * speeds.getRightDirection();
 		this.robot.input.LEFT = speeds.getLeftPower0to255() * speeds.getLeftDirection();
 		this.robot.input.STATE = this.SMT.getState();

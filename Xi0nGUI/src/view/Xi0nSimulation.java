@@ -14,8 +14,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 
+import view.robot.LateralSensor;
 import view.robot.Mode;
 import view.robot.Robot;
+import view.robot.RobotConstant;
 import view.ui.AutomaticButton;
 import view.ui.CellBar;
 import view.ui.ControllerButton;
@@ -23,7 +25,6 @@ import view.ui.KeyboardButton;
 import view.ui.LockButton;
 import view.ui.QuitButton;
 import view.ui.RestartButton;
-import view.ui.StartButton;
 import view.ui.UIButton;
 import view.ui.XBee;
 
@@ -43,7 +44,7 @@ public enum Xi0nSimulation implements ApplicationListener {
 	private KeyboardButton keyboardButton;
 	private ControllerButton controllerButton;
 	private AutomaticButton automaticButton;
-	
+
 	private boolean connected;
 	private XBee xbeeLogo;
 
@@ -66,7 +67,6 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.stage.addActor(new LockButton(480, 15));
 		this.stage.addActor(new RestartButton(1800, 1025));
 		this.stage.addActor(new QuitButton(1860, 1025));
-		
 
 		this.keyboardButton = new KeyboardButton(350, 15);
 		this.controllerButton = new ControllerButton(350, 75);
@@ -75,19 +75,17 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.stage.addActor(this.keyboardButton);
 		this.stage.addActor(this.controllerButton);
 		this.stage.addActor(this.automaticButton);
-		
+
 		this.keyboardButton.setChecked(true);
 		this.buttonGroup = new ButtonGroup<UIButton>(this.keyboardButton, this.controllerButton, this.automaticButton);
 
 		this.buttonGroup.setMaxCheckCount(1);
 		this.buttonGroup.setMinCheckCount(1);
 		this.buttonGroup.setUncheckLast(true);
-	
-		// this.stage.addActor(new CellBar(320, 13));
+
 		this.stage.addActor(this.xbeeLogo);
-		
-		this.connected = false;
-		
+		this.connected = true;
+
 	}
 
 	public void addButton(UIButton button) {
@@ -128,39 +126,45 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.sr.end();
 		// TODO: extract
 		Robot robot = this.room.getRobot();
-		
+
 		float left = robot.input.LEFT;
 		float right = robot.input.RIGHT;
 		this.shud.begin(ShapeType.Filled);
 		this.shud.rect(800, 40, 500, 100, Color.GRAY, Color.GRAY, Color.GRAY, Color.GRAY);
 		System.out.println(right);
-		if (left > 0){
-			Color forwardLeft = new Color(right/(left*4), left/255, left/(255*4), 0);
+
+		if (left > 0) {
+			Color forwardLeft = new Color(right / (left * 4), left / 255, left / (255 * 4), 0);
 			this.shud.rect(1060, 105, left, 30, forwardLeft, forwardLeft, forwardLeft, forwardLeft);
 		}
-		else if (left < 0){
-			Color backwardLeft = new Color(-left/255, -left/(255*4), -left/(255*4), 0);
-			this.shud.rect(1050+left, 105, -left, 30, backwardLeft, backwardLeft, backwardLeft, backwardLeft);
+
+		else if (left < 0) {
+			Color backwardLeft = new Color(-left / 255, -left / (255 * 4), -left / (255 * 4), 0);
+			this.shud.rect(1050 + left, 105, -left, 30, backwardLeft, backwardLeft, backwardLeft, backwardLeft);
 		}
-		if (right > 0){
-			Color forwardRight = new Color(right/(255*4), right/255, right/(255*4), 0);
+		if (right > 0) {
+			Color forwardRight = new Color(right / (255 * 4), right / 255, right / (255 * 4), 0);
 			this.shud.rect(1060, 40, right, 30, forwardRight, forwardRight, forwardRight, forwardRight);
 		}
-		else if (right < 0){
-			Color backwardRight = new Color(-right/255, -right/(255*4), -right/(255*4), 0);
-			this.shud.rect(1050+right, 40, -right, 30, backwardRight, backwardRight, backwardRight, backwardRight);
+
+		else if (right < 0) {
+			Color backwardRight = new Color(-right / 255, -right / (255 * 4), -right / (255 * 4), 0);
+			this.shud.rect(1050 + right, 40, -right, 30, backwardRight, backwardRight, backwardRight, backwardRight);
 		}
 		this.shud.rect(1050, 40, 10, 100, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK);
 		this.shud.end();
 		this.batch.begin();
 		this.batch.draw(this.HUD, 0, 0);
-		this.font.draw(this.batch, "X = " + Math.round(robot.getPosition().x) + " , Y = " + Math.round(robot.getPosition().y), 1720, 140);
+		this.font.draw(this.batch,
+				"X = " + Math.round(robot.getPosition().x) + " , Y = " + Math.round(robot.getPosition().y), 1720, 140);
 		this.font.draw(this.batch, "ROTATION = " + Math.round(robot.getOrientation()) + " deg", 1720, 120);
+		this.font.draw(this.batch, "STATE = " + robot.input.STATE, 1720, 100);
 		this.batch.end();
 		this.stage.draw();
-		
-		if(!this.connected){
+
+		if (!this.connected) {
 			this.xbeeLogo.blink();
+			this.stage.addActor(new CellBar(320, 13));
 		}
 	}
 
@@ -179,15 +183,39 @@ public enum Xi0nSimulation implements ApplicationListener {
 	public void setMode(Mode mode) {
 		this.room.getRobot().setMode(mode);
 	}
-	
-	public void startRobot(){
+
+	public void startRobot() {
 		this.room.getRobot().start();
 	}
-	
-	public void pauseRobot(){
+
+	public void pauseRobot() {
 		this.room.getRobot().pause();
 	}
-	
-	
+
+	public void setConnect(boolean connected) {
+		this.connected = connected;
+	}
+
+	public int getLateralDistance() {
+		int min = LateralSensor.stopLength + LateralSensor.warningLength + 20;
+
+		for (Obstacle obstacle : this.room.getObstacles()) {
+			if (min > this.room.getRobot().getLateralDistance(obstacle.getBoundingRectangle())) {
+				min = this.room.getRobot().getLateralDistance(obstacle.getBoundingRectangle());
+			}
+		}
+		return min;
+	}
+
+	public int getFrontalDistance() {
+		int min = RobotConstant.HEIGHT * 2;
+
+		for (Obstacle obstacle : this.room.getObstacles()) {
+			if (min > this.room.getRobot().getFrontalDistance(obstacle.getBoundingRectangle())) {
+				min = this.room.getRobot().getFrontalDistance(obstacle.getBoundingRectangle());
+			}
+		}
+		return min;
+	}
 
 }
