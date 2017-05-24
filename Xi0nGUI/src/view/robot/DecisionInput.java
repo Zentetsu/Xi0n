@@ -1,8 +1,5 @@
 package view.robot;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-
 import view.Obstacle;
 import view.Room;
 
@@ -45,7 +42,7 @@ public class DecisionInput extends CustomInput {
 					this.robot.input.AXIS_Y = 1;
 				}*/
 				//this.robot.input.AXIS_X = 1;
-				found = true;
+				this.found = true;
 			}else if (this.robot.detect(obstacle, SensorType.LATERAL)) {
 				if(this.robot.getLateralDistance(obstacle.getBoundingRectangle())<20){
 					this.robot.input.AXIS_X = 1;

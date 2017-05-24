@@ -1,4 +1,4 @@
-package view;
+package view.robot;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controller;
@@ -7,8 +7,7 @@ import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.math.Vector3;
 
-import view.robot.CustomInput;
-import view.robot.Robot;
+import view.Room;
 
 public class ControllerInput extends CustomInput implements ControllerListener {
 	

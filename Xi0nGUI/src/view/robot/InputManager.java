@@ -3,7 +3,6 @@ package view.robot;
 import java.util.HashMap;
 import java.util.Map;
 
-import view.ControllerInput;
 import view.Room;
 
 public class InputManager {
