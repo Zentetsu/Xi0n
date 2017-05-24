@@ -3,13 +3,10 @@ package view.ui;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import view.Xi0nSimulation;
-import view.robot.Mode;
-
 public class XBee extends UIButton {
 
 	private final static String GRAPHIC_ELEMENT = "xbee_ok";
-	private final static int F = 35;
+	private final static int F = 40;
 	private int counter;
 
 	public XBee(float x, float y) {

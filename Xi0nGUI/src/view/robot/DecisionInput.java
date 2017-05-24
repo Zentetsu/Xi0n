@@ -41,15 +41,18 @@ public class DecisionInput extends CustomInput {
 
 	private void decisionAlgorithm() {
 		RobotConfig speeds = new RobotConfig(0, 0, 0, 0);
-		RobotConfig calibratedSpeeds = new RobotConfig(FT.filter(speeds));
+		//RobotConfig calibratedSpeeds = new RobotConfig(FT.filter(speeds));
 		SMT.readSensorsSimulation(cpt_simu);
 		SMT.FBloc();
 		SMT.MBloc();
 		speeds = SMT.GBloc();
-		calibratedSpeeds = FT.filter(speeds);
+		System.out.println(speeds);
+		//calibratedSpeeds = FT.filter(speeds);
 		System.out.println(SMT.getState());
 		if (speeds.equals(StateMachineTransitionForDecisionV1.WALL_FINDER_SPEED)) {
 			// System.out.println("WALL_FINDER_SPEED");
+			this.robot.input.RIGHT = speeds.getRightPower0to255();
+			this.robot.input.LEFT = speeds.getLeftPower0to255();
 			this.robot.input.AXIS_Y = 1;
 			this.robot.input.AXIS_X = 0;
 		} else if (speeds.equals(StateMachineTransitionForDecisionV1.WALL_RIDER_SPEED)) {

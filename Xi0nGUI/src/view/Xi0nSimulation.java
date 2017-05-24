@@ -60,7 +60,7 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.stage = new Stage();
 		this.batch = new SpriteBatch();
 		this.HUD = new Texture("assets/HUD.png");
-		this.xbeeLogo = new XBee(500, 500);
+		this.xbeeLogo = new XBee(1490, 50);
 
 		Gdx.input.setInputProcessor(this.stage);
 		this.stage.addActor(new LockButton(480, 15));
@@ -83,7 +83,7 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.buttonGroup.setMinCheckCount(1);
 		this.buttonGroup.setUncheckLast(true);
 		
-		this.stage.addActor(new CellBar(320, 13));
+		//this.stage.addActor(new CellBar(320, 13));
 		this.stage.addActor(this.xbeeLogo);
 		
 		this.connected = false;
@@ -153,8 +153,8 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.shud.end();
 		this.batch.begin();
 		this.batch.draw(this.HUD, 0, 0);
-		this.font.draw(this.batch, "X = " + Math.round(robot.getPosition().x) + " , Y = " + Math.round(robot.getPosition().y), 1450, 140);
-		this.font.draw(this.batch, "ROTATION = " + Math.round(robot.getOrientation()) + " deg", 1450, 120);
+		this.font.draw(this.batch, "X = " + Math.round(robot.getPosition().x) + " , Y = " + Math.round(robot.getPosition().y), 1720, 140);
+		this.font.draw(this.batch, "ROTATION = " + Math.round(robot.getOrientation()) + " deg", 1720, 120);
 		this.batch.end();
 		this.stage.draw();
 		
