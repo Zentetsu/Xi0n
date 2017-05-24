@@ -28,11 +28,10 @@ public class StateMachineTransitionForDecisionV1 {
 	
 	public static final float thresholdFrontWallMinFinder = 20 ;
 	public static final float thresholdFrontWallMin = 20 ;
-	
 	public static final float thresholdNoRightWallMaxFinder = 50;
 	public static final float thresholdNoRightWallMax = 50;
 	
-	public static final float thresholdFrontWallRotationRightSide = 15;
+	public static final float thresholdFrontWallRotationRightSide = 20;
 	
 	
 	
@@ -103,22 +102,32 @@ public class StateMachineTransitionForDecisionV1 {
 			rightSideSensor = 1000;
 			servoRotorPosition = 1000;
 			break;
+		// WALL FINDER
 		case 220 :
 			frontSensor = 15;
 			rightSideSensor = 1000;
 			break;
-		case 309 :
+		// LEFT ROT POST WALL FINDER
+		case 280 :
 			frontSensor = 1000;
 			rightSideSensor = 17;
 			break;
+		// LEFT ROT
+		case 310 :
+			frontSensor = 1000;
+			rightSideSensor = 22;
+			break;
+		// WALL RIDER
 		case 520 :
 			frontSensor = 15;
 			rightSideSensor = 1000;
 			break;
+		// LEFT ROT
 		case 709 :
 			frontSensor = 1000;
 			rightSideSensor = 17;
 			break;
+		// WALL RINDER
 		}
 			
 	}
@@ -222,14 +231,19 @@ public class StateMachineTransitionForDecisionV1 {
 		case WALL_FINDER :
 			if ( frontSensor < thresholdFrontWallMinFinder )
 				nS = State.FRONT_WALL_RIDER_ROTATION_POST_FINDER;
-			else if ( rightSideSensor >= thresholdNoRightWallMaxFinder )
+			/*
+			// TODO
+			else if ( rightSideValues.get(rightSideValues.size()-2) < thresholdNoRightWallMaxFinder && rightSideSensor >= thresholdNoRightWallMaxFinder )
+				nS = State.NO_RIGHT_WALL_RIDER_ROTATION_1;
+			*/
+			else
 				nS = State.WALL_FINDER;
 			break;
 		
-		// POUR LE TEST
+		// état de suvit des murs
 		case WALL_RIDER :
 			if ( frontSensor < thresholdFrontWallMin )
-				nS = State.FRONT_WALL_RIDER_ROTATION;
+				nS = State.FRONT_WALL_RIDER_ROTATION_2;
 			else if ( rightSideSensor >= thresholdNoRightWallMax )
 				nS = State.NO_RIGHT_WALL_RIDER_ROTATION_1;
 			else
@@ -238,18 +252,18 @@ public class StateMachineTransitionForDecisionV1 {
 		
 		//état pour tourner à GAUCHE lorsque on rencontre un mur en face après le wall finder
 		case FRONT_WALL_RIDER_ROTATION_POST_FINDER :
-			if ( rightSideSensor < thresholdFrontWallRotationPostFinder )
-				nS = State.FRONT_WALL_RIDER_ROTATION;
+			if ( frontSensor < thresholdFrontWallRotationPostFinder )
+				nS = State.FRONT_WALL_RIDER_ROTATION_2;
 			else
 				nS = State.FRONT_WALL_RIDER_ROTATION_POST_FINDER;
 			break;
-			
+		/////////////
 		//état pour tourner à GAUCHE lorsque on rencontre un mur en face
-		case FRONT_WALL_RIDER_ROTATION :
+		case FRONT_WALL_RIDER_ROTATION_2 :
 			if ( rightSideSensor > thresholdFrontWallRotationRightSide )
 				nS = State.WALL_RIDER;
 			else
-				nS = State.FRONT_WALL_RIDER_ROTATION;
+				nS = State.FRONT_WALL_RIDER_ROTATION_2;
 			break;
 			
 		//état pour tourner à DROITE lorsque on perd le mur sur notre droite étape 1
@@ -328,7 +342,7 @@ public class StateMachineTransitionForDecisionV1 {
 			return ( STANDING_LEFT_ROTATION_SPEED );
 				
 		//état pour tourner à GAUCHE lorsque on rencontre un mur en face
-		case FRONT_WALL_RIDER_ROTATION :
+		case FRONT_WALL_RIDER_ROTATION_2 :
 			speeds = STANDING_LEFT_ROTATION_SPEED;
 			return ( STANDING_LEFT_ROTATION_SPEED );
 			

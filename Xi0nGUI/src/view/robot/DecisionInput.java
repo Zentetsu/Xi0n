@@ -75,7 +75,7 @@ public class DecisionInput extends CustomInput {
 			this.robot.input.AXIS_Y = 0;
 			this.robot.input.AXIS_X = 1;
 			break;
-		case FRONT_WALL_RIDER_ROTATION :
+		case FRONT_WALL_RIDER_ROTATION_2 :
 			this.robot.input.AXIS_Y = 0;
 			this.robot.input.AXIS_X = 1;
 			break;
