@@ -17,12 +17,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import view.robot.Mode;
 import view.robot.Robot;
 import view.ui.AutomaticButton;
+import view.ui.CellBar;
 import view.ui.ControllerButton;
 import view.ui.KeyboardButton;
+import view.ui.LockButton;
 import view.ui.QuitButton;
 import view.ui.RestartButton;
 import view.ui.StartButton;
 import view.ui.UIButton;
+import view.ui.XBee;
 
 public enum Xi0nSimulation implements ApplicationListener {
 
@@ -40,6 +43,9 @@ public enum Xi0nSimulation implements ApplicationListener {
 	private KeyboardButton keyboardButton;
 	private ControllerButton controllerButton;
 	private AutomaticButton automaticButton;
+	
+	private boolean connected;
+	private XBee xbeeLogo;
 
 	ButtonGroup<UIButton> buttonGroup;
 
@@ -54,11 +60,13 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.stage = new Stage();
 		this.batch = new SpriteBatch();
 		this.HUD = new Texture("assets/HUD.png");
+		this.xbeeLogo = new XBee(500, 500);
 
 		Gdx.input.setInputProcessor(this.stage);
-		this.stage.addActor(new StartButton(480, 135));
+		this.stage.addActor(new LockButton(480, 15));
 		this.stage.addActor(new RestartButton(1800, 1025));
 		this.stage.addActor(new QuitButton(1860, 1025));
+		
 
 		this.keyboardButton = new KeyboardButton(350, 15);
 		this.controllerButton = new ControllerButton(350, 75);
@@ -74,6 +82,11 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.buttonGroup.setMaxCheckCount(1);
 		this.buttonGroup.setMinCheckCount(1);
 		this.buttonGroup.setUncheckLast(true);
+		
+		this.stage.addActor(new CellBar(320, 13));
+		this.stage.addActor(this.xbeeLogo);
+		
+		this.connected = false;
 		
 	}
 
@@ -144,6 +157,10 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.font.draw(this.batch, "ROTATION = " + Math.round(robot.getOrientation()) + " deg", 1450, 120);
 		this.batch.end();
 		this.stage.draw();
+		
+		if(!this.connected){
+			this.xbeeLogo.blink();
+		}
 	}
 
 	@Override
