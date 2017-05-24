@@ -61,13 +61,14 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.stage.addActor(this.keyboardButton);
 		this.stage.addActor(this.controllerButton);
 		this.stage.addActor(this.automaticButton);
-
+		
+		this.keyboardButton.setChecked(true);
 		this.buttonGroup = new ButtonGroup<UIButton>(keyboardButton, controllerButton, automaticButton);
 
 		this.buttonGroup.setMaxCheckCount(1);
-		this.buttonGroup.setMinCheckCount(0);
-		// it may be useful to use this method:
+		this.buttonGroup.setMinCheckCount(1);
 		this.buttonGroup.setUncheckLast(true);
+		
 	}
 
 	public void addButton(UIButton button) {
