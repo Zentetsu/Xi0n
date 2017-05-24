@@ -30,19 +30,8 @@ public class StateMachineTransitionForDecisionV1 {
 	public static final float thresholdFrontWallMin = 20 ;
 	public static final float thresholdNoRightWallMaxFinder = 50;
 	public static final float thresholdNoRightWallMax = 50;
-	
 	public static final float thresholdFrontWallRotationRightSide = 20;
-	
-	
-	
 	public static final float avarageDistanceRightWall = 15;
-	
-	
-	public static final float thresholdNoRightWallRotationRightSide = 3;
-	public static final float thresholdFrontWallRotationPostFinder = 20;
-	
-	
-	//public static final float maxDistanceRightWall = 30;
 	
 	// ------------------------------------
     // SENSORS ----------------------------
@@ -119,15 +108,24 @@ public class StateMachineTransitionForDecisionV1 {
 			break;
 		// WALL RIDER
 		case 520 :
-			frontSensor = 15;
-			rightSideSensor = 1000;
+			frontSensor = 17;
+			rightSideSensor = 15;
 			break;
 		// LEFT ROT
-		case 709 :
+		case 610 :
 			frontSensor = 1000;
-			rightSideSensor = 17;
+			rightSideSensor = 22;
 			break;
 		// WALL RINDER
+		case 900 :
+			frontSensor = 17;
+			rightSideSensor = 15;
+			break;
+		// LEFT ROT
+		case 990 :
+			frontSensor = 1000;
+			rightSideSensor = 22;
+			break;
 		}
 			
 	}
@@ -164,46 +162,10 @@ public class StateMachineTransitionForDecisionV1 {
 		this.servoRotorPosition = servoRotorPosition;
 	}
 	
-	/*public boolean isDifferent ( Calibration speeds ) {
-		// TODO : TO DELETE
-		return ( this.speeds.equals(speeds) );
-	}*/
-	
-	/*
-	private RobotConfig speedAdaptation () {
-		
-		float maxDiff = maxDistanceRightWall - avarageDistanceRightWall;
-		float adaptedRightSideSensor = rightSideSensor;
-		if ( adaptedRightSideSensor > maxDistanceRightWall )
-			adaptedRightSideSensor = maxDistanceRightWall;
-		else if ( adaptedRightSideSensor < 0 )
-			adaptedRightSideSensor = 0;
-		float diff = adaptedRightSideSensor - avarageDistanceRightWall;
-		
-		if ( diff == 0 )
-			return ( speeds );
-		if ( diff > 0 )
-			return ( new RobotConfig (  ) )
-	}*/
-	
-	/*
-	public float generateX () {
-		float maxDiff = maxDistanceRightWall - avarageDistanceRightWall;
-		float adaptedRightSideSensor = rightSideSensor;
-		if ( adaptedRightSideSensor > maxDistanceRightWall )
-			adaptedRightSideSensor = maxDistanceRightWall;
-		else if ( adaptedRightSideSensor < 0 )
-			adaptedRightSideSensor = 0;
-		float diff = adaptedRightSideSensor - avarageDistanceRightWall;
-		
-		float X = ((float)0.5)*(diff / maxDiff);
-		
-		return ( X );
-	}*/
-	
 	// ------------------------------------
     // MAE BLOCS --------------------------
     // ------------------------------------
+	
 	
 	/* Description des fonctions ----------
 	Dï¿½termine le nouvel ï¿½tat de la machine
@@ -231,11 +193,10 @@ public class StateMachineTransitionForDecisionV1 {
 		case WALL_FINDER :
 			if ( frontSensor < thresholdFrontWallMinFinder )
 				nS = State.FRONT_WALL_RIDER_ROTATION_POST_FINDER;
-			/*
+			
 			// TODO
-			else if ( rightSideValues.get(rightSideValues.size()-2) < thresholdNoRightWallMaxFinder && rightSideSensor >= thresholdNoRightWallMaxFinder )
-				nS = State.NO_RIGHT_WALL_RIDER_ROTATION_1;
-			*/
+			//else if ( rightSideValues.get(rightSideValues.size()-2) < thresholdNoRightWallMaxFinder && rightSideSensor >= thresholdNoRightWallMaxFinder )
+			//	nS = State.NO_RIGHT_WALL_RIDER_ROTATION_1;
 			else
 				nS = State.WALL_FINDER;
 			break;
@@ -252,14 +213,13 @@ public class StateMachineTransitionForDecisionV1 {
 		
 		//ï¿½tat pour tourner ï¿½ GAUCHE lorsque on rencontre un mur en face aprï¿½s le wall finder
 		case FRONT_WALL_RIDER_ROTATION_POST_FINDER :
-			if ( frontSensor < thresholdFrontWallRotationPostFinder )
+			if ( rightSideSensor < thresholdFrontWallRotationRightSide )
 
 				nS = State.FRONT_WALL_RIDER_ROTATION_2;
 			else
 				nS = State.FRONT_WALL_RIDER_ROTATION_POST_FINDER;
 			break;
 
-		/////////////
 		//état pour tourner à GAUCHE lorsque on rencontre un mur en face
 		case FRONT_WALL_RIDER_ROTATION_2 :
 			if ( rightSideSensor > thresholdFrontWallRotationRightSide )
