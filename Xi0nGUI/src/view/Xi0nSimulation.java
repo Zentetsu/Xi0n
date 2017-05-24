@@ -199,7 +199,7 @@ public enum Xi0nSimulation implements ApplicationListener {
 
 	public int getLateralDistance() {
 		int min = LateralSensor.stopLength + LateralSensor.warningLength + 20;
-
+		System.out.println(this.room);
 		for (Obstacle obstacle : this.room.getObstacles()) {
 			if (min > this.room.getRobot().getLateralDistance(obstacle.getBoundingRectangle())) {
 				min = this.room.getRobot().getLateralDistance(obstacle.getBoundingRectangle());

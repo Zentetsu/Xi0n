@@ -2,6 +2,7 @@ package view.robot;
 
 import decisional.FilterCalibration;
 import decisional.StateMachineTransitionForDecisionV1;
+import decisional.StateMachineTransitionForDecisionV2;
 import view.Obstacle;
 import view.Room;
 
@@ -39,7 +40,7 @@ public class DecisionInput extends CustomInput {
 	private void decisionAlgorithm() {
 		RobotConfig speeds = new RobotConfig(0, 0, 0, 0);
 		RobotConfig calibratedSpeeds = new RobotConfig(FT.filter(speeds));
-		this.SMT.readSensorsSimulation(cpt_simu);
+		this.SMT.readSensors();
 		this.SMT.FBloc();
 		this.SMT.MBloc();
 		speeds = SMT.GBloc();
