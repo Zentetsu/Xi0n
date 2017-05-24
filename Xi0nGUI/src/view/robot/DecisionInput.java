@@ -62,7 +62,6 @@ public class DecisionInput extends CustomInput {
 			
 			this.robot.input.AXIS_Y = 0;
 			this.robot.input.AXIS_X = 0;
-
 			break;
 		case STANDING_STILL :
 			this.robot.input.AXIS_Y = 0;
@@ -99,6 +98,7 @@ public class DecisionInput extends CustomInput {
 		default :
 			this.robot.input.AXIS_Y = 0;
 			this.robot.input.AXIS_X = 0;
+			break;
 		}
 		
 		System.out.print("\n");

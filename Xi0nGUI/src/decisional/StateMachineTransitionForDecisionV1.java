@@ -105,14 +105,22 @@ public class StateMachineTransitionForDecisionV1 {
 			break;
 		case 220 :
 			frontSensor = 15;
+			rightSideSensor = 1000;
 			break;
-		case 300 :
-			rightSideSensor = 15;
+		case 309 :
+			frontSensor = 1000;
+			rightSideSensor = 17;
 			break;
-		case 305 :
-			rightSideSensor = 22;
+		case 520 :
+			frontSensor = 15;
+			rightSideSensor = 1000;
+			break;
+		case 709 :
+			frontSensor = 1000;
+			rightSideSensor = 17;
 			break;
 		}
+			
 	}
 	
 	public RobotConfig getRobotConfig () {
