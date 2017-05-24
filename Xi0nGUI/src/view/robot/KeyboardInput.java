@@ -17,32 +17,37 @@ public class KeyboardInput extends CustomInput {
 		super.updateInput();
 		
 		if (this.paused) {
-			this.robot.input.AXIS_Y = 0;
-			this.robot.input.AXIS_X = 0;
+			this.robot.input.LEFT = 0;
+			this.robot.input.RIGHT = 0;
 			return;
 		}
 		
 		if (Gdx.input.isKeyPressed(Input.Keys.Z)) {
-			this.robot.input.AXIS_Y = 1;
+			this.robot.input.LEFT = 200;
+			this.robot.input.RIGHT = 200;
 		}
 		else{
 			if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-				this.robot.input.AXIS_Y = -1;
+				this.robot.input.LEFT = -200;
+				this.robot.input.RIGHT = -200;
 			}
 			else
-				this.robot.input.AXIS_Y = 0;
+				this.robot.input.DIRECTION = 0;
 		}		
 		
 		
 		if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-			this.robot.input.AXIS_X = 1;
+			this.robot.input.LEFT = -200;
+			this.robot.input.RIGHT = 200;
 		}
 		else{
 			if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-				this.robot.input.AXIS_X = -1;
+				this.robot.input.LEFT = 200;
+				this.robot.input.RIGHT = -200;
 			}
 			else{
-				this.robot.input.AXIS_X = 0;
+				this.robot.input.LEFT = 0;
+				this.robot.input.RIGHT = 0;
 			}
 		}
 	}

@@ -23,18 +23,29 @@ public class ControllerInput extends CustomInput implements ControllerListener {
 			return false;
 		}
 		
-		if (axisIndex == 0){
-			if (Math.abs(value) < 0.2)
-				this.robot.input.AXIS_X = 0;
-			else
-				this.robot.input.AXIS_X = -value;
-		}
-			
+		// FORWARD AND BACKWARD
 		if (axisIndex == 1){
-			if (Math.abs(value) < 0.2)
-				this.robot.input.AXIS_Y = 0;
-			else
-				this.robot.input.AXIS_Y = -value;
+			if (Math.abs(value) < 0.2){
+				this.robot.input.DIRECTION = 0;
+			}
+			else{
+				this.robot.input.DIRECTION = -value;
+				this.robot.input.LEFT = value * 255 * this.robot.input.DIRECTION;
+				this.robot.input.RIGHT = -value * 255 * this.robot.input.DIRECTION;
+			}
+		}
+		
+		// LEFT AND RIGHT
+		if (axisIndex == 0){
+			if (Math.abs(value) < 0.2){
+				this.robot.input.LEFT = 0;
+				this.robot.input.RIGHT = 0;
+			}
+				
+			else{
+				this.robot.input.LEFT = value * 255 * this.robot.input.DIRECTION;
+				this.robot.input.RIGHT = -value * 255 * this.robot.input.DIRECTION;
+			}
 		}
 		
 			
