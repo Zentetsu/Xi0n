@@ -16,13 +16,21 @@ public class DecisionInput extends CustomInput {
 
 	@Override
 	public void updateInput() {
+		
 		super.updateInput();
+		
+		if (this.paused) {
+			this.robot.input.AXIS_Y = 0;
+			this.robot.input.AXIS_X = 0;
+			return;
+		}
+
 		this.cpt += 1;
 
 		this.oldSensorAlgorithm();
 
 	}
-	
+
 	private void newAlgorithm() {
 		// Move forward
 		this.robot.input.AXIS_Y = 1;
@@ -37,14 +45,15 @@ public class DecisionInput extends CustomInput {
 			if (this.robot.detect(obstacle, SensorType.FRONTAL)) {
 				int distance = this.robot.getFrontalDistance(obstacle.getBoundingRectangle());
 				// Turn right
-				/*if (this.robot.getSensorAngle() < -15) {
-					System.out.println("Slow down");
-					this.robot.input.AXIS_Y = 1;
-				}*/
-				//this.robot.input.AXIS_X = 1;
+				/*
+				 * if (this.robot.getSensorAngle() < -15) {
+				 * System.out.println("Slow down"); this.robot.input.AXIS_Y = 1;
+				 * }
+				 */
+				// this.robot.input.AXIS_X = 1;
 				this.found = true;
-			}else if (this.robot.detect(obstacle, SensorType.LATERAL)) {
-				if(this.robot.getLateralDistance(obstacle.getBoundingRectangle())<20){
+			} else if (this.robot.detect(obstacle, SensorType.LATERAL)) {
+				if (this.robot.getLateralDistance(obstacle.getBoundingRectangle()) < 20) {
 					this.robot.input.AXIS_X = 1;
 				}
 			}

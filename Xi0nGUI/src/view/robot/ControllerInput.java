@@ -19,6 +19,10 @@ public class ControllerInput extends CustomInput implements ControllerListener {
 	@Override
 	public boolean axisMoved(Controller controller, int axisIndex, float value) {
 		
+		if(this.paused){
+			return false;
+		}
+		
 		if (axisIndex == 0){
 			if (Math.abs(value) < 0.2)
 				this.robot.input.AXIS_X = 0;
@@ -39,6 +43,11 @@ public class ControllerInput extends CustomInput implements ControllerListener {
 	
 	@Override
 	public boolean buttonDown(Controller controller, int buttonIndex) {
+		
+		if(this.paused){
+			return false;
+		}
+		
 		if (buttonIndex == 0)
 			this.robot.input.SOUTH = true;
 		if (buttonIndex == 1)
@@ -50,6 +59,11 @@ public class ControllerInput extends CustomInput implements ControllerListener {
 	
 	@Override
 	public boolean buttonUp(Controller controller, int buttonIndex) {
+
+		if(this.paused){
+			return false;
+		}
+		
 		if (buttonIndex == 0)
 			this.robot.input.SOUTH = false;
 		if (buttonIndex == 1)

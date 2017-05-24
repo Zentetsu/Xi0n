@@ -160,5 +160,15 @@ public enum Xi0nSimulation implements ApplicationListener {
 	public void setMode(Mode mode) {
 		this.room.getRobot().setMode(mode);
 	}
+	
+	public void startRobot(){
+		this.room.getRobot().start();
+	}
+	
+	public void pauseRobot(){
+		this.room.getRobot().pause();
+	}
+	
+	
 
 }

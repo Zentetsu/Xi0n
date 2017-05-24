@@ -191,6 +191,14 @@ public class Robot {
 	public void setMode(Mode mode){
 		this.input = new InputManager(this, mode, this.room);
 	}
+	
+	public void pause(){
+		this.input.pause();
+	}
+	
+	public void start(){
+		this.input.start();
+	}
 
 	/*
 	 * private boolean detect() { for (Obstacle obstacle :
