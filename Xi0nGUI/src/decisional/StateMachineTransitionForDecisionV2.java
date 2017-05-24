@@ -1,9 +1,10 @@
 package decisional;
 
-import view.Xi0nSimulation;
 /* Import de bibliothï¿½ques =============*/
 import view.robot.RobotConfig;
-import tools.SensorValues;
+import view.robot.RobotConstant;
+import view.Xi0nSimulation;
+import view.robot.LateralSensor;
 
 /* Description de la classe ===============
 Machine ï¿½ ï¿½tat pour la prise de Dï¿½cision
@@ -106,9 +107,8 @@ public class StateMachineTransitionForDecisionV2 {
 		
 		// ï¿½tat permettant d'aller droit jusqu'ï¿½ trouver un mur pour dï¿½marrer la cartographie
 		case WALL_FINDER :
-			if ( frontalDistance <= 50 )
+			if ( frontalDistance <= RobotConstant.HEIGHT )
 				nS = State1.FRONT_WALL_RIDER_ROTATION_POST_FINDER;
-			
 			// TODO
 			//else if ( rightSideValues.get(rightSideValues.size()-2) < thresholdNoRightWallMaxFinder && rightSideSensor >= thresholdNoRightWallMaxFinder )
 			//	nS = State.NO_RIGHT_WALL_RIDER_ROTATION_1;
@@ -120,7 +120,7 @@ public class StateMachineTransitionForDecisionV2 {
 		case WALL_RIDER :
 			if ( frontalDistance <= 50 )
 				nS = State1.FRONT_WALL_RIDER_ROTATION_2;
-			else if ( rightSideDistance > 70 )
+			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
 				nS = State1.NO_RIGHT_WALL_RIDER_ROTATION_1;
 			else
 				nS = State1.WALL_RIDER;
@@ -128,8 +128,7 @@ public class StateMachineTransitionForDecisionV2 {
 		
 		//ï¿½tat pour tourner ï¿½ GAUCHE lorsque on rencontre un mur en face aprï¿½s le wall finder
 		case FRONT_WALL_RIDER_ROTATION_POST_FINDER :
-			if ( rightSideDistance < 70 && rightSideDistance >= 50 )
-
+			if ( rightSideDistance < LateralSensor.WARNING_LENGTH && rightSideDistance >= LateralSensor.WARNING_LENGTH )
 				nS = State1.FRONT_WALL_RIDER_ROTATION_2;
 			else
 				nS = State1.FRONT_WALL_RIDER_ROTATION_POST_FINDER;
@@ -137,7 +136,7 @@ public class StateMachineTransitionForDecisionV2 {
 
 		//état pour tourner à GAUCHE lorsque on rencontre un mur en face
 		case FRONT_WALL_RIDER_ROTATION_2 :
-			if ( rightSideDistance > 70 )
+			if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
 				nS = State1.WALL_RIDER;
 			else
 				nS = State1.FRONT_WALL_RIDER_ROTATION_2;
@@ -145,7 +144,7 @@ public class StateMachineTransitionForDecisionV2 {
 			
 		//ï¿½tat pour tourner ï¿½ DROITE lorsque on perd le mur sur notre droite ï¿½tape 1
 		case NO_RIGHT_WALL_RIDER_ROTATION_1 :
-			if ( rightSideDistance < 70 && rightSideDistance >= 50 )
+			if ( rightSideDistance < LateralSensor.WARNING_LENGTH && rightSideDistance >= LateralSensor.WARNING_LENGTH )
 				nS = State1.NO_RIGHT_WALL_RIDER_ROTATION_2;
 			else
 				nS = State1.NO_RIGHT_WALL_RIDER_ROTATION_1;
@@ -153,7 +152,7 @@ public class StateMachineTransitionForDecisionV2 {
 		
 		//ï¿½tat pour tourner ï¿½ DROITE lorsque on perd le mur sur notre droite ï¿½tape 2
 		case NO_RIGHT_WALL_RIDER_ROTATION_2 :
-			if ( rightSideDistance > 70 )
+			if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
 				nS = State1.WALL_RIDER;
 			else
 				nS = State1.NO_RIGHT_WALL_RIDER_ROTATION_2;
