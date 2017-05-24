@@ -42,16 +42,23 @@ public class DecisionInput extends CustomInput {
 
 	private void decisionAlgorithm() {
 		RobotConfig speeds = new RobotConfig(0, 0, 0, 0);
-		RobotConfig calibratedSpeeds = new RobotConfig(FT.filter(speeds));
-		SMT.readSensorsSimulation(cpt_simu);
-		SMT.FBloc();
-		SMT.MBloc();
+		//RobotConfig calibratedSpeeds = new RobotConfig(FT.filter(speeds));
+		this.SMT.readSensorsSimulation(cpt_simu);
+		this.SMT.FBloc();
+		this.SMT.MBloc();
 		speeds = SMT.GBloc();
-		calibratedSpeeds = FT.filter(speeds);
+		//calibratedSpeeds = FT.filter(speeds);
 
-		System.out.print(SMT.getState());
+		
+		this.robot.input.RIGHT = speeds.getRightPower0to255() * speeds.getRightDirection();
+		this.robot.input.LEFT = speeds.getLeftPower0to255() * speeds.getLeftDirection();
+		this.cpt_simu++;
+		return;
+		
+		/*
 		switch ( SMT.getState() ) {
 		case EMERGENCY_STANDING_STILL :
+			
 			this.robot.input.AXIS_Y = 0;
 			this.robot.input.AXIS_X = 0;
 			break;
@@ -94,8 +101,8 @@ public class DecisionInput extends CustomInput {
 		}
 		
 		System.out.print("\n");
+		*/
 		
-		cpt_simu++;
 	}
 
 	private void newAlgorithm() {

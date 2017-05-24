@@ -69,14 +69,6 @@ public class Robot {
 		this.rotation = 0;
 		this.speed = 0;
 		this.destroyed = false;
-
-		if (this.input.isMode(Mode.AUTOMATIC)) {
-			try {
-				Thread.sleep(2 * 1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 
 	public void render(ShapeRenderer sr) {
@@ -129,12 +121,12 @@ public class Robot {
 	}
 
 	private void updatePosition() {
-		this.speed = this.input.AXIS_Y;
-		this.setPosition(this.getDirectionX(this.speed * 2), this.getDirectionY(this.speed * 2));
+		this.speed = (this.input.RIGHT + this.input.LEFT)/400;
+		this.setPosition(this.getDirectionX(this.speed*2), this.getDirectionY(this.speed*2));
 	}
 
 	private void updateRotation() {
-		float angle = this.input.AXIS_X;
+		float angle = (this.input.RIGHT-this.input.LEFT)/400;
 		this.rotation += angle;
 		this.body.rotate(angle);
 

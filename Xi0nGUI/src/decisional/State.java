@@ -1,11 +1,11 @@
 package decisional;
 
-/* Import de bibliothèques =============*/
+/* Import de bibliothï¿½ques =============*/
 
 
-/* Description de l'enumération ===========
-Enueration des états pour la machine à
-état de la prise de décision.
+/* Description de l'enumï¿½ration ===========
+Enueration des ï¿½tats pour la machine ï¿½
+ï¿½tat de la prise de dï¿½cision.
 =========================================*/
 public enum State {
 
