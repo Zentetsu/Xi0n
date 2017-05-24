@@ -12,18 +12,18 @@ public class ControllerButton extends UIButton {
 
 	public ControllerButton(float x, float y) {
 		super(x, y, GRAPHIC_ELEMENT);
+		down(GRAPHIC_ELEMENT);
 	}
 
 	private class StartButtonListener extends ClickListener {
 		@Override
 		public void clicked(InputEvent input, float x, float y) {
 			Xi0nSimulation.INSTANCE.setMode(Mode.CONTROLLER);
-			down(GRAPHIC_ELEMENT);
 		}
 	} 
 	
 	public String toString() {
-		return "controller";
+		return GRAPHIC_ELEMENT;
 	}
 
 	@Override
