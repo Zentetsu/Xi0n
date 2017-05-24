@@ -56,13 +56,13 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.HUD = new Texture("assets/HUD.png");
 
 		Gdx.input.setInputProcessor(this.stage);
-		this.stage.addActor(new StartButton(30, 30));
-		this.stage.addActor(new RestartButton(30, 130));
+		this.stage.addActor(new StartButton(480, 135));
+		this.stage.addActor(new RestartButton(1800, 1025));
 		this.stage.addActor(new QuitButton(1860, 1025));
 
-		this.keyboardButton = new KeyboardButton(400, 15);
-		this.controllerButton = new ControllerButton(400, 75);
-		this.automaticButton = new AutomaticButton(400, 135);
+		this.keyboardButton = new KeyboardButton(350, 15);
+		this.controllerButton = new ControllerButton(350, 75);
+		this.automaticButton = new AutomaticButton(350, 135);
 
 		this.stage.addActor(this.keyboardButton);
 		this.stage.addActor(this.controllerButton);
