@@ -18,16 +18,16 @@ public class StateMachineTransitionForDecisionV1 {
 	
 	public static final RobotConfig WALL_FINDER_SPEED = new RobotConfig ( 200, 200, 1, 1 );
 	public static final RobotConfig WALL_RIDER_SPEED = new RobotConfig ( 200, 200, 1, 1 );
-	public static final RobotConfig EMERGENCY_STANDING_STILL = new RobotConfig ( 0, 0, 2, 2 );
-	public static final RobotConfig STANDING_STILL = new RobotConfig ( 0, 0, 0, 0 );
-	public static final RobotConfig STANDING_LEFT_ROTATION = new RobotConfig ( 200, 200, -1, 1 );
-	public static final RobotConfig STANDING_RIGHT_ROTATION = new RobotConfig ( 200, 200, 1, -1 );
+	public static final RobotConfig EMERGENCY_STANDING_STILL_SPEED = new RobotConfig ( 0, 0, 2, 2 );
+	public static final RobotConfig STANDING_STILL_SPEED = new RobotConfig ( 0, 0, 0, 0 );
+	public static final RobotConfig STANDING_LEFT_ROTATION_SPEED = new RobotConfig ( 200, 200, -1, 1 );
+	public static final RobotConfig STANDING_RIGHT_ROTATION_SPEED = new RobotConfig ( 200, 200, 1, -1 );
 	
 	public static float thresholdWallFinderFront = 20 ;
 	public static float thresholdMaxRightSide = 50;
 	public static float thresholdMinFront = 15;
-	public static float thresholdFrontWallRotationRightSide = 10;
-	public static float thresholdNoRightWallRotationRightSide = 10;
+	public static float thresholdFrontWallRotationRightSide = 3;
+	public static float thresholdNoRightWallRotationRightSide = 3;
 	public static float thresholdFrontWallPostFinder = 20;
 	
 	// ------------------------------------
@@ -78,9 +78,23 @@ public class StateMachineTransitionForDecisionV1 {
 	}
 	
 	public void readSensorsSimulation ( int i ) {
-		switch (i) {
-		case 50 : 
-			frontSensor = 1;
+		// TODO : TO DELETE
+		switch ( i ) {
+		case 0 :
+			frontSensor = 1000;
+			rightSideSensor = 1000;
+			servoRotorPosition = 1000;
+			break;
+		case 220 :
+			frontSensor = 15;
+			break;
+		case 310 :
+			rightSideSensor = 15;
+			break;
+		case 320 :
+			previousRightSideSensor = 19;
+			rightSideSensor = 22;
+			break;
 		}
 	}
 	
@@ -93,6 +107,7 @@ public class StateMachineTransitionForDecisionV1 {
 	}
 	
 	/*public boolean isDifferent ( Calibration speeds ) {
+		// TODO : TO DELETE
 		return ( this.speeds.equals(speeds) );
 	}*/
 	
@@ -143,14 +158,14 @@ public class StateMachineTransitionForDecisionV1 {
 		//état pour tourner à GAUCHE lorsque on rencontre un mur en face après le wall finder
 		case FRONT_WALL_RIDER_ROTATION_POST_FINDER :
 			if ( rightSideSensor < thresholdFrontWallPostFinder )
-				nS = State.NO_RIGHT_WALL_RIDER_ROTATION_2;
+				nS = State.FRONT_WALL_RIDER_ROTATION;
 			else
 				nS = State.FRONT_WALL_RIDER_ROTATION_POST_FINDER;
 			break;
 			
 		//état pour tourner à GAUCHE lorsque on rencontre un mur en face
 		case FRONT_WALL_RIDER_ROTATION :
-			if ( rightSideSensor > rightSideSensor + thresholdFrontWallRotationRightSide )
+			if ( rightSideSensor > previousRightSideSensor + thresholdFrontWallRotationRightSide )
 				nS = State.WALL_RIDER;
 			else
 				nS = State.FRONT_WALL_RIDER_ROTATION;
@@ -166,10 +181,11 @@ public class StateMachineTransitionForDecisionV1 {
 		
 		//état pour tourner à DROITE lorsque on perd le mur sur notre droite étape 2
 		case NO_RIGHT_WALL_RIDER_ROTATION_2 :
-			if ( previousRightSideSensor > rightSideSensor + thresholdNoRightWallRotationRightSide )
+			if ( rightSideSensor > previousRightSideSensor + thresholdNoRightWallRotationRightSide )
 				nS = State.WALL_RIDER;
 			else
 				nS = State.NO_RIGHT_WALL_RIDER_ROTATION_2;
+			break;
 			
 		// En cas d'erreur sur le typage on passe dans l'état des erreurs majeurs	
 		default :
@@ -201,19 +217,19 @@ public class StateMachineTransitionForDecisionV1 {
 		
 		// état d'erreur majeur : la machine est piégée dans cet état
 		case EMERGENCY_STANDING_STILL :
-			speeds = EMERGENCY_STANDING_STILL;
-			return ( EMERGENCY_STANDING_STILL );
+			speeds = EMERGENCY_STANDING_STILL_SPEED;
+			return ( EMERGENCY_STANDING_STILL_SPEED );
 		
 		// état d'erreur mineur : la machine est piégée dans cet état
 		case STANDING_STILL :
-			speeds = STANDING_STILL;
-			return ( STANDING_STILL );
+			speeds = STANDING_STILL_SPEED;
+			return ( STANDING_STILL_SPEED );
 		
 		// état d'erreur mineur : le robot ne peut pas prendre seul une décision, il doit passr en mode manuel pour être extrait de sa position
 		case MANUAL :
 			// TODO : Waiting for controler command
-			speeds = STANDING_STILL;
-			return ( STANDING_STILL );
+			speeds = STANDING_STILL_SPEED;
+			return ( STANDING_STILL_SPEED );
 		
 			// état permettant d'aller droit jusqu'à trouver un mur pour démarrer la cartographie
 		case WALL_FINDER :
@@ -226,27 +242,27 @@ public class StateMachineTransitionForDecisionV1 {
 			return ( WALL_RIDER_SPEED );
 		
 		case FRONT_WALL_RIDER_ROTATION_POST_FINDER :
-			speeds = STANDING_LEFT_ROTATION;
-			
-			
+			speeds = STANDING_LEFT_ROTATION_SPEED;
+			return ( STANDING_LEFT_ROTATION_SPEED );
+				
 		//état pour tourner à GAUCHE lorsque on rencontre un mur en face
 		case FRONT_WALL_RIDER_ROTATION :
-			speeds = STANDING_LEFT_ROTATION;
-			return ( STANDING_LEFT_ROTATION );
+			speeds = STANDING_LEFT_ROTATION_SPEED;
+			return ( STANDING_LEFT_ROTATION_SPEED );
 			
 		//état pour tourner à DROITE lorsque on perd le mur sur notre droite
 		case NO_RIGHT_WALL_RIDER_ROTATION_1 :
-			speeds = STANDING_RIGHT_ROTATION;
-			return ( STANDING_RIGHT_ROTATION );
+			speeds = STANDING_RIGHT_ROTATION_SPEED;
+			return ( STANDING_RIGHT_ROTATION_SPEED );
 			
 		case NO_RIGHT_WALL_RIDER_ROTATION_2 :
-			speeds = STANDING_RIGHT_ROTATION;
-			return ( STANDING_RIGHT_ROTATION );
+			speeds = STANDING_RIGHT_ROTATION_SPEED;
+			return ( STANDING_RIGHT_ROTATION_SPEED );
 		
 		// Considération d'une erreur majeure
 		default :
-			speeds = EMERGENCY_STANDING_STILL;
-			return ( EMERGENCY_STANDING_STILL );
+			speeds = EMERGENCY_STANDING_STILL_SPEED;
+			return ( EMERGENCY_STANDING_STILL_SPEED );
 			
 		}
 	}
