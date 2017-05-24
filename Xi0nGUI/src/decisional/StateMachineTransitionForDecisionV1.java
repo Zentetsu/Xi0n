@@ -1,11 +1,11 @@
 package decisional;
 
-/* Import de bibliothèques =============*/
+/* Import de bibliothï¿½ques =============*/
 import view.robot.RobotConfig;
 import tools.SensorValues;
 
 /* Description de la classe ===============
-Machine à état pour la prise de Décision
+Machine ï¿½ ï¿½tat pour la prise de Dï¿½cision
 =========================================*/
 public class StateMachineTransitionForDecisionV1 {
 	
@@ -28,22 +28,10 @@ public class StateMachineTransitionForDecisionV1 {
 	
 	public static final float thresholdFrontWallMinFinder = 20 ;
 	public static final float thresholdFrontWallMin = 20 ;
-	
 	public static final float thresholdNoRightWallMaxFinder = 50;
 	public static final float thresholdNoRightWallMax = 50;
-	
-	public static final float thresholdFrontWallRotationRightSide = 15;
-	
-	
-	
+	public static final float thresholdFrontWallRotationRightSide = 20;
 	public static final float avarageDistanceRightWall = 15;
-	
-	
-	public static final float thresholdNoRightWallRotationRightSide = 3;
-	public static final float thresholdFrontWallRotationPostFinder = 20;
-	
-	
-	//public static final float maxDistanceRightWall = 30;
 	
 	// ------------------------------------
     // SENSORS ----------------------------
@@ -103,21 +91,40 @@ public class StateMachineTransitionForDecisionV1 {
 			rightSideSensor = 1000;
 			servoRotorPosition = 1000;
 			break;
+		// WALL FINDER
 		case 220 :
 			frontSensor = 15;
 			rightSideSensor = 1000;
 			break;
-		case 309 :
+		// LEFT ROT POST WALL FINDER
+		case 280 :
 			frontSensor = 1000;
 			rightSideSensor = 17;
 			break;
+		// LEFT ROT
+		case 310 :
+			frontSensor = 1000;
+			rightSideSensor = 22;
+			break;
+		// WALL RIDER
 		case 520 :
-			frontSensor = 15;
-			rightSideSensor = 1000;
+			frontSensor = 17;
+			rightSideSensor = 15;
 			break;
-		case 709 :
+		// LEFT ROT
+		case 610 :
 			frontSensor = 1000;
-			rightSideSensor = 17;
+			rightSideSensor = 22;
+			break;
+		// WALL RINDER
+		case 900 :
+			frontSensor = 17;
+			rightSideSensor = 15;
+			break;
+		// LEFT ROT
+		case 990 :
+			frontSensor = 1000;
+			rightSideSensor = 22;
 			break;
 		}
 			
@@ -155,104 +162,73 @@ public class StateMachineTransitionForDecisionV1 {
 		this.servoRotorPosition = servoRotorPosition;
 	}
 	
-	/*public boolean isDifferent ( Calibration speeds ) {
-		// TODO : TO DELETE
-		return ( this.speeds.equals(speeds) );
-	}*/
-	
-	/*
-	private RobotConfig speedAdaptation () {
-		
-		float maxDiff = maxDistanceRightWall - avarageDistanceRightWall;
-		float adaptedRightSideSensor = rightSideSensor;
-		if ( adaptedRightSideSensor > maxDistanceRightWall )
-			adaptedRightSideSensor = maxDistanceRightWall;
-		else if ( adaptedRightSideSensor < 0 )
-			adaptedRightSideSensor = 0;
-		float diff = adaptedRightSideSensor - avarageDistanceRightWall;
-		
-		if ( diff == 0 )
-			return ( speeds );
-		if ( diff > 0 )
-			return ( new RobotConfig (  ) )
-	}*/
-	
-	/*
-	public float generateX () {
-		float maxDiff = maxDistanceRightWall - avarageDistanceRightWall;
-		float adaptedRightSideSensor = rightSideSensor;
-		if ( adaptedRightSideSensor > maxDistanceRightWall )
-			adaptedRightSideSensor = maxDistanceRightWall;
-		else if ( adaptedRightSideSensor < 0 )
-			adaptedRightSideSensor = 0;
-		float diff = adaptedRightSideSensor - avarageDistanceRightWall;
-		
-		float X = ((float)0.5)*(diff / maxDiff);
-		
-		return ( X );
-	}*/
-	
 	// ------------------------------------
     // MAE BLOCS --------------------------
     // ------------------------------------
 	
+	
 	/* Description des fonctions ----------
-	Détermine le nouvel état de la machine
+	Dï¿½termine le nouvel ï¿½tat de la machine
 	*/
 	public void FBloc () {
 		switch ( pS ) {
 		
-		// état d'erreur majeur : la machine est piégée dans cet état
+		// ï¿½tat d'erreur majeur : la machine est piï¿½gï¿½e dans cet ï¿½tat
 		case EMERGENCY_STANDING_STILL :
 			nS = State.EMERGENCY_STANDING_STILL;
 			break;
 		
-		// état d'erreur mineur : la machine est piégée dans cet état
+		// ï¿½tat d'erreur mineur : la machine est piï¿½gï¿½e dans cet ï¿½tat
 		case STANDING_STILL :
 			nS = State.STANDING_STILL;
 			break;
 			
-		// état d'erreur mineur : le robot ne peut pas prendre seul une décision, il doit passr en mode manuel pour être extrait de sa position
+		// ï¿½tat d'erreur mineur : le robot ne peut pas prendre seul une dï¿½cision, il doit passr en mode manuel pour ï¿½tre extrait de sa position
 		case MANUAL :
 			// TODO : Waiting for controler command
 			nS = State.MANUAL;
 			break;
 		
-		// état permettant d'aller droit jusqu'à trouver un mur pour démarrer la cartographie
+		// ï¿½tat permettant d'aller droit jusqu'ï¿½ trouver un mur pour dï¿½marrer la cartographie
 		case WALL_FINDER :
 			if ( frontSensor < thresholdFrontWallMinFinder )
 				nS = State.FRONT_WALL_RIDER_ROTATION_POST_FINDER;
-			else if ( rightSideSensor >= thresholdNoRightWallMaxFinder )
+			
+			// TODO
+			//else if ( rightSideValues.get(rightSideValues.size()-2) < thresholdNoRightWallMaxFinder && rightSideSensor >= thresholdNoRightWallMaxFinder )
+			//	nS = State.NO_RIGHT_WALL_RIDER_ROTATION_1;
+			else
 				nS = State.WALL_FINDER;
 			break;
 		
-		// POUR LE TEST
+		// état de suvit des murs
 		case WALL_RIDER :
 			if ( frontSensor < thresholdFrontWallMin )
-				nS = State.FRONT_WALL_RIDER_ROTATION;
+				nS = State.FRONT_WALL_RIDER_ROTATION_2;
 			else if ( rightSideSensor >= thresholdNoRightWallMax )
 				nS = State.NO_RIGHT_WALL_RIDER_ROTATION_1;
 			else
 				nS = State.WALL_RIDER;
 			break;
 		
-		//état pour tourner à GAUCHE lorsque on rencontre un mur en face après le wall finder
+		//ï¿½tat pour tourner ï¿½ GAUCHE lorsque on rencontre un mur en face aprï¿½s le wall finder
 		case FRONT_WALL_RIDER_ROTATION_POST_FINDER :
-			if ( rightSideSensor < thresholdFrontWallRotationPostFinder )
-				nS = State.FRONT_WALL_RIDER_ROTATION;
+			if ( rightSideSensor < thresholdFrontWallRotationRightSide )
+
+				nS = State.FRONT_WALL_RIDER_ROTATION_2;
 			else
 				nS = State.FRONT_WALL_RIDER_ROTATION_POST_FINDER;
 			break;
-			
+
 		//état pour tourner à GAUCHE lorsque on rencontre un mur en face
-		case FRONT_WALL_RIDER_ROTATION :
+		case FRONT_WALL_RIDER_ROTATION_2 :
 			if ( rightSideSensor > thresholdFrontWallRotationRightSide )
 				nS = State.WALL_RIDER;
 			else
-				nS = State.FRONT_WALL_RIDER_ROTATION;
+				nS = State.FRONT_WALL_RIDER_ROTATION_2;
 			break;
 			
-		//état pour tourner à DROITE lorsque on perd le mur sur notre droite étape 1
+		//ï¿½tat pour tourner ï¿½ DROITE lorsque on perd le mur sur notre droite ï¿½tape 1
 		case NO_RIGHT_WALL_RIDER_ROTATION_1 :
 			if ( rightSideSensor < thresholdNoRightWallMax )
 				nS = State.NO_RIGHT_WALL_RIDER_ROTATION_2;
@@ -260,7 +236,7 @@ public class StateMachineTransitionForDecisionV1 {
 				nS = State.NO_RIGHT_WALL_RIDER_ROTATION_1;
 			break;
 		
-		//état pour tourner à DROITE lorsque on perd le mur sur notre droite étape 2
+		//ï¿½tat pour tourner ï¿½ DROITE lorsque on perd le mur sur notre droite ï¿½tape 2
 		case NO_RIGHT_WALL_RIDER_ROTATION_2 :
 			if ( rightSideSensor > thresholdNoRightWallMax )
 				nS = State.WALL_RIDER;
@@ -268,7 +244,7 @@ public class StateMachineTransitionForDecisionV1 {
 				nS = State.NO_RIGHT_WALL_RIDER_ROTATION_2;
 			break;
 			
-		// En cas d'erreur sur le typage on passe dans l'état des erreurs majeurs	
+		// En cas d'erreur sur le typage on passe dans l'ï¿½tat des erreurs majeurs	
 		default :
 			nS = State.EMERGENCY_STANDING_STILL;
 			break;
@@ -276,10 +252,10 @@ public class StateMachineTransitionForDecisionV1 {
 	}
 	
 	/* Description des fonctions ----------
-	Enregistre dans la mémoire toutes
-	les informations nécessaire sur
-	les capteurs et l'état de la machien
-	nécessaire pour les prochaines
+	Enregistre dans la mï¿½moire toutes
+	les informations nï¿½cessaire sur
+	les capteurs et l'ï¿½tat de la machien
+	nï¿½cessaire pour les prochaines
 	executions du bloc F et G
 	*/
 	public void MBloc () {
@@ -289,36 +265,36 @@ public class StateMachineTransitionForDecisionV1 {
 	}
 	
 	/* Description des fonctions ----------
-	Calcule la sortie souhaitée par la
-	prise de décision, retourne les
-	vitesses de chaque roue associé à
-	l'état proposé
+	Calcule la sortie souhaitï¿½e par la
+	prise de dï¿½cision, retourne les
+	vitesses de chaque roue associï¿½ ï¿½
+	l'ï¿½tat proposï¿½
 	*/
 	public RobotConfig GBloc () {
 		switch ( pS ) {
 		
-		// état d'erreur majeur : la machine est piégée dans cet état
+		// ï¿½tat d'erreur majeur : la machine est piï¿½gï¿½e dans cet ï¿½tat
 		case EMERGENCY_STANDING_STILL :
 			speeds = EMERGENCY_STANDING_STILL_SPEED;
 			return ( EMERGENCY_STANDING_STILL_SPEED );
 		
-		// état d'erreur mineur : la machine est piégée dans cet état
+		// ï¿½tat d'erreur mineur : la machine est piï¿½gï¿½e dans cet ï¿½tat
 		case STANDING_STILL :
 			speeds = STANDING_STILL_SPEED;
 			return ( STANDING_STILL_SPEED );
 		
-		// état d'erreur mineur : le robot ne peut pas prendre seul une décision, il doit passr en mode manuel pour être extrait de sa position
+		// ï¿½tat d'erreur mineur : le robot ne peut pas prendre seul une dï¿½cision, il doit passr en mode manuel pour ï¿½tre extrait de sa position
 		case MANUAL :
 			// TODO : Waiting for controler command
 			speeds = STANDING_STILL_SPEED;
 			return ( STANDING_STILL_SPEED );
 		
-			// état permettant d'aller droit jusqu'à trouver un mur pour démarrer la cartographie
+			// ï¿½tat permettant d'aller droit jusqu'ï¿½ trouver un mur pour dï¿½marrer la cartographie
 		case WALL_FINDER :
 			speeds = WALL_FINDER_SPEED;
 			return ( WALL_FINDER_SPEED );
 		
-		//état pour longer un mur
+		//ï¿½tat pour longer un mur
 		case WALL_RIDER :
 			speeds = WALL_RIDER_SPEED;
 			return ( WALL_RIDER_SPEED );
@@ -328,11 +304,11 @@ public class StateMachineTransitionForDecisionV1 {
 			return ( STANDING_LEFT_ROTATION_SPEED );
 				
 		//état pour tourner à GAUCHE lorsque on rencontre un mur en face
-		case FRONT_WALL_RIDER_ROTATION :
+		case FRONT_WALL_RIDER_ROTATION_2 :
 			speeds = STANDING_LEFT_ROTATION_SPEED;
 			return ( STANDING_LEFT_ROTATION_SPEED );
 			
-		//état pour tourner à DROITE lorsque on perd le mur sur notre droite
+		//ï¿½tat pour tourner ï¿½ DROITE lorsque on perd le mur sur notre droite
 		case NO_RIGHT_WALL_RIDER_ROTATION_1 :
 			speeds = STANDING_RIGHT_ROTATION_SPEED;
 			return ( STANDING_RIGHT_ROTATION_SPEED );
@@ -341,7 +317,7 @@ public class StateMachineTransitionForDecisionV1 {
 			speeds = STANDING_RIGHT_ROTATION_SPEED;
 			return ( STANDING_RIGHT_ROTATION_SPEED );
 		
-		// Considération d'une erreur majeure
+		// Considï¿½ration d'une erreur majeure
 		default :
 			speeds = EMERGENCY_STANDING_STILL_SPEED;
 			return ( EMERGENCY_STANDING_STILL_SPEED );
@@ -383,12 +359,12 @@ public class StateMachineTransitionForDecisionV1 {
 			//SMT.readSensorsSimulation ( i_simu );
 			//previousCalibratedSpeeds = calibratedSpeeds;
 			
-			// traitement par la machine à état pour la prise de décision
+			// traitement par la machine ï¿½ ï¿½tat pour la prise de dï¿½cision
 			SMT.FBloc();
 			SMT.MBloc();
 			speeds = SMT.GBloc();
 				
-			// étalonnage de vitesse demandée
+			// ï¿½talonnage de vitesse demandï¿½e
 			calibratedSpeeds = FT.filter(speeds) ;
 			
 			// transmission de la vitesse

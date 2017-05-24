@@ -24,78 +24,30 @@ public class DecisionInput extends CustomInput {
 
 	@Override
 	public void updateInput() {
-
 		super.updateInput();
-
 		if (this.paused) {
 			this.robot.input.AXIS_Y = 0;
 			this.robot.input.AXIS_X = 0;
 			return;
 		}
-
 		this.cpt += 1;
 		//this.oldSensorAlgorithm();
 		//this.newAlgorithm();
 		this.decisionAlgorithm();
-
 	}
 
 	private void decisionAlgorithm() {
 		RobotConfig speeds = new RobotConfig(0, 0, 0, 0);
 		RobotConfig calibratedSpeeds = new RobotConfig(FT.filter(speeds));
-		SMT.readSensorsSimulation(cpt_simu);
-		SMT.FBloc();
-		SMT.MBloc();
+		this.SMT.readSensorsSimulation(cpt_simu);
+		this.SMT.FBloc();
+		this.SMT.MBloc();
 		speeds = SMT.GBloc();
 		calibratedSpeeds = FT.filter(speeds);
-
-		System.out.print(SMT.getState());
-		switch ( SMT.getState() ) {
-		case EMERGENCY_STANDING_STILL :
-			this.robot.input.AXIS_Y = 0;
-			this.robot.input.AXIS_X = 0;
-			break;
-		case STANDING_STILL :
-			this.robot.input.AXIS_Y = 0;
-			this.robot.input.AXIS_X = 0;
-			break;
-		case MANUAL :
-			this.robot.input.AXIS_Y = 0;
-			this.robot.input.AXIS_X = 0;
-			break;
-		case WALL_FINDER :
-			this.robot.input.AXIS_Y = 1;
-			this.robot.input.AXIS_X = 0;
-			break;
-		case WALL_RIDER :
-			this.robot.input.AXIS_Y = 1;
-			this.robot.input.AXIS_X = 0;
-			break;
-		case FRONT_WALL_RIDER_ROTATION_POST_FINDER :
-			this.robot.input.AXIS_Y = 0;
-			this.robot.input.AXIS_X = 1;
-			break;
-		case FRONT_WALL_RIDER_ROTATION :
-			this.robot.input.AXIS_Y = 0;
-			this.robot.input.AXIS_X = 1;
-			break;
-		case NO_RIGHT_WALL_RIDER_ROTATION_1 :
-			this.robot.input.AXIS_Y = 0;
-			this.robot.input.AXIS_X = -1;
-			break;
-		case NO_RIGHT_WALL_RIDER_ROTATION_2 :
-			this.robot.input.AXIS_Y = 0;
-			this.robot.input.AXIS_X = -1;
-			break;
-		default :
-			this.robot.input.AXIS_Y = 0;
-			this.robot.input.AXIS_X = 0;
-			break;
-		}
-		
-		System.out.print("\n");
-		
-		cpt_simu++;
+		this.robot.input.RIGHT = speeds.getRightPower0to255() * speeds.getRightDirection();
+		this.robot.input.LEFT = speeds.getLeftPower0to255() * speeds.getLeftDirection();
+		this.cpt_simu++;
+		return;
 	}
 
 	private void newAlgorithm() {

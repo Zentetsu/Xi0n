@@ -63,7 +63,7 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.stage = new Stage();
 		this.batch = new SpriteBatch();
 		this.HUD = new Texture("assets/HUD.png");
-		this.xbeeLogo = new XBee(500, 500);
+		this.xbeeLogo = new XBee(1490, 50);
 
 		Gdx.input.setInputProcessor(this.stage);
 		this.stage.addActor(new LockButton(480, 15));
@@ -129,33 +129,37 @@ public enum Xi0nSimulation implements ApplicationListener {
 		// TODO: extract
 		Robot robot = this.room.getRobot();
 
-		float left = robot.input.AXIS_Y;
-		float right = robot.input.AXIS_Y;
+		float left = robot.input.LEFT;
+		float right = robot.input.RIGHT;
 		this.shud.begin(ShapeType.Filled);
 		this.shud.rect(800, 40, 500, 100, Color.GRAY, Color.GRAY, Color.GRAY, Color.GRAY);
+		System.out.println(right);
+
 		if (left > 0) {
-			Color forwardLeft = new Color(right / 4, right, right / 4, 0);
-			this.shud.rect(1060, 105, left * 250, 30, forwardLeft, forwardLeft, forwardLeft, forwardLeft);
-		} else if (left < 0) {
-			Color backwardLeft = new Color(-right, -right / 4, -right / 4, 0);
-			this.shud.rect(1050 + left * 250, 105, -left * 250, 30, backwardLeft, backwardLeft, backwardLeft,
-					backwardLeft);
+			Color forwardLeft = new Color(right / (left * 4), left / 255, left / (255 * 4), 0);
+			this.shud.rect(1060, 105, left, 30, forwardLeft, forwardLeft, forwardLeft, forwardLeft);
+		}
+
+		else if (left < 0) {
+			Color backwardLeft = new Color(-left / 255, -left / (255 * 4), -left / (255 * 4), 0);
+			this.shud.rect(1050 + left, 105, -left, 30, backwardLeft, backwardLeft, backwardLeft, backwardLeft);
 		}
 		if (right > 0) {
-			Color forwardRight = new Color(right / 4, right, right / 4, 0);
-			this.shud.rect(1060, 40, right * 250, 30, forwardRight, forwardRight, forwardRight, forwardRight);
-		} else if (right < 0) {
-			Color backwardRight = new Color(-right, -right / 4, -right / 4, 0);
-			this.shud.rect(1050 + right * 250, 40, -right * 250, 30, backwardRight, backwardRight, backwardRight,
-					backwardRight);
+			Color forwardRight = new Color(right / (255 * 4), right / 255, right / (255 * 4), 0);
+			this.shud.rect(1060, 40, right, 30, forwardRight, forwardRight, forwardRight, forwardRight);
+		}
+
+		else if (right < 0) {
+			Color backwardRight = new Color(-right / 255, -right / (255 * 4), -right / (255 * 4), 0);
+			this.shud.rect(1050 + right, 40, -right, 30, backwardRight, backwardRight, backwardRight, backwardRight);
 		}
 		this.shud.rect(1050, 40, 10, 100, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK);
 		this.shud.end();
 		this.batch.begin();
 		this.batch.draw(this.HUD, 0, 0);
 		this.font.draw(this.batch,
-				"X = " + Math.round(robot.getPosition().x) + " , Y = " + Math.round(robot.getPosition().y), 1450, 140);
-		this.font.draw(this.batch, "ROTATION = " + Math.round(robot.getOrientation()) + " deg", 1450, 120);
+				"X = " + Math.round(robot.getPosition().x) + " , Y = " + Math.round(robot.getPosition().y), 1720, 140);
+		this.font.draw(this.batch, "ROTATION = " + Math.round(robot.getOrientation()) + " deg", 1720, 120);
 		this.batch.end();
 		this.stage.draw();
 
@@ -174,8 +178,8 @@ public enum Xi0nSimulation implements ApplicationListener {
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
-  
-	} 
+
+	}
 
 	public void setMode(Mode mode) {
 		this.room.getRobot().setMode(mode);
