@@ -1,4 +1,4 @@
-package Calibration;
+package decisional;
 
 /* Import de bibliothèques =============*/
 

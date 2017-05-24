@@ -1,4 +1,4 @@
-package Calibration;
+package calibration;
 
 /* Import de bibliothèques =============*/
 

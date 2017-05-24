@@ -7,7 +7,7 @@ import view.Xi0nSimulation;
 
 public class PauseButton extends UIButton {
 
-	private final static String GRAPHIC_ELEMENT = "pause.png";
+	private final static String GRAPHIC_ELEMENT = "pause";
 
 	public PauseButton(float x, float y) {
 		super(x, y, GRAPHIC_ELEMENT);

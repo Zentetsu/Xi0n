@@ -12,8 +12,16 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 
+<<<<<<< HEAD
 import view.robot.Robot;
+=======
+import view.robot.Mode;
+import view.ui.AutomaticButton;
+import view.ui.ControllerButton;
+import view.ui.KeyboardButton;
+>>>>>>> branch 'dev' of https://github.com/haze-sama/Xi0n.git
 import view.ui.QuitButton;
 import view.ui.RestartButton;
 import view.ui.StartButton;
@@ -32,6 +40,12 @@ public enum Xi0nSimulation implements ApplicationListener {
 	private SpriteBatch batch;
 	private BitmapFont font;
 
+	private KeyboardButton keyboardButton;
+	private ControllerButton controllerButton;
+	private AutomaticButton automaticButton;
+
+	ButtonGroup<UIButton> buttonGroup;
+
 	@Override
 	public void create() {
 		this.camera = new OrthographicCamera();
@@ -48,6 +62,21 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.stage.addActor(new StartButton(500, 30));
 		this.stage.addActor(new RestartButton(30, 130));
 		this.stage.addActor(new QuitButton(1860, 1025));
+
+		this.keyboardButton = new KeyboardButton(100, 300);
+		this.controllerButton = new ControllerButton(100, 400);
+		this.automaticButton = new AutomaticButton(100, 500);
+
+		this.stage.addActor(this.keyboardButton);
+		this.stage.addActor(this.controllerButton);
+		this.stage.addActor(this.automaticButton);
+
+		this.buttonGroup = new ButtonGroup<UIButton>(keyboardButton, controllerButton, automaticButton);
+
+		this.buttonGroup.setMaxCheckCount(1);
+		this.buttonGroup.setMinCheckCount(0);
+		// it may be useful to use this method:
+		this.buttonGroup.setUncheckLast(true);
 	}
 
 	public void addButton(UIButton button) {
@@ -129,4 +158,9 @@ public enum Xi0nSimulation implements ApplicationListener {
 		// TODO Auto-generated method stub
 
 	}
+
+	public void setMode(Mode mode) {
+		this.room.getRobot().setMode(mode);
+	}
+
 }

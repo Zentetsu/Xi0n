@@ -1,4 +1,4 @@
-package Decisional;
+package view.robot;
 
 /* Import de bibliothèques =============*/
 
@@ -7,7 +7,7 @@ package Decisional;
 Classe de couple de vitesses à communiquer
 au robot
 =========================================*/
-public class Calibration {
+public class RobotConfig {
 	
 // ========================================
 // ATTRIBUTS	
@@ -20,7 +20,7 @@ public class Calibration {
 // ========================================	
 // CONSTRUCTOR
 	
-	public Calibration ( int leftPower0to255, int rightPower0to255, int leftDirection, int rightDirection ) {
+	public RobotConfig ( int leftPower0to255, int rightPower0to255, int leftDirection, int rightDirection ) {
 		this.leftPower0to255 = leftPower0to255;
 		this.rightPower0to255 = rightPower0to255;
 		this.leftDirection = leftDirection;
@@ -35,38 +35,11 @@ public class Calibration {
 			this.rightDirection = -1;
 	}
 	
-	public Calibration ( int leftPower0to255, int rightPower0to255, MovementEnum movType ) {
-		this.leftPower0to255 = leftPower0to255;
-		this.rightPower0to255 = rightPower0to255;
-		switch ( movType ) {
-		case STAND:
-			this.leftDirection = 0;
-			this.rightDirection = 0;
-			break;
-		case FORWARD:
-			this.leftDirection = 1;
-			this.rightDirection = 1;
-			break;
-		case BACK:
-			this.leftDirection = -1;
-			this.rightDirection = -1;
-			break;
-		case ROTATIONLEFT:
-			this.leftDirection = -1;
-			this.rightDirection = 1;
-			break;
-		case ROTATIONRIGHT:
-			this.leftDirection = 1;
-			this.rightDirection = -1;
-			break;
-		}
-	}
-	
-	public Calibration ( Calibration calibration ) {
-		leftPower0to255 = calibration.getLeftPower0to255();
-		rightPower0to255 = calibration.getRightPower0to255();
-		leftDirection = calibration.getLeftDirection();
-		rightDirection = calibration.getRightDirection();
+	public RobotConfig ( RobotConfig config ) {
+		leftPower0to255 = config.getLeftPower0to255();
+		rightPower0to255 = config.getRightPower0to255();
+		leftDirection = config.getLeftDirection();
+		rightDirection = config.getRightDirection();
 	}
 
 // ========================================	
@@ -110,6 +83,10 @@ public class Calibration {
 
 	public void setRightDirection(int rightDirection) {
 		this.rightDirection = rightDirection;
+	}
+	
+	public boolean equals ( RobotConfig config ) {
+		return ( this.leftDirection==config.leftDirection && this.leftPower0to255== config.leftPower0to255 && this.rightDirection == config.rightDirection && this.rightPower0to255 == config.rightPower0to255 );
 	}
 	
 	public String toString() {

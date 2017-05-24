@@ -1,4 +1,4 @@
-package Decisional;
+package decisional;
 
 /* Import de bibliothèques =============*/
 import java.io.File;
@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import tools.Keyboard;
+import view.robot.RobotConfig;
 
 /* Description de la classe ===============
 Classe de vitesse pour le robot
@@ -15,10 +17,10 @@ public class FilterCalibration {
 // ========================================
 // ATTRIBUTS
 	
-	Map<Integer,Integer> leftMotorSL;
-	Map<Integer,Integer> rightMotorSL;
-	Map<Integer,Integer> leftMotorR;
-	Map<Integer,Integer> rightMotorR;
+	private Map<Integer,Integer> leftMotorSL;
+	private Map<Integer,Integer> rightMotorSL;
+	private Map<Integer,Integer> leftMotorR;
+	private Map<Integer,Integer> rightMotorR;
 	
 // ========================================	
 // CONSTRUCTOR
@@ -63,14 +65,14 @@ public class FilterCalibration {
 	ajoute l'étalon à la map de SLLeft
 	*/
 	public boolean addLMSL ( String actualLine, int i ) {
-		Clavier clavierTest = new Clavier();
+		Keyboard clavierTest = new Keyboard();
 		boolean positive = true;
 		if ( actualLine.startsWith("-") ) {
 			positive = false;
 			String actualLineTemp = actualLine.substring(1);
 			actualLine = actualLineTemp;
 		}
-		if ( clavierTest.isEntier(actualLine) ) {
+		if ( clavierTest.isInteger(actualLine) ) {
 			if ( positive ) {
 				leftMotorSL.put((Integer)i,(Integer)(Integer.parseInt(actualLine)) );
 			}
@@ -87,14 +89,14 @@ public class FilterCalibration {
 	ajoute l'étalon à la map de RLeft
 	*/
 	public boolean addLMR ( String actualLine, int i ) {
-		Clavier clavierTest = new Clavier();
+		Keyboard clavierTest = new Keyboard();
 		boolean positive = true;
 		if ( actualLine.startsWith("-") ) {
 			positive = false;
 			String actualLineTemp = actualLine.substring(1);
 			actualLine = actualLineTemp;
 		}
-		if ( clavierTest.isEntier(actualLine) ) {
+		if ( clavierTest.isInteger(actualLine) ) {
 			if ( positive )
 				leftMotorR.put((Integer)i,(Integer)(Integer.parseInt(actualLine)) );
 			else
@@ -108,14 +110,14 @@ public class FilterCalibration {
 	ajoute l'étalon à la map de LSRight
 	*/
 	public boolean addRMSL ( String actualLine, int i ) {
-		Clavier clavierTest = new Clavier();
+		Keyboard clavierTest = new Keyboard();
 		boolean positive = true;
 		if ( actualLine.startsWith("-") ) {
 			positive = false;
 			String actualLineTemp = actualLine.substring(1);
 			actualLine = actualLineTemp;
 		}
-		if ( clavierTest.isEntier(actualLine) ) {
+		if ( clavierTest.isInteger(actualLine) ) {
 			if ( positive )
 				rightMotorSL.put((Integer)i,(Integer)(Integer.parseInt(actualLine)) );
 			else
@@ -129,14 +131,14 @@ public class FilterCalibration {
 	ajoute l'étalon à la map de RRight
 	*/
 	public boolean addRMR ( String actualLine, int i ) {
-		Clavier clavierTest = new Clavier();
+		Keyboard clavierTest = new Keyboard();
 		boolean positive = true;
 		if ( actualLine.startsWith("-") ) {
 			positive = false;
 			String actualLineTemp = actualLine.substring(1);
 			actualLine = actualLineTemp;
 		}
-		if ( clavierTest.isEntier(actualLine) ) {
+		if ( clavierTest.isInteger(actualLine) ) {
 			if ( positive )
 				rightMotorR.put((Integer)i,(Integer)(Integer.parseInt(actualLine)) );
 			else
@@ -150,7 +152,7 @@ public class FilterCalibration {
 	charge le fichier de calibrage
 	*/
 	public boolean loadCalibrationFile () {
-		File f = new File ( "./src/files/calibration.txt" );
+		File f = new File ( "assets/calibration/calibration.txt" );
 		FileReader fR;
 		boolean writenTest = true;
 		try
@@ -232,43 +234,43 @@ public class FilterCalibration {
 	entrée en fonction des valeurs
 	invalides et de l'atalonnage
 	*/
-	public Calibration filter ( int leftPower0to255, int rightPower0to255, int leftDirection, int rightDirection ){
+	public RobotConfig filter ( int leftPower0to255, int rightPower0to255, int leftDirection, int rightDirection ){
 		if ( leftDirection < -1 || leftDirection > 2 || rightDirection < -1 || rightDirection > 2  ) {
-			return ( new Calibration ( 0, 0, 0, 0 ) );
+			return ( new RobotConfig ( 0, 0, 0, 0 ) );
 		}
 		else if ( ( leftPower0to255 < ((int)(0.4*255)) && leftPower0to255 > (-1)*((int)(0.4*255)) ) || leftPower0to255 > 255 || leftPower0to255 < -255) {
-			return ( new Calibration ( 0, 0, 0, 0 ) );
+			return ( new RobotConfig ( 0, 0, 0, 0 ) );
 		}
 		else if ( ( rightPower0to255 < ((int)(0.4*255)) && rightPower0to255 > (-1)*((int)(0.4*255)) ) || rightPower0to255 > 255 || rightPower0to255 < -255) {
-			return ( new Calibration ( 0, 0, 0, 0 ) );
+			return ( new RobotConfig ( 0, 0, 0, 0 ) );
 		}
 		else if ( leftDirection == 0 || rightDirection == 0 ) {
-			return ( new Calibration ( 0, 0, 0, 0 ) );
+			return ( new RobotConfig ( 0, 0, 0, 0 ) );
 		}
 		else if ( leftDirection == 2 || rightDirection ==2 ) {
-			return ( new Calibration ( 0, 0, 2, 2 ) );
+			return ( new RobotConfig ( 0, 0, 2, 2 ) );
 		}
 		else if ( leftDirection == rightDirection ) {
 			try {
-				return ( new Calibration ( leftMotorSL.get(leftPower0to255), rightMotorSL.get(rightPower0to255), leftDirection, rightDirection ) );
+				return ( new RobotConfig ( leftMotorSL.get(leftPower0to255), rightMotorSL.get(rightPower0to255), leftDirection, rightDirection ) );
 			}
 			catch ( NullPointerException e ) {
-				return ( new Calibration ( 0, 0, 0, 0 ) );
+				return ( new RobotConfig ( 0, 0, 0, 0 ) );
 			}
 		}
 		else if ( leftDirection != rightDirection ) {
 			try {
-				return ( new Calibration ( leftMotorR.get(leftPower0to255), rightMotorR.get(rightPower0to255), leftDirection, rightDirection ) );
+				return ( new RobotConfig ( leftMotorR.get(leftPower0to255), rightMotorR.get(rightPower0to255), leftDirection, rightDirection ) );
 			}
 			catch ( NullPointerException e ) {
-				return ( new Calibration ( 0, 0, 0, 0 ) );
+				return ( new RobotConfig ( 0, 0, 0, 0 ) );
 			}
 		}
 		else
-			return ( new Calibration ( 0, 0, 0, 0 ) );
+			return ( new RobotConfig ( 0, 0, 0, 0 ) );
 	}
 	
-	public Calibration filter ( Calibration calibration ) {
+	public RobotConfig filter ( RobotConfig calibration ) {
 		return ( this.filter( calibration.getLeftPower0to255(), calibration.getRightPower0to255(), calibration.getLeftDirection(), calibration.getRightDirection() ) );
 	}
 	
@@ -286,7 +288,6 @@ public class FilterCalibration {
 			System.out.println(filterCalibration);
 		else
 			System.out.println("LOADING ERROR");
-		System.out.println(filterCalibration.filter(150,150,1,-1));
 	}
 
 // ========================================  	
