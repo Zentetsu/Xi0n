@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 
 import view.robot.Mode;
+import view.robot.Robot;
 import view.ui.AutomaticButton;
 import view.ui.ControllerButton;
 import view.ui.KeyboardButton;
@@ -27,11 +29,13 @@ public enum Xi0nSimulation implements ApplicationListener {
 	INSTANCE;
 
 	private ShapeRenderer sr;
+	private ShapeRenderer shud;
 	private OrthographicCamera camera;
 	private Room room;
 	private Stage stage;
-	private Texture bar;
+	private Texture HUD;
 	private SpriteBatch batch;
+	private BitmapFont font;
 
 	private KeyboardButton keyboardButton;
 	private ControllerButton controllerButton;
@@ -45,24 +49,26 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.camera.setToOrtho(false);
 		this.room = new Room();
 		this.sr = new ShapeRenderer();
+		this.shud = new ShapeRenderer();
+		this.font = new BitmapFont();
 		this.stage = new Stage();
 		this.batch = new SpriteBatch();
-		this.bar = new Texture("assets/test3.png");
+		this.HUD = new Texture("assets/HUD.png");
 
 		Gdx.input.setInputProcessor(this.stage);
 		this.stage.addActor(new StartButton(30, 30));
 		this.stage.addActor(new RestartButton(30, 130));
 		this.stage.addActor(new QuitButton(1860, 1025));
 
-		this.keyboardButton = new KeyboardButton(100, 300);
-		this.controllerButton = new ControllerButton(100, 400);
-		this.automaticButton = new AutomaticButton(100, 500);
+		this.keyboardButton = new KeyboardButton(400, 15);
+		this.controllerButton = new ControllerButton(400, 75);
+		this.automaticButton = new AutomaticButton(400, 135);
 
 		this.stage.addActor(this.keyboardButton);
 		this.stage.addActor(this.controllerButton);
 		this.stage.addActor(this.automaticButton);
 
-		this.buttonGroup = new ButtonGroup<UIButton>(keyboardButton, controllerButton, automaticButton);
+		this.buttonGroup = new ButtonGroup<UIButton>(this.keyboardButton, this.controllerButton, this.automaticButton);
 
 		this.buttonGroup.setMaxCheckCount(1);
 		this.buttonGroup.setMinCheckCount(0);
@@ -72,7 +78,7 @@ public enum Xi0nSimulation implements ApplicationListener {
 
 	public void addButton(UIButton button) {
 		this.stage.addActor(button);
-	}
+}
 
 	public void removeButton(String name) {
 		for (Actor actor : this.stage.getActors()) {
@@ -105,10 +111,35 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.sr.begin(ShapeType.Line);
 		this.sr.setProjectionMatrix(this.camera.combined);
 		this.room.render(this.sr);
-		this.sr.rect(500, 200, 700, 50, Color.ORANGE, Color.ORANGE, Color.ORANGE, Color.ORANGE);
 		this.sr.end();
+		// TODO: extract
+		Robot robot = this.room.getRobot();
+		
+		float left = robot.input.AXIS_Y;
+		float right = robot.input.AXIS_Y;
+		this.shud.begin(ShapeType.Filled);
+		this.shud.rect(800, 40, 500, 100, Color.GRAY, Color.GRAY, Color.GRAY, Color.GRAY);
+		if (left > 0){
+			Color forwardLeft = new Color(right/4, right, right/4, 0);
+			this.shud.rect(1060, 105, left*250, 30, forwardLeft, forwardLeft, forwardLeft, forwardLeft);
+		}
+		else if (left < 0){
+			Color backwardLeft = new Color(-right, -right/4, -right/4, 0);
+			this.shud.rect(1050+left*250, 105, -left*250, 30, backwardLeft, backwardLeft, backwardLeft, backwardLeft);
+		}
+		if (right > 0){
+			Color forwardRight = new Color(right/4, right, right/4, 0);
+			this.shud.rect(1060, 40, right*250, 30, forwardRight, forwardRight, forwardRight, forwardRight);
+		}
+		else if (right < 0){
+			Color backwardRight = new Color(-right, -right/4, -right/4, 0);
+			this.shud.rect(1050+right*250, 40, -right*250, 30, backwardRight, backwardRight, backwardRight, backwardRight);
+		}
+		this.shud.rect(1050, 40, 10, 100, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK);
+		this.shud.end();
 		this.batch.begin();
-		this.batch.draw(this.bar, 0, 0);
+		this.batch.draw(this.HUD, 0, 0);
+		this.font.draw(this.batch, robot.getPosition().toString(), 1600, 100);
 		this.batch.end();
 		this.stage.draw();
 	}
