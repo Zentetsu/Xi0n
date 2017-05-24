@@ -65,6 +65,12 @@ public class StateMachineTransitionForDecisionV2 {
     // FONCTIONS PRINCIPALES --------------
     // ------------------------------------
 	
+	public void reset () {
+		readSensors();
+		pS = State1.WALL_FINDER;
+		nS = State1.WALL_FINDER;
+	}
+	
 	public void readSensors () {
 		rightSideDistance = Xi0nSimulation.INSTANCE.getLateralDistance();
 		frontalDistance = Xi0nSimulation.INSTANCE.getFrontalDistance();
@@ -120,15 +126,17 @@ public class StateMachineTransitionForDecisionV2 {
 		case WALL_RIDER :
 			if ( frontalDistance <= 50 )
 				nS = State1.FRONT_WALL_RIDER_ROTATION_2;
+			/*
 			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
 				nS = State1.NO_RIGHT_WALL_RIDER_ROTATION_1;
+			*/
 			else
 				nS = State1.WALL_RIDER;
 			break;
 		
 		//�tat pour tourner � GAUCHE lorsque on rencontre un mur en face apr�s le wall finder
 		case FRONT_WALL_RIDER_ROTATION_POST_FINDER :
-			if ( rightSideDistance < LateralSensor.WARNING_LENGTH && rightSideDistance >= LateralSensor.WARNING_LENGTH )
+			if ( rightSideDistance < LateralSensor.WARNING_LENGTH && rightSideDistance >= LateralSensor.STOP_LENGTH )
 				nS = State1.FRONT_WALL_RIDER_ROTATION_2;
 			else
 				nS = State1.FRONT_WALL_RIDER_ROTATION_POST_FINDER;
@@ -144,7 +152,7 @@ public class StateMachineTransitionForDecisionV2 {
 			
 		//�tat pour tourner � DROITE lorsque on perd le mur sur notre droite �tape 1
 		case NO_RIGHT_WALL_RIDER_ROTATION_1 :
-			if ( rightSideDistance < LateralSensor.WARNING_LENGTH && rightSideDistance >= LateralSensor.WARNING_LENGTH )
+			if ( rightSideDistance < LateralSensor.WARNING_LENGTH && rightSideDistance >= LateralSensor.STOP_LENGTH )
 				nS = State1.NO_RIGHT_WALL_RIDER_ROTATION_2;
 			else
 				nS = State1.NO_RIGHT_WALL_RIDER_ROTATION_1;
