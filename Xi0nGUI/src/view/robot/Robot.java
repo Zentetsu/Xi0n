@@ -30,24 +30,21 @@ public class Robot {
 	private RotableRectangle leftWheel;
 	private RotableRectangle rightWheel;
 
-	private List<Circle> visited;
-	private static Robot instance;
-	
 	private Room room;
 
+	private List<Circle> visited;
+	private static Robot instance;
+
 	private Robot(Room room, float x, float y) {
-<<<<<<< HEAD
 		this.input = new InputManager(this, Mode.CONTROLLER, room);
-=======
 		this.room = room;
 		this.setMode(Mode.KEYBOARD);
->>>>>>> branch 'dev' of https://github.com/haze-sama/Xi0n.git
 		this.initialize(x, y);
 	}
 
-	public static Robot getInstance(Room room) {
-		if (instance == null) {
-			instance = new Robot(room, 0, 0);
+	public static Robot getInstance(Room room){
+		if(instance == null){
+			instance =  new Robot(room, 0, 0);
 		}
 		return instance;
 	}
@@ -190,7 +187,7 @@ public class Robot {
 	public int getFrontalDistance(Rectangle rectangle) {
 		return this.frontalSensor.getDistance(rectangle);
 	}
-	
+
 	public void setMode(Mode mode){
 		this.input = new InputManager(this, mode, this.room);
 	}

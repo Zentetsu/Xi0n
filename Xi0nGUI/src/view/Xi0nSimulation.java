@@ -14,14 +14,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 
-<<<<<<< HEAD
-import view.robot.Robot;
-=======
 import view.robot.Mode;
+import view.robot.Robot;
 import view.ui.AutomaticButton;
 import view.ui.ControllerButton;
 import view.ui.KeyboardButton;
->>>>>>> branch 'dev' of https://github.com/haze-sama/Xi0n.git
 import view.ui.QuitButton;
 import view.ui.RestartButton;
 import view.ui.StartButton;
@@ -53,25 +50,25 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.room = new Room();
 		this.sr = new ShapeRenderer();
 		this.shud = new ShapeRenderer();
+		this.font = new BitmapFont();
 		this.stage = new Stage();
 		this.batch = new SpriteBatch();
 		this.HUD = new Texture("assets/HUD.png");
-		this.font = new BitmapFont();
 
 		Gdx.input.setInputProcessor(this.stage);
-		this.stage.addActor(new StartButton(500, 30));
+		this.stage.addActor(new StartButton(30, 30));
 		this.stage.addActor(new RestartButton(30, 130));
 		this.stage.addActor(new QuitButton(1860, 1025));
 
-		this.keyboardButton = new KeyboardButton(100, 300);
-		this.controllerButton = new ControllerButton(100, 400);
-		this.automaticButton = new AutomaticButton(100, 500);
+		this.keyboardButton = new KeyboardButton(400, 15);
+		this.controllerButton = new ControllerButton(400, 75);
+		this.automaticButton = new AutomaticButton(400, 135);
 
 		this.stage.addActor(this.keyboardButton);
 		this.stage.addActor(this.controllerButton);
 		this.stage.addActor(this.automaticButton);
 
-		this.buttonGroup = new ButtonGroup<UIButton>(keyboardButton, controllerButton, automaticButton);
+		this.buttonGroup = new ButtonGroup<UIButton>(this.keyboardButton, this.controllerButton, this.automaticButton);
 
 		this.buttonGroup.setMaxCheckCount(1);
 		this.buttonGroup.setMinCheckCount(0);
@@ -81,7 +78,7 @@ public enum Xi0nSimulation implements ApplicationListener {
 
 	public void addButton(UIButton button) {
 		this.stage.addActor(button);
-	}
+}
 
 	public void removeButton(String name) {
 		for (Actor actor : this.stage.getActors()) {
