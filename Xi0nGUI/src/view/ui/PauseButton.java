@@ -16,6 +16,7 @@ public class PauseButton extends UIButton {
 	private class StartButtonListener extends ClickListener {
 		@Override
 		public void clicked(InputEvent input, float x, float y) {
+			Xi0nSimulation.INSTANCE.pauseRobot();
 			Xi0nSimulation.INSTANCE.removeButton("pause");
 			Xi0nSimulation.INSTANCE.addButton(new StartButton(getX(), getY()));
 		}
