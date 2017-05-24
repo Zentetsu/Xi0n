@@ -22,5 +22,6 @@ float Ultrason::getDistance() {
 	delayMicroseconds(10);
 	digitalWrite(trigger_Pin, LOW);
 
-	return ((pulseIn(echo_Pin, HIGH) / 2) / 58); //check the model
+
+	return (pulseIn(echo_Pin, HIGH) / 58.0);
 }

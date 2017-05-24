@@ -5,7 +5,7 @@
 
 #include "./Ultrason.h"
 #include "./InfraRedSensor.h"
-#include "./AllOrNothingSensor.h"
+//#include "./AllOrNothingSensor.h"
 
 
 class Sensor {
@@ -13,8 +13,11 @@ class Sensor {
 		Sensor();
 		~Sensor();
 
+		float getDistanceUltrasion();
+		float getDistanceInfraRedSensor();
+
 	private:
-		AllOrNothingSensor *allOrNothingSensor;
+		//AllOrNothingSensor *allOrNothingSensor;
 		InfraRedSensor *infraRedSensor;
 		Ultrason *ultrason;
 		

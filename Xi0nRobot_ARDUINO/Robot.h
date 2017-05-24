@@ -7,6 +7,7 @@
 #include "./ControlLed.h"
 #include "./Sensor.h"
 #include "./Mobility.h"
+#include "./HeadServo.h"
 
 
 class Robot {
@@ -14,13 +15,18 @@ class Robot {
 		Robot();
 		~Robot();
 
-		void Deplacemnt(int direction_M1, int direction_M2, int speed_M1, int speed_M2);
+		void deplacemnt(int direction_M1, int direction_M2, int speed_M1, int speed_M2);
+		float getDistanceUltrasion();
+		float getDistanceInfraRedSensor();
+		void setHeadPosition(int new_position);
+		int getHeadPosition();
 
 	private:
 		Communication *communication;
 		ControlLed *controlLed;
 		Mobility *mobility;
 		Sensor *sensor;
+		HeadServo *headServo;
 		
 };
 

@@ -2,7 +2,6 @@
 #define DEF_MOBILITY
 
 #include "Arduino.h"
-
 #include "./Motor.h"
 
 

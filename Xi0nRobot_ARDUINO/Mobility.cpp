@@ -6,8 +6,8 @@ using namespace std;
 
 Mobility::Mobility() {
 	Serial.println ("CREATE MOBILITY");
-	left_Motor = new Motor(1, 1, 1);
-	right_Motor = new Motor(1, 1, 1);
+	left_Motor = new Motor(7, 4, 10);
+	right_Motor = new Motor(12, 8, 11);
 
 	//TODO : assign speed for the two motors
 
@@ -42,13 +42,15 @@ void Mobility::disable() {
 
 void Mobility::move(int new_direction_M1, int new_direction_M2, int new_Speed_M1, int new_Speed_M2) {
 	switch(new_direction_M1 + new_direction_M2) {
-		case -1:
+		case -2:
+			Serial.println ("backward");
 			backward();
 			setSpeed(new_Speed_M1, new_Speed_M2);
 			setDirection(-1);
 
 			break;
 		case 0:
+			Serial.println ("stop/left or right standing rotation");
 			if(new_direction_M1 == 0)
 				disable();
 			else {
@@ -59,13 +61,15 @@ void Mobility::move(int new_direction_M1, int new_direction_M2, int new_Speed_M1
 			setDirection(0);
 
 			break;
-		case 1:
+		case 2:
+			Serial.println ("forward");
 			forward();
 			setSpeed(new_Speed_M1, new_Speed_M2);
 			setDirection(1);
 
 			break;
-		case 4:
+		case 8:
+			Serial.println ("brake");
 			brake();
 			setDirection(4);
 
@@ -74,29 +78,20 @@ void Mobility::move(int new_direction_M1, int new_direction_M2, int new_Speed_M1
 }
 
 void Mobility::forward() {
+			Serial.println ("get forward");
+
+	if (left_Motor->getRotationDirection() == -1)
+		left_Motor->changeRotationDirection();
+
+	if (right_Motor->getRotationDirection() == -1)
+		right_Motor->changeRotationDirection();
+
 	switch(direction) {
-		case -1:
-			left_Motor->changeRotationDirection();
-			right_Motor->changeRotationDirection();
-
-			break;
 		case 0:
-			if (left_Motor->getRotationDirection() == -1)
-				left_Motor->changeRotationDirection();
-
-			if (right_Motor->getRotationDirection() == -1)
-				right_Motor->changeRotationDirection();
-
 			enable();
 
 			break;
 		case 4:
-			if (left_Motor->getRotationDirection() == -1)
-				left_Motor->changeRotationDirection();
-
-			if (right_Motor->getRotationDirection() == -1)
-				right_Motor->changeRotationDirection();
-
 			stopBrake();
 
 			break;
@@ -104,29 +99,22 @@ void Mobility::forward() {
 }
 
 void Mobility::backward() {
+			Serial.println ("get backward");
+
+
+	if (left_Motor->getRotationDirection() == 1)
+		left_Motor->changeRotationDirection();
+
+	if (right_Motor->getRotationDirection() == 1)
+		right_Motor->changeRotationDirection();
+
+
 	switch(getDirection()) {
 		case 0:
-			if (left_Motor->getRotationDirection() == 1)
-				left_Motor->changeRotationDirection();
-
-			if (right_Motor->getRotationDirection() == 1)
-				right_Motor->changeRotationDirection();
-
 			enable();
 
 			break;
-		case 1:
-			left_Motor->changeRotationDirection();
-			right_Motor->changeRotationDirection();
-
-			break;
 		case 4:
-			if (left_Motor->getRotationDirection() == 1)
-				left_Motor->changeRotationDirection();
-
-			if (right_Motor->getRotationDirection() == 1)
-				right_Motor->changeRotationDirection();
-
 			stopBrake();
 
 			break;
@@ -134,6 +122,7 @@ void Mobility::backward() {
 }
 
 void Mobility::standingRotation(int new_direction) {
+			Serial.println ("get standing");
 	switch(getDirection()) {
 		case -1:
 			if(new_direction == -1)
@@ -209,11 +198,13 @@ void Mobility::standingRotation(int new_direction) {
 }
 
 void Mobility::brake() {
+			Serial.println ("get brake");
 	left_Motor->brake();
 	right_Motor->brake();
 }
 
 void Mobility::stopBrake() {
+			Serial.println ("stop brake");
 	left_Motor->stopBrake();
 	right_Motor->stopBrake();
 }

@@ -6,8 +6,7 @@ using namespace std;
 InfraRedSensor::InfraRedSensor(int init_sensor_Pin) {
 	Serial.println ("CREATE INFRAREDSENSOR");
 	sensor_Pin = init_sensor_Pin;
-
-	analogReference(EXTERNAL);
+	pinMode(sensor_Pin, INPUT);
 }
 
 InfraRedSensor::~InfraRedSensor() {
@@ -16,10 +15,6 @@ InfraRedSensor::~InfraRedSensor() {
 
 //TODO : check result give by it
 float InfraRedSensor::getDistance() {
-	float read = 0;
 
-	for(int i = 0; i < 10; i++)
-		read += analogRead(sensor_Pin);
-
-	return (32076.69016894*pow(read, -1.245865753));
+	return analogRead(sensor_Pin)*0.48828125;
 }
