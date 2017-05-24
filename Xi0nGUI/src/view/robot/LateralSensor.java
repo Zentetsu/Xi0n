@@ -6,8 +6,8 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class LateralSensor extends Sensor {
 
-	public static final int warningLength = 50;
-	public static final int stopLength = 20;
+	public static final int WARNING_LENGTH = 70;
+	public static final int STOP_LENGTH = 40;
 
 	private RotableRectangle warningZone;
 	private RotableRectangle stopZone;
@@ -15,8 +15,8 @@ public class LateralSensor extends Sensor {
 	public LateralSensor(float x, float y) {
 		this.type = SensorType.LATERAL;
 
-		this.warningZone = new RotableRectangle(x, y, 10, this.warningLength);
-		this.stopZone = new RotableRectangle(x, y, 10, this.stopLength);
+		this.warningZone = new RotableRectangle(x, y, 10, this.WARNING_LENGTH);
+		this.stopZone = new RotableRectangle(x, y, 10, this.STOP_LENGTH);
 	}
 
 	@Override
@@ -45,12 +45,12 @@ public class LateralSensor extends Sensor {
 	@Override
 	public int getDistance(Rectangle rectangle) {
 		if (this.stopZone.collide(rectangle)) {
-			return LateralSensor.stopLength;
+			return LateralSensor.STOP_LENGTH;
 		}
 		if (this.warningZone.collide(rectangle)) {
-			return LateralSensor.stopLength;
+			return LateralSensor.STOP_LENGTH;
 		}
-		return LateralSensor.warningLength + LateralSensor.stopLength;
+		return LateralSensor.WARNING_LENGTH + LateralSensor.STOP_LENGTH;
 	}
 
 }

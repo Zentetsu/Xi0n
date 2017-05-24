@@ -197,11 +197,12 @@ public enum Xi0nSimulation implements ApplicationListener {
 	}
 
 	public int getLateralDistance() {
-		int min = LateralSensor.stopLength + LateralSensor.warningLength + 20;
-		System.out.println(this.room);
-		for (Obstacle obstacle : this.room.getObstacles()) {
-			if (min > this.room.getRobot().getLateralDistance(obstacle.getBoundingRectangle())) {
-				min = this.room.getRobot().getLateralDistance(obstacle.getBoundingRectangle());
+		int min = LateralSensor.STOP_LENGTH + LateralSensor.WARNING_LENGTH + 20;
+		if ( this.room != null ) {
+			for (Obstacle obstacle : this.room.getObstacles()) {
+				if (min > this.room.getRobot().getLateralDistance(obstacle.getBoundingRectangle())) {
+					min = this.room.getRobot().getLateralDistance(obstacle.getBoundingRectangle());
+				}
 			}
 		}
 		return min;
@@ -209,10 +210,11 @@ public enum Xi0nSimulation implements ApplicationListener {
 
 	public int getFrontalDistance() {
 		int min = RobotConstant.HEIGHT * 2;
-
-		for (Obstacle obstacle : this.room.getObstacles()) {
-			if (min > this.room.getRobot().getFrontalDistance(obstacle.getBoundingRectangle())) {
-				min = this.room.getRobot().getFrontalDistance(obstacle.getBoundingRectangle());
+		if ( this.room != null ) {
+			for (Obstacle obstacle : this.room.getObstacles()) {
+				if (min > this.room.getRobot().getFrontalDistance(obstacle.getBoundingRectangle())) {
+					min = this.room.getRobot().getFrontalDistance(obstacle.getBoundingRectangle());
+				}
 			}
 		}
 		return min;

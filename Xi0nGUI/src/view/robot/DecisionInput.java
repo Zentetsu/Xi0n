@@ -1,14 +1,14 @@
 package view.robot;
 
 import decisional.FilterCalibration;
-import decisional.StateMachineTransitionForDecisionV1;
+import decisional.StateMachineTransitionForDecisionV2;
 import view.Room;
 
 public class DecisionInput extends CustomInput {
 
 	private boolean found;
 	private int cpt;
-	StateMachineTransitionForDecisionV1 SMT;
+	StateMachineTransitionForDecisionV2 SMT;
 	FilterCalibration FT;
 	int cpt_simu = 0;
 
@@ -16,7 +16,7 @@ public class DecisionInput extends CustomInput {
 		super(robot, room);
 		this.found = false;
 		this.cpt = 0;
-		SMT = new StateMachineTransitionForDecisionV1();
+		SMT = new StateMachineTransitionForDecisionV2();
 		FT = new FilterCalibration();
 		boolean testLoad = FT.loadCalibrationFile();
 	}
@@ -36,7 +36,7 @@ public class DecisionInput extends CustomInput {
 	}
 
 	private void decisionAlgorithm() {
-		this.SMT.readSensorsSimulation(cpt_simu);
+		this.SMT.readSensors();
 		this.SMT.FBloc();
 		this.SMT.MBloc();
 		RobotConfig speeds = SMT.GBloc();
