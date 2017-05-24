@@ -88,12 +88,24 @@ public class StateMachineTransitionForDecisionV1 {
 		case 220 :
 			frontSensor = 15;
 			break;
-		case 310 :
+		case 300 :
 			rightSideSensor = 15;
 			break;
-		case 320 :
-			previousRightSideSensor = 19;
+		case 305 :
+			previousRightSideSensor = 18;
 			rightSideSensor = 22;
+			break;
+		case 330 :
+			rightSideSensor = 18;
+			break;
+		case 360 :
+			rightSideSensor = 19;
+			break;
+		case 400 :
+			rightSideSensor = 25;
+			break;
+		case 450 :
+			rightSideSensor = 17;
 			break;
 		}
 	}
@@ -269,7 +281,8 @@ public class StateMachineTransitionForDecisionV1 {
 	
 // ========================================	
 // MAIN PROGRAMME - TEST
-			
+	
+	/*
 	public static void main(String[] args) {
 			
 		// DECLARATION 
@@ -296,9 +309,9 @@ public class StateMachineTransitionForDecisionV1 {
 			// lecture des valeurs de capteurs
 			SMT.readSensors ();
 			
-			/* lecture des valeurs des capteurs ( simulation )
-			SMT.readSensorsSimulation ( i_simu );
-			previousCalibratedSpeeds = calibratedSpeeds;*/
+			//lecture des valeurs des capteurs ( simulation )
+			//SMT.readSensorsSimulation ( i_simu );
+			//previousCalibratedSpeeds = calibratedSpeeds;
 			
 			// traitement par la machine à état pour la prise de décision
 			SMT.FBloc();
@@ -311,16 +324,16 @@ public class StateMachineTransitionForDecisionV1 {
 			// transmission de la vitesse
 			System.out.println("--> | "+calibratedSpeeds+" |");
 			
-			/* transmission de la vitesse ( simultation )
-			if ( SMT.isDifferent(previousCalibratedSpeeds) )
-				System.out.println("\n--> | "+calibratedSpeeds+" |");
-			else {
-				if ( i_simu/20 == 0 )
-					System.out.print("|");
-			}*/
+			//transmission de la vitesse ( simultation )
+			//if ( SMT.isDifferent(previousCalibratedSpeeds) )
+			//	System.out.println("\n--> | "+calibratedSpeeds+" |");
+			//else {
+			//	if ( i_simu/20 == 0 )
+			//		System.out.print("|");
+			}
 			
 		}
-	}
+	} */
 	
 //========================================	
 	
