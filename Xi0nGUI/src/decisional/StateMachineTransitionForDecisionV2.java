@@ -137,23 +137,28 @@ public class StateMachineTransitionForDecisionV2 {
 		//ï¿½tat pour tourner ï¿½ GAUCHE lorsque on rencontre un mur en face aprï¿½s le wall finder
 		case FRONT_WALL_RIDER_ROTATION_POST_FINDER :
 			if ( rightSideDistance < LateralSensor.WARNING_LENGTH && rightSideDistance >= LateralSensor.STOP_LENGTH )
-				nS = State2.FRONT_WALL_RIDER_ROTATION_2;
+				nS = State2.WALL_RIDER;
 			else
 				nS = State2.FRONT_WALL_RIDER_ROTATION_POST_FINDER;
 			break;
 
+		/*
+		case FRONT_WALL_RIDER_ROTATION_TEMP :
+			if ( rightSideDistance <= LateralSensor.STOP_LENGTH )
+				nS = State2.FRONT_WALL_RIDER_ROTATION_2;
+			else
+				nS = State2.FRONT_WALL_RIDER_ROTATION_TEMP;
+			break;
+		*/
+			
 		//état pour tourner à GAUCHE lorsque on rencontre un mur en face
 		case FRONT_WALL_RIDER_ROTATION_2 :
-			if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
-				nS = State2.FRONT_WALL_RIDER_ROTATION_TEMP;
+			if ( rightSideDistance > LateralSensor.STOP_LENGTH )
+				nS = State2.WALL_RIDER;
 			else
 				nS = State2.FRONT_WALL_RIDER_ROTATION_2;
 			break;
 		
-		case FRONT_WALL_RIDER_ROTATION_TEMP :
-			
-		case FRONT_WALL_RIDER_ROTATION_3 :
-			
 		//ï¿½tat pour tourner ï¿½ DROITE lorsque on perd le mur sur notre droite ï¿½tape 1
 		case NO_RIGHT_WALL_RIDER_ROTATION_1 :
 			if ( rightSideDistance < LateralSensor.WARNING_LENGTH && rightSideDistance >= LateralSensor.STOP_LENGTH )
