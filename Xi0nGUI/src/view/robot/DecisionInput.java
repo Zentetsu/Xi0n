@@ -34,7 +34,8 @@ public class DecisionInput extends CustomInput {
 		}
 
 		this.cpt += 1;
-		// this.oldSensorAlgorithm();
+		//this.oldSensorAlgorithm();
+		//this.newAlgorithm();
 		this.decisionAlgorithm();
 
 	}
@@ -42,46 +43,67 @@ public class DecisionInput extends CustomInput {
 	private void decisionAlgorithm() {
 		RobotConfig speeds = new RobotConfig(0, 0, 0, 0);
 		//RobotConfig calibratedSpeeds = new RobotConfig(FT.filter(speeds));
-		SMT.readSensorsSimulation(cpt_simu);
-		SMT.FBloc();
-		SMT.MBloc();
+		this.SMT.readSensorsSimulation(cpt_simu);
+		this.SMT.FBloc();
+		this.SMT.MBloc();
 		speeds = SMT.GBloc();
-		System.out.println(speeds);
 		//calibratedSpeeds = FT.filter(speeds);
-		System.out.println(SMT.getState());
-		if (speeds.equals(StateMachineTransitionForDecisionV1.WALL_FINDER_SPEED)) {
-			// System.out.println("WALL_FINDER_SPEED");
-			this.robot.input.RIGHT = speeds.getRightPower0to255();
-			this.robot.input.LEFT = speeds.getLeftPower0to255();
-			this.robot.input.AXIS_Y = 1;
-			this.robot.input.AXIS_X = 0;
-		} else if (speeds.equals(StateMachineTransitionForDecisionV1.WALL_RIDER_SPEED)) {
-			// System.out.println("WALL_RIDER_SPEED");
-			this.robot.input.AXIS_Y = 1;
-			this.robot.input.AXIS_X = 0;
-		} else if (speeds.equals(StateMachineTransitionForDecisionV1.EMERGENCY_STANDING_STILL_SPEED)) {
-			// System.out.println("EMERGENCY_STANDING_STILL_SPEED");
+
+		System.out.print(SMT.getState());
+		
+		this.robot.input.RIGHT = speeds.getRightPower0to255() * speeds.getRightDirection();
+		this.robot.input.LEFT = speeds.getLeftPower0to255() * speeds.getLeftDirection();
+		this.cpt_simu++;
+		return;
+		
+		/*
+		switch ( SMT.getState() ) {
+		case EMERGENCY_STANDING_STILL :
+			
 			this.robot.input.AXIS_Y = 0;
 			this.robot.input.AXIS_X = 0;
-		} else if (speeds.equals(StateMachineTransitionForDecisionV1.STANDING_STILL_SPEED)) {
-			// System.out.println("STANDING_STILL_SPEED");
+
+			break;
+		case STANDING_STILL :
 			this.robot.input.AXIS_Y = 0;
 			this.robot.input.AXIS_X = 0;
-		} else if (speeds.equals(StateMachineTransitionForDecisionV1.STANDING_LEFT_ROTATION_SPEED)) {
-			// System.out.println("STANDING_LEFT_ROTATION_SPEED");
+			break;
+		case MANUAL :
+			this.robot.input.AXIS_Y = 0;
+			this.robot.input.AXIS_X = 0;
+			break;
+		case WALL_FINDER :
+			this.robot.input.AXIS_Y = 1;
+			this.robot.input.AXIS_X = 0;
+			break;
+		case WALL_RIDER :
+			this.robot.input.AXIS_Y = 1;
+			this.robot.input.AXIS_X = 0;
+			break;
+		case FRONT_WALL_RIDER_ROTATION_POST_FINDER :
 			this.robot.input.AXIS_Y = 0;
 			this.robot.input.AXIS_X = 1;
-		} else if (speeds.equals(StateMachineTransitionForDecisionV1.STANDING_RIGHT_ROTATION_SPEED)) {
-			// System.out.println("STANDING_RIGHT_ROTATION_SPEED");
+			break;
+		case FRONT_WALL_RIDER_ROTATION :
+			this.robot.input.AXIS_Y = 0;
+			this.robot.input.AXIS_X = 1;
+			break;
+		case NO_RIGHT_WALL_RIDER_ROTATION_1 :
 			this.robot.input.AXIS_Y = 0;
 			this.robot.input.AXIS_X = -1;
-		} else {
-			// System.out.println("ERROR");
+			break;
+		case NO_RIGHT_WALL_RIDER_ROTATION_2 :
+			this.robot.input.AXIS_Y = 0;
+			this.robot.input.AXIS_X = -1;
+			break;
+		default :
 			this.robot.input.AXIS_Y = 0;
 			this.robot.input.AXIS_X = 0;
 		}
-
-		cpt_simu++;
+		
+		System.out.print("\n");
+		*/
+		
 	}
 
 	private void newAlgorithm() {

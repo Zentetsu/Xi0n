@@ -1,8 +1,8 @@
 package decisional;
 
 /* Import de bibliothèques =============*/
-import java.util.ArrayList;
 import view.robot.RobotConfig;
+import tools.SensorValues;
 
 /* Description de la classe ===============
 Machine à état pour la prise de Décision
@@ -23,12 +23,27 @@ public class StateMachineTransitionForDecisionV1 {
 	public static final RobotConfig STANDING_LEFT_ROTATION_SPEED = new RobotConfig ( 200, 200, -1, 1 );
 	public static final RobotConfig STANDING_RIGHT_ROTATION_SPEED = new RobotConfig ( 200, 200, 1, -1 );
 	
-	public static float thresholdWallFinderFront = 20 ;
-	public static float thresholdMaxRightSide = 50;
-	public static float thresholdMinFront = 15;
-	public static float thresholdFrontWallRotationRightSide = 3;
-	public static float thresholdNoRightWallRotationRightSide = 3;
-	public static float thresholdFrontWallPostFinder = 20;
+	public static final int rightSideSizeMemory = 20;
+	public static final int frontSizeMemory = 20;
+	
+	public static final float thresholdFrontWallMinFinder = 20 ;
+	public static final float thresholdFrontWallMin = 20 ;
+	
+	public static final float thresholdNoRightWallMaxFinder = 50;
+	public static final float thresholdNoRightWallMax = 50;
+	
+	public static final float thresholdFrontWallRotationRightSide = 15;
+	
+	
+	
+	public static final float avarageDistanceRightWall = 15;
+	
+	
+	public static final float thresholdNoRightWallRotationRightSide = 3;
+	public static final float thresholdFrontWallRotationPostFinder = 20;
+	
+	
+	//public static final float maxDistanceRightWall = 30;
 	
 	// ------------------------------------
     // SENSORS ----------------------------
@@ -42,7 +57,8 @@ public class StateMachineTransitionForDecisionV1 {
     // SENSORS MEMORY ---------------------
     // ------------------------------------
 	
-	private float previousRightSideSensor;
+	private SensorValues rightSideValues;
+	private SensorValues frontValues;
 	
 	// ------------------------------------
     // STATE MEMORY -----------------------
@@ -64,6 +80,8 @@ public class StateMachineTransitionForDecisionV1 {
 		readSensors();
 		pS = State.WALL_FINDER;
 		nS = State.WALL_FINDER;
+		rightSideValues = new SensorValues ( rightSideSizeMemory, rightSideSensor );
+		frontValues = new SensorValues ( frontSizeMemory, rightSideSensor );
 	}
 	
 // ========================================	
@@ -92,20 +110,7 @@ public class StateMachineTransitionForDecisionV1 {
 			rightSideSensor = 15;
 			break;
 		case 305 :
-			previousRightSideSensor = 18;
 			rightSideSensor = 22;
-			break;
-		case 330 :
-			rightSideSensor = 18;
-			break;
-		case 360 :
-			rightSideSensor = 19;
-			break;
-		case 400 :
-			rightSideSensor = 25;
-			break;
-		case 450 :
-			rightSideSensor = 17;
 			break;
 		}
 	}
@@ -118,9 +123,65 @@ public class StateMachineTransitionForDecisionV1 {
 		return ( pS );
 	}
 	
+	public float getFrontSensor() {
+		return frontSensor;
+	}
+
+	public void setFrontSensor(float frontSensor) {
+		this.frontSensor = frontSensor;
+	}
+
+	public float getRightSideSensor() {
+		return rightSideSensor;
+	}
+
+	public void setRightSideSensor(float rightSideSensor) {
+		this.rightSideSensor = rightSideSensor;
+	}
+
+	public int getServoRotorPosition() {
+		return servoRotorPosition;
+	}
+
+	public void setServoRotorPosition(int servoRotorPosition) {
+		this.servoRotorPosition = servoRotorPosition;
+	}
+	
 	/*public boolean isDifferent ( Calibration speeds ) {
 		// TODO : TO DELETE
 		return ( this.speeds.equals(speeds) );
+	}*/
+	
+	/*
+	private RobotConfig speedAdaptation () {
+		
+		float maxDiff = maxDistanceRightWall - avarageDistanceRightWall;
+		float adaptedRightSideSensor = rightSideSensor;
+		if ( adaptedRightSideSensor > maxDistanceRightWall )
+			adaptedRightSideSensor = maxDistanceRightWall;
+		else if ( adaptedRightSideSensor < 0 )
+			adaptedRightSideSensor = 0;
+		float diff = adaptedRightSideSensor - avarageDistanceRightWall;
+		
+		if ( diff == 0 )
+			return ( speeds );
+		if ( diff > 0 )
+			return ( new RobotConfig (  ) )
+	}*/
+	
+	/*
+	public float generateX () {
+		float maxDiff = maxDistanceRightWall - avarageDistanceRightWall;
+		float adaptedRightSideSensor = rightSideSensor;
+		if ( adaptedRightSideSensor > maxDistanceRightWall )
+			adaptedRightSideSensor = maxDistanceRightWall;
+		else if ( adaptedRightSideSensor < 0 )
+			adaptedRightSideSensor = 0;
+		float diff = adaptedRightSideSensor - avarageDistanceRightWall;
+		
+		float X = ((float)0.5)*(diff / maxDiff);
+		
+		return ( X );
 	}*/
 	
 	// ------------------------------------
@@ -151,17 +212,17 @@ public class StateMachineTransitionForDecisionV1 {
 		
 		// état permettant d'aller droit jusqu'à trouver un mur pour démarrer la cartographie
 		case WALL_FINDER :
-			if ( frontSensor < thresholdWallFinderFront )
+			if ( frontSensor < thresholdFrontWallMinFinder )
 				nS = State.FRONT_WALL_RIDER_ROTATION_POST_FINDER;
-			else
+			else if ( rightSideSensor >= thresholdNoRightWallMaxFinder )
 				nS = State.WALL_FINDER;
 			break;
 		
 		// POUR LE TEST
 		case WALL_RIDER :
-			if ( frontSensor < thresholdMinFront )
+			if ( frontSensor < thresholdFrontWallMin )
 				nS = State.FRONT_WALL_RIDER_ROTATION;
-			else if ( rightSideSensor >= thresholdMaxRightSide )
+			else if ( rightSideSensor >= thresholdNoRightWallMax )
 				nS = State.NO_RIGHT_WALL_RIDER_ROTATION_1;
 			else
 				nS = State.WALL_RIDER;
@@ -169,7 +230,7 @@ public class StateMachineTransitionForDecisionV1 {
 		
 		//état pour tourner à GAUCHE lorsque on rencontre un mur en face après le wall finder
 		case FRONT_WALL_RIDER_ROTATION_POST_FINDER :
-			if ( rightSideSensor < thresholdFrontWallPostFinder )
+			if ( rightSideSensor < thresholdFrontWallRotationPostFinder )
 				nS = State.FRONT_WALL_RIDER_ROTATION;
 			else
 				nS = State.FRONT_WALL_RIDER_ROTATION_POST_FINDER;
@@ -177,7 +238,7 @@ public class StateMachineTransitionForDecisionV1 {
 			
 		//état pour tourner à GAUCHE lorsque on rencontre un mur en face
 		case FRONT_WALL_RIDER_ROTATION :
-			if ( rightSideSensor > previousRightSideSensor + thresholdFrontWallRotationRightSide )
+			if ( rightSideSensor > thresholdFrontWallRotationRightSide )
 				nS = State.WALL_RIDER;
 			else
 				nS = State.FRONT_WALL_RIDER_ROTATION;
@@ -185,7 +246,7 @@ public class StateMachineTransitionForDecisionV1 {
 			
 		//état pour tourner à DROITE lorsque on perd le mur sur notre droite étape 1
 		case NO_RIGHT_WALL_RIDER_ROTATION_1 :
-			if ( rightSideSensor < thresholdMaxRightSide )
+			if ( rightSideSensor < thresholdNoRightWallMax )
 				nS = State.NO_RIGHT_WALL_RIDER_ROTATION_2;
 			else
 				nS = State.NO_RIGHT_WALL_RIDER_ROTATION_1;
@@ -193,7 +254,7 @@ public class StateMachineTransitionForDecisionV1 {
 		
 		//état pour tourner à DROITE lorsque on perd le mur sur notre droite étape 2
 		case NO_RIGHT_WALL_RIDER_ROTATION_2 :
-			if ( rightSideSensor > previousRightSideSensor + thresholdNoRightWallRotationRightSide )
+			if ( rightSideSensor > thresholdNoRightWallMax )
 				nS = State.WALL_RIDER;
 			else
 				nS = State.NO_RIGHT_WALL_RIDER_ROTATION_2;
@@ -214,7 +275,8 @@ public class StateMachineTransitionForDecisionV1 {
 	executions du bloc F et G
 	*/
 	public void MBloc () {
-		previousRightSideSensor = rightSideSensor;
+		rightSideValues.add(rightSideSensor);
+		frontValues.add(frontSensor);
 		pS = nS;
 	}
 	
