@@ -10,19 +10,35 @@ import com.badlogic.gdx.math.Vector3;
 import view.Room;
 
 public class ControllerInput extends CustomInput implements ControllerListener {
-	
+
 	public ControllerInput(Robot robot, Room room) {
 		super(robot, room);
 		Controllers.addListener(this);
 	}
-	
+
 	@Override
 	public boolean axisMoved(Controller controller, int axisIndex, float value) {
-		
+
 		if(this.paused){
 			return false;
 		}
-		
+
+		this.robot.input.LEFT = 0;
+		this.robot.input.RIGHT = 0;
+
+		// LEFT AND RIGHT
+		if (axisIndex == 0){
+			if (Math.abs(value) < 0.2){
+				this.robot.input.LEFT = 0;
+				this.robot.input.RIGHT = 0;
+			}
+
+			else{
+				this.robot.input.LEFT = value * 255 * this.robot.input.DIRECTION;
+				this.robot.input.RIGHT = -value * 255 * this.robot.input.DIRECTION;
+			}
+		}
+
 		// FORWARD AND BACKWARD
 		if (axisIndex == 1){
 			if (Math.abs(value) < 0.2){
@@ -30,31 +46,18 @@ public class ControllerInput extends CustomInput implements ControllerListener {
 			}
 			else{
 				this.robot.input.DIRECTION = -value;
-				this.robot.input.LEFT = value * 255 * this.robot.input.DIRECTION;
-				this.robot.input.RIGHT = -value * 255 * this.robot.input.DIRECTION;
+				this.robot.input.LEFT = 255 * value;
+				this.robot.input.RIGHT = 255 * value;
 			}
 		}
-		
-		// LEFT AND RIGHT
-		if (axisIndex == 0){
-			if (Math.abs(value) < 0.2){
-				this.robot.input.LEFT = 0;
-				this.robot.input.RIGHT = 0;
-			}
-				
-			else{
-				this.robot.input.LEFT = value * 255 * this.robot.input.DIRECTION;
-				this.robot.input.RIGHT = -value * 255 * this.robot.input.DIRECTION;
-			}
-		}
-		
-			
+
+
 		return true;
 	}
-	
+
 	@Override
 	public boolean buttonDown(Controller controller, int buttonIndex) {
-		
+
 		if(this.paused){
 			return false;
 		}
@@ -62,7 +65,7 @@ public class ControllerInput extends CustomInput implements ControllerListener {
 			this.robot.initialize(0, 0);
 		return true;
 	}
-	
+
 	@Override
 	public boolean buttonUp(Controller controller, int buttonIndex) {
 
@@ -83,13 +86,13 @@ public class ControllerInput extends CustomInput implements ControllerListener {
 	@Override
 	public void connected(Controller arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void disconnected(Controller arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -110,7 +113,7 @@ public class ControllerInput extends CustomInput implements ControllerListener {
 		return false;
 	}
 
-	
-	
-	
+
+
+
 }
