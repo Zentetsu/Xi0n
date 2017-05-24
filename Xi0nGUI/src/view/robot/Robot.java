@@ -192,6 +192,18 @@ public class Robot {
 		this.input = new InputManager(this, mode, this.room);
 	}
 
+	public void pause(){
+		this.input.pause();
+	}
+
+	public void start(){
+		this.input.start();
+	}
+
+	public float getOrientation() {
+		return this.rotation;
+	}
+
 	/*
 	 * private boolean detect() { for (Obstacle obstacle :
 	 * this.room.getObstacles()) { if

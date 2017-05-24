@@ -1,6 +1,5 @@
 package view.robot;
 
-
 import decisional.FilterCalibration;
 import decisional.StateMachineTransitionForDecisionV1;
 import view.Obstacle;
@@ -25,7 +24,15 @@ public class DecisionInput extends CustomInput {
 
 	@Override
 	public void updateInput() {
+
 		super.updateInput();
+
+		if (this.paused) {
+			this.robot.input.AXIS_Y = 0;
+			this.robot.input.AXIS_X = 0;
+			return;
+		}
+
 		this.cpt += 1;
 		//this.oldSensorAlgorithm();
 		//this.newAlgorithm();
@@ -41,11 +48,13 @@ public class DecisionInput extends CustomInput {
 		SMT.MBloc();
 		speeds = SMT.GBloc();
 		calibratedSpeeds = FT.filter(speeds);
+
 		System.out.print(SMT.getState());
 		switch ( SMT.getState() ) {
 		case EMERGENCY_STANDING_STILL :
 			this.robot.input.AXIS_Y = 0;
 			this.robot.input.AXIS_X = 0;
+
 			break;
 		case STANDING_STILL :
 			this.robot.input.AXIS_Y = 0;
@@ -103,18 +112,28 @@ public class DecisionInput extends CustomInput {
 			if (this.robot.detect(obstacle, SensorType.FRONTAL)) {
 				int distance = this.robot.getFrontalDistance(obstacle.getBoundingRectangle());
 				// Turn right
-
 				/*
 				 * if (this.robot.getSensorAngle() < -15) {
 				 * System.out.println("Slow down"); this.robot.input.AXIS_Y = 1;
 				 * }
 				 */
 				// this.robot.input.AXIS_X = 1;
-				found = true;
+				this.found = true;
 			} else if (this.robot.detect(obstacle, SensorType.LATERAL)) {
 				if (this.robot.getLateralDistance(obstacle.getBoundingRectangle()) < 20) {
 
-					this.robot.input.AXIS_X = 1;
+					/*
+					 * if (this.robot.getSensorAngle() < -15) {
+					 * System.out.println("Slow down"); this.robot.input.AXIS_Y
+					 * = 1; }
+					 */
+					// this.robot.input.AXIS_X = 1;
+					this.found = true;
+				} else if (this.robot.detect(obstacle, SensorType.LATERAL)) {
+					if (this.robot.getLateralDistance(obstacle.getBoundingRectangle()) < 20) {
+
+						this.robot.input.AXIS_X = 1;
+					}
 				}
 			}
 		}

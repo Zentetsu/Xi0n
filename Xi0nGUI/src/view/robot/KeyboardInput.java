@@ -16,6 +16,12 @@ public class KeyboardInput extends CustomInput {
 		
 		super.updateInput();
 		
+		if (this.paused) {
+			this.robot.input.AXIS_Y = 0;
+			this.robot.input.AXIS_X = 0;
+			return;
+		}
+		
 		if (Gdx.input.isKeyPressed(Input.Keys.Z)) {
 			this.robot.input.AXIS_Y = 1;
 		}
