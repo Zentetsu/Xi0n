@@ -49,7 +49,6 @@ public class DecisionInput extends CustomInput {
 		speeds = SMT.GBloc();
 		//calibratedSpeeds = FT.filter(speeds);
 
-		System.out.print(SMT.getState());
 		
 		this.robot.input.RIGHT = speeds.getRightPower0to255() * speeds.getRightDirection();
 		this.robot.input.LEFT = speeds.getLeftPower0to255() * speeds.getLeftDirection();

@@ -129,25 +129,26 @@ public enum Xi0nSimulation implements ApplicationListener {
 		// TODO: extract
 		Robot robot = this.room.getRobot();
 		
-		float left = robot.input.AXIS_Y;
-		float right = robot.input.AXIS_Y;
+		float left = robot.input.LEFT;
+		float right = robot.input.RIGHT;
 		this.shud.begin(ShapeType.Filled);
 		this.shud.rect(800, 40, 500, 100, Color.GRAY, Color.GRAY, Color.GRAY, Color.GRAY);
+		System.out.println(right);
 		if (left > 0){
-			Color forwardLeft = new Color(right/4, right, right/4, 0);
-			this.shud.rect(1060, 105, left*250, 30, forwardLeft, forwardLeft, forwardLeft, forwardLeft);
+			Color forwardLeft = new Color(right/(left*4), left/255, left/(255*4), 0);
+			this.shud.rect(1060, 105, left, 30, forwardLeft, forwardLeft, forwardLeft, forwardLeft);
 		}
 		else if (left < 0){
-			Color backwardLeft = new Color(-right, -right/4, -right/4, 0);
-			this.shud.rect(1050+left*250, 105, -left*250, 30, backwardLeft, backwardLeft, backwardLeft, backwardLeft);
+			Color backwardLeft = new Color(-left/255, -left/(255*4), -left/(255*4), 0);
+			this.shud.rect(1050+left, 105, -left, 30, backwardLeft, backwardLeft, backwardLeft, backwardLeft);
 		}
 		if (right > 0){
-			Color forwardRight = new Color(right/4, right, right/4, 0);
-			this.shud.rect(1060, 40, right*250, 30, forwardRight, forwardRight, forwardRight, forwardRight);
+			Color forwardRight = new Color(right/(255*4), right/255, right/(255*4), 0);
+			this.shud.rect(1060, 40, right, 30, forwardRight, forwardRight, forwardRight, forwardRight);
 		}
 		else if (right < 0){
-			Color backwardRight = new Color(-right, -right/4, -right/4, 0);
-			this.shud.rect(1050+right*250, 40, -right*250, 30, backwardRight, backwardRight, backwardRight, backwardRight);
+			Color backwardRight = new Color(-right/255, -right/(255*4), -right/(255*4), 0);
+			this.shud.rect(1050+right, 40, -right, 30, backwardRight, backwardRight, backwardRight, backwardRight);
 		}
 		this.shud.rect(1050, 40, 10, 100, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK);
 		this.shud.end();

@@ -121,12 +121,12 @@ public class Robot {
 	}
 
 	private void updatePosition() {
-		this.speed = this.input.AXIS_Y;
-		this.setPosition(this.getDirectionX(this.speed * 2), this.getDirectionY(this.speed * 2));
+		this.speed = (this.input.RIGHT + this.input.LEFT)/400;
+		this.setPosition(this.getDirectionX(this.speed*2), this.getDirectionY(this.speed*2));
 	}
 
 	private void updateRotation() {
-		float angle = this.input.AXIS_X;
+		float angle = (this.input.RIGHT-this.input.LEFT)/400;
 		this.rotation += angle;
 		this.body.rotate(angle);
 

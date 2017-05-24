@@ -1,11 +1,11 @@
 package decisional;
 
-/* Import de bibliothèques =============*/
+/* Import de bibliothï¿½ques =============*/
 
 
-/* Description de l'enumération ===========
-Enueration des états pour la machine à
-état de la prise de décision.
+/* Description de l'enumï¿½ration ===========
+Enueration des ï¿½tats pour la machine ï¿½
+ï¿½tat de la prise de dï¿½cision.
 =========================================*/
 public enum State {
 
@@ -18,7 +18,7 @@ public enum State {
 	WALL_FINDER,
 	WALL_RIDER,
 	FRONT_WALL_RIDER_ROTATION_POST_FINDER,
-	FRONT_WALL_RIDER_ROTATION, // LEFT ROTATION RIDING WALL
+	FRONT_WALL_RIDER_ROTATION_2, // LEFT ROTATION RIDING WALL
 	NO_RIGHT_WALL_RIDER_ROTATION_1, // RIGHT ROTATION RIDING WALL
 	NO_RIGHT_WALL_RIDER_ROTATION_2,
 
