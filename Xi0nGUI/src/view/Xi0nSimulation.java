@@ -140,7 +140,8 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.shud.end();
 		this.batch.begin();
 		this.batch.draw(this.HUD, 0, 0);
-		this.font.draw(this.batch, robot.getPosition().toString(), 1600, 100);
+		this.font.draw(this.batch, "X = " + Math.round(robot.getPosition().x) + " , Y = " + Math.round(robot.getPosition().y), 1600, 100);
+		//this.font.draw(this.batch, robot.getPosition().toString(), 1600, 100);
 		this.batch.end();
 		this.stage.draw();
 	}
