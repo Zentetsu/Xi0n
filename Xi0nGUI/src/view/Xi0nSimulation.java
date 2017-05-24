@@ -86,7 +86,7 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.buttonGroup.setUncheckLast(true);
 
 		this.stage.addActor(this.xbeeLogo);
-		this.connected = false;
+		this.connected = true;
 
 	}
 
