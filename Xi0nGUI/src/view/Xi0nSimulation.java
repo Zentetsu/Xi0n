@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -29,6 +30,7 @@ public enum Xi0nSimulation implements ApplicationListener {
 	private Stage stage;
 	private Texture HUD;
 	private SpriteBatch batch;
+	private BitmapFont font;
 
 	@Override
 	public void create() {
@@ -40,6 +42,7 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.stage = new Stage();
 		this.batch = new SpriteBatch();
 		this.HUD = new Texture("assets/HUD.png");
+		this.font = new BitmapFont();
 
 		Gdx.input.setInputProcessor(this.stage);
 		this.stage.addActor(new StartButton(500, 30));
@@ -110,6 +113,7 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.shud.end();
 		this.batch.begin();
 		this.batch.draw(this.HUD, 0, 0);
+		this.font.draw(this.batch, robot.getPosition().toString(), 1600, 100);
 		this.batch.end();
 		this.stage.draw();
 	}

@@ -34,7 +34,7 @@ public class Robot {
 	private static Robot instance;
 
 	private Robot(Room room, float x, float y) {
-		this.input = new InputManager(this, Mode.KEYBOARD, room);
+		this.input = new InputManager(this, Mode.CONTROLLER, room);
 		this.initialize(x, y);
 	}
 	
