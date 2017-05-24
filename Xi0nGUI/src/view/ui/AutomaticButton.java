@@ -12,18 +12,18 @@ public class AutomaticButton extends UIButton {
 
 	public AutomaticButton(float x, float y) {
 		super(x, y, GRAPHIC_ELEMENT);
+		down(GRAPHIC_ELEMENT);
 	}
 
 	private class StartButtonListener extends ClickListener {
 		@Override
 		public void clicked(InputEvent input, float x, float y) {
 			Xi0nSimulation.INSTANCE.setMode(Mode.AUTOMATIC);
-			down(GRAPHIC_ELEMENT);
 		}
 	}
 	
  	public String toString() {
-		return "automatic";
+		return GRAPHIC_ELEMENT;
 	}
 
 	@Override
