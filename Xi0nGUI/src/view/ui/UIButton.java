@@ -35,6 +35,13 @@ public abstract class UIButton extends ImageButton {
 		setStyle(this.style);
 	}
 	
+	protected void setDown(String fileName) {
+
+		this.style.checked = new TextureRegionDrawable(
+				new TextureRegion(new Texture(Gdx.files.internal(DATA_PATH + fileName + EXT))));
+		setStyle(this.style);
+	}
+	
 	protected abstract ClickListener getButtonListener();
 
 }
