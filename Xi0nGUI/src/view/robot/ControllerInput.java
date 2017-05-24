@@ -47,11 +47,6 @@ public class ControllerInput extends CustomInput implements ControllerListener {
 		if(this.paused){
 			return false;
 		}
-		
-		if (buttonIndex == 0)
-			this.robot.input.SOUTH = true;
-		if (buttonIndex == 1)
-			this.robot.input.EST = true;
 		if (buttonIndex == 9)
 			this.robot.initialize(0, 0);
 		return true;
@@ -63,11 +58,6 @@ public class ControllerInput extends CustomInput implements ControllerListener {
 		if(this.paused){
 			return false;
 		}
-		
-		if (buttonIndex == 0)
-			this.robot.input.SOUTH = false;
-		if (buttonIndex == 1)
-			this.robot.input.EST = false;
 		if (buttonIndex == 3)
 			Gdx.app.exit();
 		return true;

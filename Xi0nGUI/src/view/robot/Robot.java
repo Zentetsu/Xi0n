@@ -69,14 +69,6 @@ public class Robot {
 		this.rotation = 0;
 		this.speed = 0;
 		this.destroyed = false;
-
-		if (this.input.isMode(Mode.AUTOMATIC)) {
-			try {
-				Thread.sleep(2 * 1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 
 	public void render(ShapeRenderer sr) {

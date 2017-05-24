@@ -7,19 +7,21 @@ import view.Room;
 
 public class InputManager {
 
-	public boolean SOUTH;
-	public boolean EST;
-	public boolean START;
-	public boolean NORTH;
+	public boolean START; // RESTART
+	public boolean NORTH; // QUIT
 
-	public float AXIS_X;
-	public float AXIS_Y;
+	public float AXIS_X; // LEFT - RIGHT
+	public float LEFT;
+	public float RIGHT;
+	
+	public float AXIS_Y; // FORWARD - BACKWARD
+	public float FORWARD;
+	public float BACKWARD;
 
 	private Map<Mode, CustomInput> inputs;
 	private Mode currentMode;
 
 	public InputManager(Robot robot, Mode currentMode, Room room) {
-
 		this.inputs = new HashMap<>();
 		this.inputs.put(Mode.CONTROLLER, new ControllerInput(robot, room));
 		this.inputs.put(Mode.KEYBOARD, new KeyboardInput(robot, room));
