@@ -114,32 +114,53 @@ public class StateMachineTransitionForDecisionV2 {
 		// ï¿½tat permettant d'aller droit jusqu'ï¿½ trouver un mur pour dï¿½marrer la cartographie
 		case WALL_FINDER :
 			if ( frontalDistance <= RobotConstant.HEIGHT )
-				nS = State2.FRONT_WALL_RIDER_ROTATION_POST_FINDER;
-			// TODO
-			//else if ( rightSideValues.get(rightSideValues.size()-2) < thresholdNoRightWallMaxFinder && rightSideSensor >= thresholdNoRightWallMaxFinder )
-			//	nS = State.NO_RIGHT_WALL_RIDER_ROTATION_1;
+				nS = State2.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
+			else if ( rightSideDistance < LateralSensor.WARNING_LENGTH && rightSideDistance >= LateralSensor.STOP_LENGTH )
+				nS = State2.WALL_RIDER;
+			else if ( rightSideDistance <= LateralSensor.STOP_LENGTH )
+				nS = State2.WALL_RIDER_NEAR;
 			else
 				nS = State2.WALL_FINDER;
 			break;
 		
-		// état de suvit des murs
+		// état de suivi des murs
 		case WALL_RIDER :
-			if ( frontalDistance <= 50 )
+			if ( frontalDistance <= RobotConstant.HEIGHT )
 				nS = State2.FRONT_WALL_RIDER_ROTATION;
-			/*
 			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
-				nS = State1.NO_RIGHT_WALL_RIDER_ROTATION_1;
-			*/
+				nS = State2.WALL_RIDER_AWAY;
+			else if ( rightSideDistance <= LateralSensor.STOP_LENGTH )
+				nS = State2.WALL_RIDER_NEAR;
+			else
+				nS = State2.WALL_RIDER;
+			break;
+			
+		// état de suivi des murs lorqu'on s'en éloigne
+		case WALL_RIDER_AWAY :
+			if ( frontalDistance <= RobotConstant.HEIGHT )
+				nS = State2.FRONT_WALL_RIDER_ROTATION;
+			else if ( rightSideDistance <= LateralSensor.WARNING_LENGTH )
+				nS = State2.NO_RIGHT_WALL_RIDER_ROTATION;
+			else
+				nS = State2.WALL_RIDER;
+			break;
+			
+		// état de suivi des murs lorsqu'on s'en rapproche
+		case WALL_RIDER_NEAR :
+			if ( frontalDistance <= RobotConstant.HEIGHT )
+				nS = State2.FRONT_WALL_RIDER_ROTATION;
+			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
+				nS = State2.NO_RIGHT_WALL_RIDER_ROTATION;
 			else
 				nS = State2.WALL_RIDER;
 			break;
 		
 		//ï¿½tat pour tourner ï¿½ GAUCHE lorsque on rencontre un mur en face aprï¿½s le wall finder
-		case FRONT_WALL_RIDER_ROTATION_POST_FINDER :
+		case FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL :
 			if ( rightSideDistance < LateralSensor.WARNING_LENGTH && rightSideDistance >= LateralSensor.STOP_LENGTH )
 				nS = State2.WALL_RIDER;
 			else
-				nS = State2.FRONT_WALL_RIDER_ROTATION_POST_FINDER;
+				nS = State2.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
 			break;
 
 			
@@ -212,7 +233,7 @@ public class StateMachineTransitionForDecisionV2 {
 			speeds = WALL_RIDER_SPEED;
 			return ( WALL_RIDER_SPEED );
 		
-		case FRONT_WALL_RIDER_ROTATION_POST_FINDER :
+		case FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL :
 			speeds = STANDING_LEFT_ROTATION_SPEED;
 			return ( STANDING_LEFT_ROTATION_SPEED );
 				
@@ -260,7 +281,6 @@ public class StateMachineTransitionForDecisionV2 {
 			
 		// WHILE DE LA MAE
 		for ( int i_simu = 0; true; i_simu++ ) {
-			
 			// lecture des valeurs de capteurs
 			SMT.readSensors ();
 			
