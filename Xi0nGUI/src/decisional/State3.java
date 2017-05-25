@@ -7,7 +7,7 @@ package decisional;
 Enueration des �tats pour la machine �
 �tat de la prise de d�cision.
 =========================================*/
-public enum State2 {
+public enum State3 {
 
 // ========================================
 //ENUMERATION 
@@ -18,7 +18,9 @@ public enum State2 {
 	WALL_FINDER,
 	WALL_RIDER,
 	WALL_RIDER_AWAY,
+	WALL_RIDER_AWAY_BACK,
 	WALL_RIDER_NEAR,
+	WALL_RIDER_NEAR_BACK,
 	FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL,
 	FRONT_WALL_RIDER_ROTATION,
 	NO_RIGHT_WALL_RIDER_ROTATION,
