@@ -10,7 +10,7 @@ import tools.Chrono;
 /* Description de la classe ===============
 Machine ï¿½ ï¿½tat pour la prise de Dï¿½cision
 =========================================*/
-public class StateMachineTransitionForDecisionV3 {
+public class StateMachineTransitionForDecisionV4 {
 	
 // ========================================
 // ATTRIBUTS
@@ -19,18 +19,18 @@ public class StateMachineTransitionForDecisionV3 {
 	// PARAMETERS -------------------------
     // ------------------------------------
 	
-	public static final RobotConfig WALL_FINDER_SPEED = new RobotConfig ( 170, 170, 1, 1 );
-	public static final RobotConfig WALL_RIDER_SPEED = new RobotConfig ( 170, 170, 1, 1 );
-	public static final RobotConfig WALL_RIDER_AWAY_SPEED = new RobotConfig ( 170, 102, 1, 1 );
-	public static final RobotConfig WALL_RIDER_NEAR_SPEED = new RobotConfig ( 102, 170, 1, 1 );
+	public static final RobotConfig WALL_FINDER_SPEED = new RobotConfig ( 150, 150, 1, 1 );
+	public static final RobotConfig WALL_RIDER_SPEED = new RobotConfig ( 150, 150, 1, 1 );
+	public static final RobotConfig WALL_RIDER_AWAY_SPEED = new RobotConfig ( 150, 102, 1, 1 );
+	public static final RobotConfig WALL_RIDER_NEAR_SPEED = new RobotConfig ( 102, 150, 1, 1 );
 	public static final RobotConfig WALL_RIDER_AWAY_BACK_SPEED = new RobotConfig ( WALL_RIDER_AWAY_SPEED.getRightPower0to255(), WALL_RIDER_AWAY_SPEED.getLeftPower0to255(), 1, 1 );
 	public static final RobotConfig WALL_RIDER_NEAR_BACK_SPEED = new RobotConfig ( WALL_RIDER_NEAR_SPEED.getRightPower0to255(), WALL_RIDER_NEAR_SPEED.getLeftPower0to255(), 1, 1 );
 	public static final RobotConfig EMERGENCY_STANDING_STILL_SPEED = new RobotConfig ( 0, 0, 2, 2 );
 	public static final RobotConfig STANDING_STILL_SPEED = new RobotConfig ( 0, 0, 0, 0 );
-	public static final RobotConfig STANDING_LEFT_ROTATION_SPEED = new RobotConfig ( 170, 170, -1, 1 );
-	public static final RobotConfig STANDING_RIGHT_ROTATION_SPEED = new RobotConfig ( 170, 170, 1, -1 );
+	public static final RobotConfig STANDING_LEFT_ROTATION_SPEED = new RobotConfig ( 102, 102, -1, 1 );
+	public static final RobotConfig STANDING_RIGHT_ROTATION_SPEED = new RobotConfig ( 102, 102, 1, -1 );
 	
-	public static final float THRESHOLD_ANGLE = 20;
+	public static final float THRESHOLD_ANGLE = 35;
 	
 	// ------------------------------------
     // SENSORS ----------------------------
@@ -57,8 +57,8 @@ public class StateMachineTransitionForDecisionV3 {
     // STATE MEMORY -----------------------
     // ------------------------------------
 	
-	private State3 pS;
-	private State3 nS;
+	private State4 pS;
+	private State4 nS;
 	
 	// ------------------------------------
     // OUTPUTS ----------------------------
@@ -69,10 +69,10 @@ public class StateMachineTransitionForDecisionV3 {
 // ========================================	
 // CONSTRUCTOR
 	
-	public StateMachineTransitionForDecisionV3 () {
+	public StateMachineTransitionForDecisionV4 () {
 		readSensors();
-		pS = State3.WALL_FINDER;
-		nS = State3.WALL_FINDER;
+		pS = State4.WALL_FINDER;
+		nS = State4.WALL_FINDER;
 		memorisedDurationWallRider_1 = 0;
 		memorisedDurationWallRider_2 = 0;
 	}
@@ -86,8 +86,8 @@ public class StateMachineTransitionForDecisionV3 {
 	
 	public void reset () {
 		readSensors();
-		pS = State3.WALL_FINDER;
-		nS = State3.WALL_FINDER;
+		pS = State4.WALL_FINDER;
+		nS = State4.WALL_FINDER;
 		memorisedDurationWallRider_1 = 0;
 		memorisedDurationWallRider_2 = 0;
 	}
@@ -102,7 +102,7 @@ public class StateMachineTransitionForDecisionV3 {
 		return ( speeds );
 	}
 	
-	public State3 getState () {
+	public State4 getState () {
 		return ( pS );
 	}
 	
@@ -120,64 +120,64 @@ public class StateMachineTransitionForDecisionV3 {
 		
 		// ï¿½tat d'erreur majeur : la machine est piï¿½gï¿½e dans cet ï¿½tat
 		case EMERGENCY_STANDING_STILL :
-			nS = State3.EMERGENCY_STANDING_STILL;
+			nS = State4.EMERGENCY_STANDING_STILL;
 			break;
 		
 		// ï¿½tat d'erreur mineur : la machine est piï¿½gï¿½e dans cet ï¿½tat
 		case STANDING_STILL :
-			nS = State3.STANDING_STILL;
+			nS = State4.STANDING_STILL;
 			break;
 			
 		// ï¿½tat d'erreur mineur : le robot ne peut pas prendre seul une dï¿½cision, il doit passr en mode manuel pour ï¿½tre extrait de sa position
 		case MANUAL :
 			// TODO : Waiting for controler command
-			nS = State3.MANUAL;
+			nS = State4.MANUAL;
 			break;
-		
+			
 		// ï¿½tat permettant d'aller droit jusqu'ï¿½ trouver un mur pour dï¿½marrer la cartographie
 		case WALL_FINDER :
 			if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.WARNING_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
-				nS = State3.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
+				nS = State4.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
 			else if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.WARNING_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
-				nS = State3.FRONT_WALL_RIDER_ROTATION_1;
+				nS = State4.FRONT_WALL_RIDER_ROTATION_1;
 			else if ( rightSideDistance <= LateralSensor.WARNING_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH )
-				nS = State3.WALL_RIDER;
+				nS = State4.WALL_RIDER;
 			else if ( rightSideDistance <= LateralSensor.STOP_LENGTH )
-				nS = State3.WALL_RIDER_NEAR;
+				nS = State4.WALL_RIDER_NEAR;
 			else
-				nS = State3.WALL_FINDER;
+				nS = State4.WALL_FINDER;
 			break;
 		
 		// état de suivi des murs
 		case WALL_RIDER :
 			// TODO : RIGHT ROTATION
 			if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
-				nS = State3.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
+				nS = State4.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
 			else if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance <= LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
-				nS = State3.FRONT_WALL_RIDER_ROTATION_1;
+				nS = State4.FRONT_WALL_RIDER_ROTATION_1;
 			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
-				nS = State3.NO_RIGHT_WALL_RIDER_ROTATION_1;
+				nS = State4.NO_RIGHT_WALL_RIDER_ROTATION_1;
 			else if ( rightSideDistance > LateralSensor.STOP_LENGTH )
-				nS = State3.WALL_RIDER_AWAY;
+				nS = State4.WALL_RIDER_AWAY;
 			else if ( rightSideDistance <= LateralSensor.STOP_LENGTH )
-				nS = State3.WALL_RIDER_NEAR;
+				nS = State4.WALL_RIDER_NEAR;
 			else
-				nS = State3.WALL_RIDER;
+				nS = State4.WALL_RIDER;
 			break;
 			
 		// état de suivi des murs lorqu'on s'en éloigne
 		case WALL_RIDER_AWAY :
 			// TODO : RIGHT ROTATION
 			if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
-				nS = State3.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
+				nS = State4.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
 			else if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance <= LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
-				nS = State3.FRONT_WALL_RIDER_ROTATION_1;
+				nS = State4.FRONT_WALL_RIDER_ROTATION_1;
 			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
-				nS = State3.NO_RIGHT_WALL_RIDER_ROTATION_1;
+				nS = State4.NO_RIGHT_WALL_RIDER_ROTATION_1;
 			else if ( rightSideDistance <= LateralSensor.STOP_LENGTH )
-				nS = State3.WALL_RIDER_AWAY_BACK;
+				nS = State4.WALL_RIDER_AWAY_BACK;
 			else
-				nS = State3.WALL_RIDER;
+				nS = State4.WALL_RIDER;
 			break;
 		
 		// état de suivi des murs lorqu'on se rapproche après s'être éloigné
@@ -185,17 +185,17 @@ public class StateMachineTransitionForDecisionV3 {
 			// TODO : RIGHT ROTATION
 			chronoWallRider.stop();
 			if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
-				nS = State3.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
+				nS = State4.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
 			else if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance <= LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
-				nS = State3.FRONT_WALL_RIDER_ROTATION_1;
+				nS = State4.FRONT_WALL_RIDER_ROTATION_1;
 			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
-				nS = State3.NO_RIGHT_WALL_RIDER_ROTATION_1;
+				nS = State4.NO_RIGHT_WALL_RIDER_ROTATION_1;
 			else if ( rightSideDistance <= LateralSensor.STOP_LENGTH )
-				nS = State3.WALL_RIDER_NEAR;
+				nS = State4.WALL_RIDER_NEAR;
 			else if ( this.memorisedDurationWallRider_2 > ( this.memorisedDurationWallRider_1 / 2 ) )
-				nS = State3.WALL_RIDER;
+				nS = State4.WALL_RIDER;
 			else
-				nS = State3.WALL_RIDER_AWAY_BACK;
+				nS = State4.WALL_RIDER_AWAY_BACK;
 			chronoWallRider.resume();
 			break;
 			
@@ -203,15 +203,15 @@ public class StateMachineTransitionForDecisionV3 {
 		case WALL_RIDER_NEAR :
 			// TODO : RIGHT ROTATION
 			if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
-				nS = State3.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
+				nS = State4.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
 			else if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance <= LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
-				nS = State3.FRONT_WALL_RIDER_ROTATION_1;
+				nS = State4.FRONT_WALL_RIDER_ROTATION_1;
 			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
-				nS = State3.NO_RIGHT_WALL_RIDER_ROTATION_1;
+				nS = State4.NO_RIGHT_WALL_RIDER_ROTATION_1;
 			else if ( rightSideDistance > LateralSensor.STOP_LENGTH )
-				nS = State3.WALL_RIDER_NEAR_BACK;
+				nS = State4.WALL_RIDER_NEAR_BACK;
 			else
-				nS = State3.WALL_RIDER_NEAR;
+				nS = State4.WALL_RIDER_NEAR;
 			break;
 			
 		// état de suivi des murs lorsqu'on s'en éloigne après s'être rapproché
@@ -219,72 +219,72 @@ public class StateMachineTransitionForDecisionV3 {
 			// TODO : RIGHT ROTATION
 			chronoWallRider.stop();
 			if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
-				nS = State3.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
+				nS = State4.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
 			else if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance <= LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
-				nS = State3.FRONT_WALL_RIDER_ROTATION_1;
+				nS = State4.FRONT_WALL_RIDER_ROTATION_1;
 			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
-				nS = State3.NO_RIGHT_WALL_RIDER_ROTATION_1;
+				nS = State4.NO_RIGHT_WALL_RIDER_ROTATION_1;
 			else if ( rightSideDistance > LateralSensor.STOP_LENGTH )
-				nS = State3.WALL_RIDER_AWAY;
+				nS = State4.WALL_RIDER_AWAY;
 			else if ( this.memorisedDurationWallRider_2 > ( this.memorisedDurationWallRider_1 / 2 ) )
-				nS = State3.WALL_RIDER;
+				nS = State4.WALL_RIDER;
 			else
-				nS = State3.WALL_RIDER_NEAR_BACK;
+				nS = State4.WALL_RIDER_NEAR_BACK;
 			chronoWallRider.resume();
 			break;
 		
 		//ï¿½tat pour tourner ï¿½ GAUCHE lorsque on rencontre un mur en face aprï¿½s le wall finder
 		case FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL :
 			if ( rightSideDistance <= LateralSensor.WARNING_LENGTH )
-				nS = State3.FRONT_WALL_RIDER_ROTATION_1;
+				nS = State4.FRONT_WALL_RIDER_ROTATION_1;
 			else
-				nS = State3.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
+				nS = State4.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
 			break;
 
 			
 		//état pour tourner à GAUCHE lorsque on rencontre un mur en face étape 1
 		case FRONT_WALL_RIDER_ROTATION_1 :
 			if ( rightSideDistance <= LateralSensor.STOP_LENGTH )
-				nS = State3.FRONT_WALL_RIDER_ROTATION_2;
+				nS = State4.FRONT_WALL_RIDER_ROTATION_2;
 			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
-				nS = State3.WALL_RIDER;
+				nS = State4.WALL_RIDER;
 			else
-				nS = State3.FRONT_WALL_RIDER_ROTATION_1;
+				nS = State4.FRONT_WALL_RIDER_ROTATION_1;
 			break;
 			
 		//état pour tourner à GAUCHE lorsque on rencontre un mur en face étape 2
 		case FRONT_WALL_RIDER_ROTATION_2 :
 			if ( rightSideDistance <= LateralSensor.WARNING_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH )
-				nS = State3.WALL_RIDER;
+				nS = State4.WALL_RIDER;
 			else if ( rightSideDistance > LateralSensor.STOP_LENGTH )
-				nS = State3.WALL_RIDER_AWAY;
+				nS = State4.WALL_RIDER_AWAY;
 			else
-				nS = State3.FRONT_WALL_RIDER_ROTATION_2;
+				nS = State4.FRONT_WALL_RIDER_ROTATION_2;
 			break;
 		
 		//ï¿½tat pour tourner ï¿½ DROITE lorsque on perd le mur sur notre droite ï¿½tape 1
 		case NO_RIGHT_WALL_RIDER_ROTATION_1 :
 			if ( rightSideDistance <= LateralSensor.STOP_LENGTH )
-				nS = State3.WALL_RIDER;
+				nS = State4.WALL_RIDER;
 			else if ( rightSideDistance <= LateralSensor.WARNING_LENGTH )
-				nS = State3.NO_RIGHT_WALL_RIDER_ROTATION_2;
+				nS = State4.NO_RIGHT_WALL_RIDER_ROTATION_2;
 			else
-				nS = State3.NO_RIGHT_WALL_RIDER_ROTATION_1;
+				nS = State4.NO_RIGHT_WALL_RIDER_ROTATION_1;
 			break;
 			
 		//ï¿½tat pour tourner ï¿½ DROITE lorsque on perd le mur sur notre droite ï¿½tape 2
 		case NO_RIGHT_WALL_RIDER_ROTATION_2 :
 			if ( rightSideDistance <= LateralSensor.STOP_LENGTH )
-				nS = State3.WALL_RIDER;
+				nS = State4.WALL_RIDER;
 			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
-				nS = State3.WALL_RIDER;
+				nS = State4.WALL_RIDER;
 			else
-				nS = State3.NO_RIGHT_WALL_RIDER_ROTATION_2;
+				nS = State4.NO_RIGHT_WALL_RIDER_ROTATION_2;
 			break;
 		
 		// En cas d'erreur sur le typage on passe dans l'ï¿½tat des erreurs majeurs	
 		default :
-			nS = State3.EMERGENCY_STANDING_STILL;
+			nS = State4.EMERGENCY_STANDING_STILL;
 			break;
 		}
 		
@@ -314,7 +314,6 @@ public class StateMachineTransitionForDecisionV3 {
 				case WALL_RIDER_AWAY_BACK:
 				case WALL_RIDER_NEAR_BACK:
 					chronoWallRider.stop();
-					//chrono = new Chrono();
 					chronoWallRider.start();
 					break;
 				default:
@@ -376,7 +375,7 @@ public class StateMachineTransitionForDecisionV3 {
 			speeds = STANDING_STILL_SPEED;
 			return ( STANDING_STILL_SPEED );
 		
-			// ï¿½tat permettant d'aller droit jusqu'ï¿½ trouver un mur pour dï¿½marrer la cartographie
+		// ï¿½tat permettant d'aller droit jusqu'ï¿½ trouver un mur pour dï¿½marrer la cartographie
 		case WALL_FINDER :
 			speeds = WALL_FINDER_SPEED;
 			return ( WALL_FINDER_SPEED );
@@ -437,61 +436,6 @@ public class StateMachineTransitionForDecisionV3 {
 			
 		}
 	}
-	
-// ========================================	
-// MAIN PROGRAMME - TEST
-	
-	/*
-	public static void main(String[] args) {
-			
-		// DECLARATION 
-		StateMachineTransitionForDecisionV1 SMT = new StateMachineTransitionForDecisionV1 ();
-		FilterCalibration FT = new FilterCalibration();
-		RobotConfig speeds = new RobotConfig (0,0,0,0);
-		RobotConfig calibratedSpeeds = new RobotConfig ( FT.filter(speeds) );
-		//Calibration previousCalibratedSpeeds = new Calibration ( calibratedSpeeds );
-			
-		// CHARGEMENT DE L'ETALONNAGE
-		boolean testLoad = FT.loadCalibrationFile();
-		System.out.println("-------------- ETALONNAGE --------------");
-		if ( testLoad )
-			System.out.println(FT);
-		else
-			System.out.println("LOADING ERROR");
-		System.out.println("----------------------------------------");
-		
-		System.out.println("--> | "+calibratedSpeeds+" |");
-			
-		// WHILE DE LA MAE
-		for ( int i_simu = 0; true; i_simu++ ) {
-			// lecture des valeurs de capteurs
-			SMT.readSensors ();
-			
-			//lecture des valeurs des capteurs ( simulation )
-			//SMT.readSensorsSimulation ( i_simu );
-			//previousCalibratedSpeeds = calibratedSpeeds;
-			
-			// traitement par la machine ï¿½ ï¿½tat pour la prise de dï¿½cision
-			SMT.FBloc();
-			SMT.MBloc();
-			speeds = SMT.GBloc();
-				
-			// ï¿½talonnage de vitesse demandï¿½e
-			calibratedSpeeds = FT.filter(speeds) ;
-			
-			// transmission de la vitesse
-			System.out.println("--> | "+calibratedSpeeds+" |");
-			
-			//transmission de la vitesse ( simultation )
-			//if ( SMT.isDifferent(previousCalibratedSpeeds) )
-			//	System.out.println("\n--> | "+calibratedSpeeds+" |");
-			//else {
-			//	if ( i_simu/20 == 0 )
-			//		System.out.print("|");
-			}
-			
-		}
-	} */
 	
 //========================================	
 	

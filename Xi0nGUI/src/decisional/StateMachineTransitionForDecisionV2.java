@@ -5,7 +5,6 @@ import view.robot.RobotConfig;
 import view.robot.RobotConstant;
 import view.Xi0nSimulation;
 import view.robot.LateralSensor;
-import tools.Chrono;
 
 /* Description de la classe ===============
 Machine � �tat pour la prise de D�cision
@@ -43,8 +42,6 @@ public class StateMachineTransitionForDecisionV2 {
 	// ------------------------------------
     // CHRONOMETER ------------------------
     // ------------------------------------
-	
-	private Chrono chrono = new Chrono ();
 	
 	// ------------------------------------
     // SENSORS MEMORY ---------------------

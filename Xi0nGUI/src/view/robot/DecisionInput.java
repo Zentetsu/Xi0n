@@ -2,15 +2,16 @@ package view.robot;
 
 import decisional.FilterCalibration;
 import decisional.StateMachineTransitionForDecisionV1;
+import decisional.StateMachineTransitionForDecisionV2;
 import decisional.StateMachineTransitionForDecisionV3;
-import decisional.StateMachineTransitionForDecisionV3;
+import decisional.StateMachineTransitionForDecisionV4;
 import view.Room;
 
 public class DecisionInput extends CustomInput {
 
 	private boolean found;
 	private int cpt;
-	StateMachineTransitionForDecisionV3 SMT;
+	StateMachineTransitionForDecisionV4 SMT;
 	FilterCalibration FT;
 	int cpt_simu = 0;
 
@@ -18,7 +19,7 @@ public class DecisionInput extends CustomInput {
 		super(robot, room);
 		this.found = false;
 		this.cpt = 0;
-		SMT = new StateMachineTransitionForDecisionV3();
+		SMT = new StateMachineTransitionForDecisionV4();
 		FT = new FilterCalibration();
 		boolean testLoad = FT.loadCalibrationFile();
 	}
@@ -43,8 +44,14 @@ public class DecisionInput extends CustomInput {
 		this.SMT.MBloc();
 		RobotConfig speeds = SMT.GBloc();
 		RobotConfig calibratedSpeeds = new RobotConfig(FT.filter(speeds));
-		this.robot.input.RIGHT = speeds.getRightPower0to255() * speeds.getRightDirection();
-		this.robot.input.LEFT = speeds.getLeftPower0to255() * speeds.getLeftDirection();
+		if ( speeds.getRightDirection() != 2 && speeds.getLeftDirection() != 2 ) {
+			this.robot.input.RIGHT = speeds.getRightPower0to255() * speeds.getRightDirection();
+			this.robot.input.LEFT = speeds.getLeftPower0to255() * speeds.getLeftDirection();
+		}
+		else {
+			this.robot.input.RIGHT = 0;
+			this.robot.input.LEFT = 0;
+		}
 		this.robot.input.STATE = this.SMT.getState();
 		this.cpt_simu++;
 	}

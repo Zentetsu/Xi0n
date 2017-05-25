@@ -9,10 +9,10 @@ import view.robot.RobotConstant;
 
 public class FrontalSensor extends Sensor {
 
-	private final float speed = (float) 1.5 * 3 ;
+	private final float speed = (float) ( 2.75) ;
 	private final int maxAngle = 45;
 	
-	public static final int FRONTAL_LENGTH = 45;
+	public static final int FRONTAL_LENGTH = 40;
 
 	private Polygon cone;
 	private float angle;
