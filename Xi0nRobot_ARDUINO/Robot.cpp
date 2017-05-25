@@ -1,13 +1,13 @@
 #include "./Robot.h"
 
 
-Robot::Robot() {
+Robot::Robot(int init_motorL_Pin1, int init_motorL_Pin2, int init_enableL_Pin, int init_motorR_Pin1, int init_motorR_Pin2, int init_enableR_Pin, int init_InfraRedSensor_Pin, int init_echo_Pin, int init_trigger_Pin, int new_ServoMotor_Pin) {
 	Serial.println ("CREATE ROBOT");
 	//communication = new Communication();
 	//controlLed = new ControlLed();
-	mobility = new Mobility();
-	sensor = new Sensor();
-	headServo = new HeadServo();
+	mobility = new Mobility(init_motorL_Pin1, init_motorL_Pin2, init_enableL_Pin, init_motorR_Pin1, init_motorR_Pin2, init_enableR_Pin);
+	sensor = new Sensor(init_InfraRedSensor_Pin, init_echo_Pin, init_trigger_Pin);
+	headServo = new HeadServo(new_ServoMotor_Pin);
 }
 
 Robot::~Robot() {

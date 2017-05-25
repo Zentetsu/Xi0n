@@ -7,7 +7,7 @@
 
 class Mobility {
 	public:
-		Mobility();
+		Mobility(int init_motorL_Pin1, int init_motorL_Pin2, int init_enableL_Pin, int init_motorR_Pin1, int init_motorR_Pin2, int init_enableR_Pin);
 		~Mobility();
 
 		void setDirection(int new_direction);

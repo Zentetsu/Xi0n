@@ -1,85 +1,99 @@
+#include <Communication.h>
+#include <ControlLed.h>
+#include <InfraRedSensor.h>
+#include <LED.h>
+#include <Mobility.h>
+#include <Motor.h>
+#include <Robot.h>
+#include <Sensor.h>
+#include <Ultrason.h>
+
 /********************************************************************
  * STATEMENT OF THE PHYSICAL PINOUT
 ********************************************************************/
-#define PinIR 14                // pinout of the front IR sensor
-#define PinUltrasoundTrig 9     // pinout trigger right side ultrasound
-#define PinUltrasoundEcho 10    // pinout right side ultrasound echo
-#define PinActuator 6           // pinout actuator front side scanning
-#define PinTX 1                 // Transmission pin series
-#define PinRX 0                 // Receive pin series
-#define PinPWMMotorRight 5      // Right motor PWM pinout
-#define PinPWMMotorLeft 3       // Left motor PWM pinout
-#define PinDigitalMotorRight1 13  // Enable pin 1 right motor
+#define PinIR A2                  // pinout of the front IR sensor
+#define PinUltrasoundTrig 2       // pinout trigger right side ultrasound
+#define PinUltrasoundEcho 9       // pinout right side ultrasound echo
+#define PinServoMotor 6           // pinout servomotor front side scanning
+#define PinTX 1                   // Transmission pin series
+#define PinRX 0                   // Receive pin series
+#define PinPWMMotorLeft 10        // Left motor PWM pinout
+#define PinPWMMotorRight 11       // Right motor PWM pinout
+#define PinDigitalMotorLeft1 7    // Enable pin 1 left motor
+#define PinDigitalMotorLeft2 4    // Enable pin 2 left motor
+#define PinDigitalMotorRight1 12  // Enable pin 1 right motor
 #define PinDigitalMotorRight2 8   // Enable pin 2 right motor
-#define PinDigitalMotorLeft1 12   // Enable pin 1 left motor
-#define PinDigitalMotorLeft2 7    // Enable pin 2 left motor
+
 
 /********************************************************************
  * GLOBAL VARIABLES
 ********************************************************************/
-boolean mode;               // Operating mode: Auto = true, Manual = false
-int infraRedRemote;         // Distance given by the infra-red sensor
-int ultrasoundRemote;       // Distance given by the ultrasound sensor
-int scanAngle;              // Sweep angle of the actuator
-int rightMotorDutyCycle;    // Duty cycle of the right motor
-int leftMotorDutyCycle;     // Duty cycle of the left motor
+boolean mode;                 // Operating mode: Auto = true, Manual = false
+int infraRedRemote;           // Distance given by the infra-red sensor
+int ultrasoundRemote;         // Distance given by the ultrasound sensor
+int scanAngle;                // Sweep angle of the ServoMotor
+int rightMotorDutyCycle;      // Duty cycle of the right motor
+int leftMotorDutyCycle;       // Duty cycle of the left motor
 int moveDirectionRightMotor;  // Right motor direction
 int moveDirectionLeftMotor;   // Left motor direction
 
 int incChar = 0;
 
+Robot *robot;
+int up_down;
+
+
+
 void setup() {
+  // put your setup code here, to run once:
   Serial.begin(9600);
-  pinMode(PinUltrasoundEcho, INPUT); 
-  pinMode(PinUltrasoundTrig, OUTPUT);
+  robot = new Robot(PinDigitalMotorLeft1, PinDigitalMotorLeft2, PinPWMMotorLeft, PinDigitalMotorRight1, PinDigitalMotorRight2, PinPWMMotorRight, PinIR,PinUltrasoundEcho, PinUltrasoundTrig, PinServoMotor);
+  scanAngle = 89;
+  up_down = 1;
 }
 
+
 void loop() {
-  ultrasonic();
-  infrared();
-  actuator();
-  engine();
+  assignHeadPosition();
+  assignDistanceUltrason();
+  assignDistanceInfraRed();
   communication();
-  Serial.println("\n");
-  delay(100);
 }
+
 
 /********************************************************************
  * TREATEMENT FROM THE ULTRASONIC DISTANCE SENSOR
 ********************************************************************/
-void ultrasonic() {
-  long duration;  
-  digitalWrite(PinUltrasoundTrig, LOW);
-  delayMicroseconds(2);
-  digitalWrite(PinUltrasoundTrig, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(PinUltrasoundTrig, LOW);
-  duration = pulseIn(PinUltrasoundEcho, HIGH);
-  ultrasoundRemote = (duration/2) / 29.1;
-  //Serial.print(ultrasoundRemote);  
-  //Serial.print(" cm    ");
+void assignDistanceUltrason() {
+  ultrasoundRemote = robot->getDistanceUltrasion();
 }
+
 
 /********************************************************************
  * TREATEMENT FROM THE INFRARED DISTANCE SENSOR
 ********************************************************************/
-void infrared() {
-  infraRedRemote = 10;
+void assignDistanceInfraRed() {
+  infraRedRemote = robot->getDistanceInfraRedSensor();
 }
 
-/********************************************************************
- * ACTUATOR ANGLE MANAGEMENT
-********************************************************************/
-void actuator() {
-  
-}
 
 /********************************************************************
- * ENGINE MANAGEMENT
+ * SERVOMOTOR ANGLE MANAGEMENT
 ********************************************************************/
-void engine() {
-  
+void assignHeadPosition() {
+  if(up_down)
+    scanAngle++;
+  else
+    scanAngle--;
+
+  robot->setHeadPosition(scanAngle);
+
+  if(scanAngle == 44)
+    up_down = 1;
+  else if(scanAngle == 134)
+    up_down = 0;
 }
+
 
 /********************************************************************
  * COMMUNICATION: SENDING SENSOR DISTANCE AND SCAN ANGLE
@@ -98,6 +112,7 @@ void communication() {
   Serial.print(scanAngle);
   Serial.print("$");
 }
+
 
 /********************************************************************
  * PROCESSING OF DATA FROM SERIAL DATA

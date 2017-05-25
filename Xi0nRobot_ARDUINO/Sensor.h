@@ -5,19 +5,17 @@
 
 #include "./Ultrason.h"
 #include "./InfraRedSensor.h"
-//#include "./AllOrNothingSensor.h"
 
 
 class Sensor {
 	public:
-		Sensor();
+		Sensor(int init_InfraRedSensor_Pin, int init_echo_Pin, int init_trigger_Pin);
 		~Sensor();
 
 		float getDistanceUltrasion();
 		float getDistanceInfraRedSensor();
 
 	private:
-		//AllOrNothingSensor *allOrNothingSensor;
 		InfraRedSensor *infraRedSensor;
 		Ultrason *ultrason;
 		

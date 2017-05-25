@@ -4,10 +4,10 @@
 using namespace std;
 
 
-Mobility::Mobility() {
+Mobility::Mobility(int init_motorL_Pin1, int init_motorL_Pin2, int init_enableL_Pin, int init_motorR_Pin1, int init_motorR_Pin2, int init_enableR_Pin) {
 	Serial.println ("CREATE MOBILITY");
-	left_Motor = new Motor(7, 4, 10);
-	right_Motor = new Motor(12, 8, 11);
+	left_Motor = new Motor(init_motorL_Pin1, init_motorL_Pin2, init_enableL_Pin);
+	right_Motor = new Motor(init_motorR_Pin1, init_motorR_Pin2, init_enableR_Pin);
 
 	//TODO : assign speed for the two motors
 

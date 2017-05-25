@@ -7,7 +7,7 @@
 
 class HeadServo {
 	public:
-		HeadServo();
+		HeadServo(int new_ServoMotor_Pin);
 		~HeadServo();
 
 		void setPosition(int new_position);

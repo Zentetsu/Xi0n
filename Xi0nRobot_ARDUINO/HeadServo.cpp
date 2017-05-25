@@ -3,9 +3,9 @@
 using namespace std;
 
 
-HeadServo::HeadServo() {
+HeadServo::HeadServo(int new_ServoMotor_Pin) {
 	Serial.println ("CREATE HEADSERVO");
-	servo.attach(6);
+	servo.attach(new_ServoMotor_Pin);
 	setPosition(0);
 }
 

@@ -3,16 +3,14 @@
 using namespace std;
 
 
-Sensor::Sensor() {
+Sensor::Sensor(int init_InfraRedSensor_Pin, int init_echo_Pin, int init_trigger_Pin) {
 	Serial.println ("CREATE SENSOR");
-	//allOrNothingSensor = new AllOrNothingSensor();
-	infraRedSensor = new InfraRedSensor(A2);
-	ultrason = new Ultrason(9, 2);
+	infraRedSensor = new InfraRedSensor(init_InfraRedSensor_Pin);
+	ultrason = new Ultrason(init_echo_Pin, init_trigger_Pin);
 }
 
 Sensor::~Sensor() {
 	Serial.println ("DELETE SENSOR");
-	//delete allOrNothingSensor;
 	delete infraRedSensor;
 	delete ultrason;
 }
