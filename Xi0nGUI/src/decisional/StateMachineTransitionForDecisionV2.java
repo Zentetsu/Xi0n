@@ -5,6 +5,7 @@ import view.robot.RobotConfig;
 import view.robot.RobotConstant;
 import view.Xi0nSimulation;
 import view.robot.LateralSensor;
+import tools.Chrono;
 
 /* Description de la classe ===============
 Machine ï¿½ ï¿½tat pour la prise de Dï¿½cision
@@ -20,12 +21,16 @@ public class StateMachineTransitionForDecisionV2 {
 	
 	public static final RobotConfig WALL_FINDER_SPEED = new RobotConfig ( 200, 200, 1, 1 );
 	public static final RobotConfig WALL_RIDER_SPEED = new RobotConfig ( 200, 200, 1, 1 );
-	public static final RobotConfig WALL_RIDER_AWAY_SPEED = new RobotConfig ( 100, 20, 1, 1 );
-	public static final RobotConfig WALL_RIDER_NEAR_SPEED = new RobotConfig ( 20, 100, 1, 1 );
+	public static final RobotConfig WALL_RIDER_AWAY_SPEED = new RobotConfig ( 200, 50, 1, 1 );
+	public static final RobotConfig WALL_RIDER_NEAR_SPEED = new RobotConfig ( 50, 200, 1, 1 );
+	public static final RobotConfig WALL_RIDER_AWAY_BACK_SPEED = new RobotConfig ( WALL_RIDER_AWAY_SPEED.getRightPower0to255(), WALL_RIDER_AWAY_SPEED.getLeftPower0to255(), 1, 1 );
+	public static final RobotConfig WALL_RIDER_NEAR_BACK_SPEED = new RobotConfig ( WALL_RIDER_NEAR_SPEED.getRightPower0to255(), WALL_RIDER_NEAR_SPEED.getLeftPower0to255(), 1, 1 );
 	public static final RobotConfig EMERGENCY_STANDING_STILL_SPEED = new RobotConfig ( 0, 0, 2, 2 );
 	public static final RobotConfig STANDING_STILL_SPEED = new RobotConfig ( 0, 0, 0, 0 );
 	public static final RobotConfig STANDING_LEFT_ROTATION_SPEED = new RobotConfig ( 200, 200, -1, 1 );
 	public static final RobotConfig STANDING_RIGHT_ROTATION_SPEED = new RobotConfig ( 200, 200, 1, -1 );
+	
+	public static final int maxDuration = 5000;
 	
 	// ------------------------------------
     // SENSORS ----------------------------
@@ -35,8 +40,17 @@ public class StateMachineTransitionForDecisionV2 {
 	private int frontalDistance;
 	
 	// ------------------------------------
+    // CHRONOMETER ------------------------
+    // ------------------------------------
+	
+	private Chrono chrono = new Chrono ();
+	
+	// ------------------------------------
     // SENSORS MEMORY ---------------------
     // ------------------------------------
+	
+	private long memorisedDuration_1;
+	private long memorisedDuration_2;
 	
 	// ------------------------------------
     // STATE MEMORY -----------------------
@@ -58,6 +72,8 @@ public class StateMachineTransitionForDecisionV2 {
 		readSensors();
 		pS = State2.WALL_FINDER;
 		nS = State2.WALL_FINDER;
+		memorisedDuration_1 = 0;
+		memorisedDuration_2 = 0;
 	}
 	
 // ========================================	
@@ -71,6 +87,8 @@ public class StateMachineTransitionForDecisionV2 {
 		readSensors();
 		pS = State2.WALL_FINDER;
 		nS = State2.WALL_FINDER;
+		memorisedDuration_1 = 0;
+		memorisedDuration_2 = 0;
 	}
 	
 	public void readSensors () {
@@ -95,6 +113,7 @@ public class StateMachineTransitionForDecisionV2 {
 	Dï¿½termine le nouvel ï¿½tat de la machine
 	*/
 	public void FBloc () {
+		
 		switch ( pS ) {
 		
 		// ï¿½tat d'erreur majeur : la machine est piï¿½gï¿½e dans cet ï¿½tat
@@ -129,6 +148,7 @@ public class StateMachineTransitionForDecisionV2 {
 		
 		// état de suivi des murs
 		case WALL_RIDER :
+			// TODO : RIGHT ROTATION
 			if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance > LateralSensor.WARNING_LENGTH )
 				nS = State2.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
 			else if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance <= LateralSensor.WARNING_LENGTH )
@@ -149,25 +169,60 @@ public class StateMachineTransitionForDecisionV2 {
 			else if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance <= LateralSensor.WARNING_LENGTH )
 				nS = State2.FRONT_WALL_RIDER_ROTATION;
 			else if ( rightSideDistance <= LateralSensor.WARNING_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH )
-				nS = State2.WALL_RIDER;
+				nS = State2.WALL_RIDER_AWAY_BACK;
 			else if ( rightSideDistance <= LateralSensor.STOP_LENGTH )
 				nS = State2.WALL_RIDER_NEAR;
 			else
 				nS = State2.WALL_RIDER_AWAY;
 			break;
+		
+		// état de suivi des murs lorqu'on se rapproche après s'être éloigné
+		case WALL_RIDER_AWAY_BACK :
+			// TODO : RIGHT ROTATION
+			chrono.stop();
+			if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance > LateralSensor.WARNING_LENGTH )
+				nS = State2.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
+			else if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance <= LateralSensor.WARNING_LENGTH )
+				nS = State2.FRONT_WALL_RIDER_ROTATION;
+			else if ( rightSideDistance <= LateralSensor.STOP_LENGTH )
+				nS = State2.WALL_RIDER_NEAR;
+			else if ( this.memorisedDuration_2 > ( this.memorisedDuration_1 / 2 ) )
+				nS = State2.WALL_RIDER;
+			else
+				nS = State2.WALL_RIDER_AWAY_BACK;
+			chrono.resume();
+			break;
 			
 		// état de suivi des murs lorsqu'on s'en rapproche
 		case WALL_RIDER_NEAR :
+			// TODO : RIGHT ROTATION
 			if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance > LateralSensor.WARNING_LENGTH )
 				nS = State2.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
 			else if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance <= LateralSensor.WARNING_LENGTH )
 				nS = State2.FRONT_WALL_RIDER_ROTATION;
 			else if ( rightSideDistance <= LateralSensor.WARNING_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH )
-				nS = State2.WALL_RIDER;
+				nS = State2.WALL_RIDER_NEAR_BACK;
 			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
 				nS = State2.WALL_RIDER_AWAY;
 			else
 				nS = State2.WALL_RIDER_NEAR;
+			break;
+			
+		// état de suivi des murs lorsqu'on s'en éloigne après s'être rapproché
+		case WALL_RIDER_NEAR_BACK :
+			// TODO : RIGHT ROTATION
+			chrono.stop();
+			if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance > LateralSensor.WARNING_LENGTH )
+				nS = State2.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
+			else if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance <= LateralSensor.WARNING_LENGTH )
+				nS = State2.FRONT_WALL_RIDER_ROTATION;
+			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
+				nS = State2.WALL_RIDER_AWAY;
+			else if ( this.memorisedDuration_2 > ( this.memorisedDuration_1 / 2 ) )
+				nS = State2.WALL_RIDER;
+			else
+				nS = State2.WALL_RIDER_NEAR_BACK;
+			chrono.resume();
 			break;
 		
 		//ï¿½tat pour tourner ï¿½ GAUCHE lorsque on rencontre un mur en face aprï¿½s le wall finder
@@ -201,6 +256,7 @@ public class StateMachineTransitionForDecisionV2 {
 			nS = State2.EMERGENCY_STANDING_STILL;
 			break;
 		}
+		
 	}
 	
 	/* Description des fonctions ----------
@@ -211,6 +267,54 @@ public class StateMachineTransitionForDecisionV2 {
 	executions du bloc F et G
 	*/
 	public void MBloc () {
+
+		System.out.println(memorisedDuration_1);
+		System.out.println(memorisedDuration_2);
+		
+		if ( nS != pS ) {
+			switch ( nS ) {
+			case WALL_RIDER_AWAY:
+			case WALL_RIDER_NEAR:
+			case WALL_RIDER_AWAY_BACK:
+			case WALL_RIDER_NEAR_BACK:
+				switch ( pS ) {
+				case WALL_RIDER_AWAY:
+				case WALL_RIDER_NEAR:
+				case WALL_RIDER_AWAY_BACK:
+				case WALL_RIDER_NEAR_BACK:
+					chrono.stop();
+					//chrono = new Chrono();
+					chrono.start();
+					break;
+				default:
+					chrono.start();
+					break;
+				}
+				break;
+			default:
+				memorisedDuration_1 = 0;
+				memorisedDuration_2 = 0;
+				break;
+			}
+		}
+		else {
+			switch ( nS ) {
+			case WALL_RIDER_AWAY:
+			case WALL_RIDER_NEAR:
+				chrono.stop();
+				memorisedDuration_1 += chrono.getDurationMs();
+				chrono.resume();
+				break;
+			case WALL_RIDER_AWAY_BACK:
+			case WALL_RIDER_NEAR_BACK:
+				chrono.stop();
+				memorisedDuration_2 += chrono.getDurationMs();
+				chrono.resume();
+				break;
+			default:
+				break;
+			}
+		}
 		pS = nS;
 	}
 	
@@ -221,6 +325,7 @@ public class StateMachineTransitionForDecisionV2 {
 	l'ï¿½tat proposï¿½
 	*/
 	public RobotConfig GBloc () {
+		
 		switch ( pS ) {
 		
 		// ï¿½tat d'erreur majeur : la machine est piï¿½gï¿½e dans cet ï¿½tat
@@ -253,11 +358,21 @@ public class StateMachineTransitionForDecisionV2 {
 		case WALL_RIDER_AWAY :
 			speeds = WALL_RIDER_AWAY_SPEED;
 			return ( WALL_RIDER_AWAY_SPEED );
+			
+		// état de suivi des murs lorqu'on se rapproche après s'être éloigné
+		case WALL_RIDER_AWAY_BACK :
+			speeds = WALL_RIDER_AWAY_BACK_SPEED;
+			return ( WALL_RIDER_AWAY_BACK_SPEED );
 				
 			//ï¿½tat pour longer un mur lorsque l'on s'en rapproche
 		case WALL_RIDER_NEAR :
 			speeds = WALL_RIDER_NEAR_SPEED;
 			return ( WALL_RIDER_NEAR_SPEED );
+			
+		// état de suivi des murs lorsqu'on s'en éloigne après s'être rapproché
+		case WALL_RIDER_NEAR_BACK :
+			speeds = WALL_RIDER_NEAR_BACK_SPEED;
+			return (WALL_RIDER_NEAR_BACK_SPEED);
 		
 		case FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL :
 			speeds = STANDING_LEFT_ROTATION_SPEED;
