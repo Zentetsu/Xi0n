@@ -20,8 +20,8 @@ public class StateMachineTransitionForDecisionV2 {
 	
 	public static final RobotConfig WALL_FINDER_SPEED = new RobotConfig ( 200, 200, 1, 1 );
 	public static final RobotConfig WALL_RIDER_SPEED = new RobotConfig ( 200, 200, 1, 1 );
-	public static final RobotConfig WALL_RIDER_AWAY_SPEED = new RobotConfig ( 200, 150, 1, 1 );
-	public static final RobotConfig WALL_RIDER_NEAR_SPEED = new RobotConfig ( 150, 200, 1, 1 );
+	public static final RobotConfig WALL_RIDER_AWAY_SPEED = new RobotConfig ( 100, 20, 1, 1 );
+	public static final RobotConfig WALL_RIDER_NEAR_SPEED = new RobotConfig ( 20, 100, 1, 1 );
 	public static final RobotConfig EMERGENCY_STANDING_STILL_SPEED = new RobotConfig ( 0, 0, 2, 2 );
 	public static final RobotConfig STANDING_STILL_SPEED = new RobotConfig ( 0, 0, 0, 0 );
 	public static final RobotConfig STANDING_LEFT_ROTATION_SPEED = new RobotConfig ( 200, 200, -1, 1 );
@@ -131,7 +131,7 @@ public class StateMachineTransitionForDecisionV2 {
 		case WALL_RIDER :
 			if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance > LateralSensor.WARNING_LENGTH )
 				nS = State2.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
-			else if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance > LateralSensor.WARNING_LENGTH )
+			else if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance <= LateralSensor.WARNING_LENGTH )
 				nS = State2.FRONT_WALL_RIDER_ROTATION;
 			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
 				nS = State2.WALL_RIDER_AWAY;
@@ -160,7 +160,7 @@ public class StateMachineTransitionForDecisionV2 {
 		case WALL_RIDER_NEAR :
 			if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance > LateralSensor.WARNING_LENGTH )
 				nS = State2.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
-			else if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance > LateralSensor.WARNING_LENGTH )
+			else if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance <= LateralSensor.WARNING_LENGTH )
 				nS = State2.FRONT_WALL_RIDER_ROTATION;
 			else if ( rightSideDistance <= LateralSensor.WARNING_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH )
 				nS = State2.WALL_RIDER;
