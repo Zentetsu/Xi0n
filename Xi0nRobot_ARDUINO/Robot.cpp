@@ -1,8 +1,8 @@
-#include "./Robot.h"
+ #include "./Robot.h"
 
 
 Robot::Robot(int init_motorL_Pin1, int init_motorL_Pin2, int init_enableL_Pin, int init_motorR_Pin1, int init_motorR_Pin2, int init_enableR_Pin, int init_InfraRedSensor_Pin, int init_echo_Pin, int init_trigger_Pin, int new_ServoMotor_Pin) {
-	Serial.println ("CREATE ROBOT");
+	//Serial.println ("CREATE ROBOT");
 	//communication = new Communication();
 	//controlLed = new ControlLed();
 	mobility = new Mobility(init_motorL_Pin1, init_motorL_Pin2, init_enableL_Pin, init_motorR_Pin1, init_motorR_Pin2, init_enableR_Pin);
@@ -11,7 +11,7 @@ Robot::Robot(int init_motorL_Pin1, int init_motorL_Pin2, int init_enableL_Pin, i
 }
 
 Robot::~Robot() {
-	Serial.println ("DELETE ROBOT");
+	//Serial.println ("DELETE ROBOT");
 	delete communication;
 	delete mobility;
 	delete sensor;
@@ -19,7 +19,7 @@ Robot::~Robot() {
 }
 
 void Robot::deplacemnt(int new_direction_M1, int new_direction_M2, int new_Speed_M1, int new_Speed_M2) {
-	Serial.println ("Deplacemnt");
+	//Serial.println ("Deplacemnt");
 	mobility->move(new_direction_M1, new_direction_M2, new_Speed_M1, new_Speed_M2);
 }
 

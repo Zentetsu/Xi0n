@@ -4,7 +4,7 @@ using namespace std;
 
 
 Motor::Motor(int init_motor_Pin1, int init_motor_Pin2, int init_enable_Pin) {
-	Serial.println ("CREATE MOTOR");
+	//Serial.println ("CREATE MOTOR");
 	motor_Pin1 = init_motor_Pin1;
 	motor_Pin2 = init_motor_Pin2;
 	enable_Pin = init_enable_Pin;
@@ -22,7 +22,7 @@ Motor::Motor(int init_motor_Pin1, int init_motor_Pin2, int init_enable_Pin) {
 }
 
 Motor::~Motor() {
-	Serial.println ("DELETE MOTOR");	
+	//Serial.println ("DELETE MOTOR");	
 }
 
 void  Motor::run(int v1_HIGH_LOW, int v2_HIGH_LOW) {

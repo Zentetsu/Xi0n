@@ -1,13 +1,37 @@
 #ifndef DEF_MOBILITY
 #define DEF_MOBILITY
 
+/*!
+ * \file Mobility.h
+ * \brief Mobility structure's
+ * \author MORANT Thbiaut
+ */
+
 #include "Arduino.h"
 #include "./Motor.h"
 
 
 class Mobility {
 	public:
+		/*!
+		 *  \brief Constructor
+		 *
+		 *  Constructor of the Mobility Class'
+		 *
+		 *  \param init_motorL_Pin1 : first pin of the left motor 
+		 *  \param init_motorL_Pin2 : second pin of the left motor
+		 *  \param init_enableL_Pin : pin to start or stop the left motor
+		 *  \param init_motorR_Pin1 : first pin of the right motor 
+		 *  \param init_motorR_Pin2 : second pin of the right motor
+		 *  \param init_enableR_Pin : pin to start or stop the right motor
+		 */
 		Mobility(int init_motorL_Pin1, int init_motorL_Pin2, int init_enableL_Pin, int init_motorR_Pin1, int init_motorR_Pin2, int init_enableR_Pin);
+
+		/*!
+		 *  \brief Destructor
+		 *
+		 *  Destructor of the Mobility Class'
+		 */
 		~Mobility();
 
 		void setDirection(int new_direction);
