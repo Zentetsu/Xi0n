@@ -6,8 +6,8 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class LateralSensor extends Sensor {
 
-	public static final int WARNING_LENGTH = 70;
-	public static final int STOP_LENGTH = 40;
+	public static final int WARNING_LENGTH = 50;
+	public static final int STOP_LENGTH = 30;
 
 	private RotableRectangle warningZone;
 	private RotableRectangle stopZone;

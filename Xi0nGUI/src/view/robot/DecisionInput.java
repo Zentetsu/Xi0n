@@ -1,6 +1,8 @@
 package view.robot;
 
 import decisional.FilterCalibration;
+import decisional.StateMachineTransitionForDecisionV1;
+import decisional.StateMachineTransitionForDecisionV3;
 import decisional.StateMachineTransitionForDecisionV3;
 import view.Room;
 

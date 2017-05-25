@@ -221,5 +221,12 @@ public enum Xi0nSimulation implements ApplicationListener {
 		}
 		return min;
 	}
+	
+	public float getSensorAngle () {
+		if ( this.room != null ) {
+			return this.room.getRobot().getSensorAngle();
+		}
+		else return 0;
+	}
 
 }

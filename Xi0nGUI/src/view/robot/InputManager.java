@@ -3,8 +3,9 @@ package view.robot;
 import java.util.HashMap;
 import java.util.Map;
 
-import decisional.State3;
+import decisional.State1;
 import decisional.State2;
+import decisional.State3;
 import view.Room;
 
 public class InputManager {

@@ -30,12 +30,15 @@ public class StateMachineTransitionForDecisionV2 {
 	public static final RobotConfig STANDING_LEFT_ROTATION_SPEED = new RobotConfig ( 200, 200, -1, 1 );
 	public static final RobotConfig STANDING_RIGHT_ROTATION_SPEED = new RobotConfig ( 200, 200, 1, -1 );
 	
+	public static final float thresholdAngle = 5;
+	
 	// ------------------------------------
     // SENSORS ----------------------------
     // ------------------------------------
 	
 	private int rightSideDistance;
 	private int frontalDistance;
+	private float servoAngle;
 	
 	// ------------------------------------
     // CHRONOMETER ------------------------
@@ -85,6 +88,7 @@ public class StateMachineTransitionForDecisionV2 {
 	public void readSensors () {
 		rightSideDistance = Xi0nSimulation.INSTANCE.getLateralDistance();
 		frontalDistance = Xi0nSimulation.INSTANCE.getFrontalDistance();
+		servoAngle = Xi0nSimulation.INSTANCE.getSensorAngle();
 	}
 	
 	public RobotConfig getRobotConfig () {
@@ -125,9 +129,9 @@ public class StateMachineTransitionForDecisionV2 {
 		
 		// ï¿½tat permettant d'aller droit jusqu'ï¿½ trouver un mur pour dï¿½marrer la cartographie
 		case WALL_FINDER :
-			if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance > LateralSensor.WARNING_LENGTH )
+			if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance > LateralSensor.WARNING_LENGTH && servoAngle < thresholdAngle && servoAngle > (-1)*thresholdAngle )
 				nS = State2.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
-			else if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance > LateralSensor.WARNING_LENGTH )
+			else if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance > LateralSensor.WARNING_LENGTH && servoAngle < thresholdAngle && servoAngle > (-1)*thresholdAngle )
 				nS = State2.FRONT_WALL_RIDER_ROTATION;
 			else if ( rightSideDistance <= LateralSensor.WARNING_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH )
 				nS = State2.WALL_RIDER;
@@ -140,9 +144,9 @@ public class StateMachineTransitionForDecisionV2 {
 		// état de suivi des murs
 		case WALL_RIDER :
 			// TODO : RIGHT ROTATION
-			if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance > LateralSensor.WARNING_LENGTH )
+			if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance > LateralSensor.WARNING_LENGTH && servoAngle < thresholdAngle && servoAngle > (-1)*thresholdAngle )
 				nS = State2.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
-			else if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance <= LateralSensor.WARNING_LENGTH )
+			else if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance <= LateralSensor.WARNING_LENGTH && servoAngle < thresholdAngle && servoAngle > (-1)*thresholdAngle )
 				nS = State2.FRONT_WALL_RIDER_ROTATION;
 			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
 				nS = State2.WALL_RIDER_AWAY;
@@ -155,9 +159,9 @@ public class StateMachineTransitionForDecisionV2 {
 		// état de suivi des murs lorqu'on s'en éloigne
 		case WALL_RIDER_AWAY :
 			// TODO : RIGHT ROTATION
-			if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance > LateralSensor.WARNING_LENGTH )
+			if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance > LateralSensor.WARNING_LENGTH && servoAngle < thresholdAngle && servoAngle > (-1)*thresholdAngle )
 				nS = State2.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
-			else if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance <= LateralSensor.WARNING_LENGTH )
+			else if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance <= LateralSensor.WARNING_LENGTH && servoAngle < thresholdAngle && servoAngle > (-1)*thresholdAngle )
 				nS = State2.FRONT_WALL_RIDER_ROTATION;
 			else if ( rightSideDistance <= LateralSensor.WARNING_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH )
 				nS = State2.WALL_RIDER;
@@ -170,9 +174,9 @@ public class StateMachineTransitionForDecisionV2 {
 		// état de suivi des murs lorsqu'on s'en rapproche
 		case WALL_RIDER_NEAR :
 			// TODO : RIGHT ROTATION
-			if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance > LateralSensor.WARNING_LENGTH )
+			if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance > LateralSensor.WARNING_LENGTH && servoAngle < thresholdAngle && servoAngle > (-1)*thresholdAngle )
 				nS = State2.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
-			else if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance <= LateralSensor.WARNING_LENGTH )
+			else if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance <= LateralSensor.WARNING_LENGTH && servoAngle < thresholdAngle && servoAngle > (-1)*thresholdAngle )
 				nS = State2.FRONT_WALL_RIDER_ROTATION;
 			else if ( rightSideDistance <= LateralSensor.WARNING_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH )
 				nS = State2.WALL_RIDER;

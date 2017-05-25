@@ -8,7 +8,7 @@ import tools.SensorValues;
 Machine � �tat pour la prise de D�cision
 =========================================*/
 public class StateMachineTransitionForDecisionV1 {
-	
+
 // ========================================
 // ATTRIBUTS
 	
