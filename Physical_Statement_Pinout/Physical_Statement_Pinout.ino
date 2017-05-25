@@ -1,3 +1,17 @@
+/********************************************************************
+ * Control program of a mobile robot developed in the framework of
+ * part three of the red wire robotic project
+ * 
+ * First year at UPSSITECH - Toulouse
+ * 
+ * VERSION: V02
+ * DATE: 25/05/17
+ * NAMES: MORANT Thibaut & PECCHIOLI Mathieu
+********************************************************************/
+
+/********************************************************************
+ * LIBRAIRIES
+********************************************************************/
 #include <Communication.h>
 #include <ControlLed.h>
 #include <InfraRedSensor.h>
@@ -24,7 +38,6 @@
 #define PinDigitalMotorRight1 12  // Enable pin 1 right motor
 #define PinDigitalMotorRight2 8   // Enable pin 2 right motor
 
-
 /********************************************************************
  * GLOBAL VARIABLES
 ********************************************************************/
@@ -38,26 +51,29 @@ int moveDirectionRightMotor;  // Right motor direction
 int moveDirectionLeftMotor;   // Left motor direction
 
 int incChar = 0;
-
 Robot *robot;
 int up_down;
 
 
-
+/********************************************************************
+ * MAIN PROGRAM - SETTINGS
+********************************************************************/
 void setup() {
-  // put your setup code here, to run once:
   Serial.begin(9600);
   robot = new Robot(PinDigitalMotorLeft1, PinDigitalMotorLeft2, PinPWMMotorLeft, PinDigitalMotorRight1, PinDigitalMotorRight2, PinPWMMotorRight, PinIR,PinUltrasoundEcho, PinUltrasoundTrig, PinServoMotor);
   scanAngle = 89;
   up_down = 1;
 }
 
-
+/********************************************************************
+ * MAIN PROGRAM - LOOP
+********************************************************************/
 void loop() {
   assignHeadPosition();
   assignDistanceUltrason();
   assignDistanceInfraRed();
   communication();
+  delay(100);
 }
 
 
