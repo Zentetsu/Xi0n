@@ -11,6 +11,8 @@ public class FrontalSensor extends Sensor {
 
 	private final float speed = (float) 1.5 * 3 ;
 	private final int maxAngle = 45;
+	
+	public static final int FRONTAL_LENGTH = 45;
 
 	private Polygon cone;
 	private float angle;
@@ -22,7 +24,7 @@ public class FrontalSensor extends Sensor {
 		this.type = SensorType.FRONTAL;
 
 		this.cone = new Polygon(
-				new float[] { x, y, x - 5 * 2, y + RobotConstant.HEIGHT, x + 5 * 2, y + RobotConstant.HEIGHT });
+				new float[] { x, y, x - 3 * 2, y + FRONTAL_LENGTH, x + 3 * 2, y + FRONTAL_LENGTH });
 		this.sens = 1;
 		this.angle = 0;
 
@@ -64,9 +66,9 @@ public class FrontalSensor extends Sensor {
 	@Override
 	public int getDistance(Rectangle rectangle) {
 		if(this.collide(rectangle)){
-			return RobotConstant.HEIGHT;
+			return FRONTAL_LENGTH;
 		}
-		return RobotConstant.HEIGHT + 20;
+		return FRONTAL_LENGTH + 20;
 	}
 
 }

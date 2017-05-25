@@ -4,6 +4,7 @@ package decisional;
 import view.robot.RobotConfig;
 import view.robot.RobotConstant;
 import view.Xi0nSimulation;
+import view.robot.FrontalSensor;
 import view.robot.LateralSensor;
 import tools.Chrono;
 
@@ -19,16 +20,16 @@ public class StateMachineTransitionForDecisionV3 {
 	// PARAMETERS -------------------------
     // ------------------------------------
 	
-	public static final RobotConfig WALL_FINDER_SPEED = new RobotConfig ( 200, 200, 1, 1 );
-	public static final RobotConfig WALL_RIDER_SPEED = new RobotConfig ( 200, 200, 1, 1 );
-	public static final RobotConfig WALL_RIDER_AWAY_SPEED = new RobotConfig ( 200, 50, 1, 1 );
-	public static final RobotConfig WALL_RIDER_NEAR_SPEED = new RobotConfig ( 50, 200, 1, 1 );
+	public static final RobotConfig WALL_FINDER_SPEED = new RobotConfig ( 130, 130, 1, 1 );
+	public static final RobotConfig WALL_RIDER_SPEED = new RobotConfig ( 130, 130, 1, 1 );
+	public static final RobotConfig WALL_RIDER_AWAY_SPEED = new RobotConfig ( 130, 30, 1, 1 );
+	public static final RobotConfig WALL_RIDER_NEAR_SPEED = new RobotConfig ( 30, 130, 1, 1 );
 	public static final RobotConfig WALL_RIDER_AWAY_BACK_SPEED = new RobotConfig ( WALL_RIDER_AWAY_SPEED.getRightPower0to255(), WALL_RIDER_AWAY_SPEED.getLeftPower0to255(), 1, 1 );
 	public static final RobotConfig WALL_RIDER_NEAR_BACK_SPEED = new RobotConfig ( WALL_RIDER_NEAR_SPEED.getRightPower0to255(), WALL_RIDER_NEAR_SPEED.getLeftPower0to255(), 1, 1 );
 	public static final RobotConfig EMERGENCY_STANDING_STILL_SPEED = new RobotConfig ( 0, 0, 2, 2 );
 	public static final RobotConfig STANDING_STILL_SPEED = new RobotConfig ( 0, 0, 0, 0 );
-	public static final RobotConfig STANDING_LEFT_ROTATION_SPEED = new RobotConfig ( 200, 200, -1, 1 );
-	public static final RobotConfig STANDING_RIGHT_ROTATION_SPEED = new RobotConfig ( 200, 200, 1, -1 );
+	public static final RobotConfig STANDING_LEFT_ROTATION_SPEED = new RobotConfig ( 100, 100, -1, 1 );
+	public static final RobotConfig STANDING_RIGHT_ROTATION_SPEED = new RobotConfig ( 100, 100, 1, -1 );
 	
 	public static final float THRESHOLD_ANGLE = 20;
 	
@@ -137,9 +138,9 @@ public class StateMachineTransitionForDecisionV3 {
 		
 		// ï¿½tat permettant d'aller droit jusqu'ï¿½ trouver un mur pour dï¿½marrer la cartographie
 		case WALL_FINDER :
-			if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance > LateralSensor.WARNING_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
+			if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.WARNING_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
 				nS = State3.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
-			else if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance > LateralSensor.WARNING_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
+			else if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.WARNING_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
 				nS = State3.FRONT_WALL_RIDER_ROTATION_1;
 			else if ( rightSideDistance <= LateralSensor.WARNING_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH )
 				nS = State3.WALL_RIDER;
@@ -152,9 +153,9 @@ public class StateMachineTransitionForDecisionV3 {
 		// état de suivi des murs
 		case WALL_RIDER :
 			// TODO : RIGHT ROTATION
-			if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
+			if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
 				nS = State3.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
-			else if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance <= LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
+			else if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance <= LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
 				nS = State3.FRONT_WALL_RIDER_ROTATION_1;
 			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
 				nS = State3.NO_RIGHT_WALL_RIDER_ROTATION_1;
@@ -169,9 +170,9 @@ public class StateMachineTransitionForDecisionV3 {
 		// état de suivi des murs lorqu'on s'en éloigne
 		case WALL_RIDER_AWAY :
 			// TODO : RIGHT ROTATION
-			if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
+			if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
 				nS = State3.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
-			else if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance <= LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
+			else if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance <= LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
 				nS = State3.FRONT_WALL_RIDER_ROTATION_1;
 			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
 				nS = State3.NO_RIGHT_WALL_RIDER_ROTATION_1;
@@ -185,9 +186,9 @@ public class StateMachineTransitionForDecisionV3 {
 		case WALL_RIDER_AWAY_BACK :
 			// TODO : RIGHT ROTATION
 			chronoWallRider.stop();
-			if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
+			if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
 				nS = State3.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
-			else if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance <= LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
+			else if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance <= LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
 				nS = State3.FRONT_WALL_RIDER_ROTATION_1;
 			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
 				nS = State3.NO_RIGHT_WALL_RIDER_ROTATION_1;
@@ -203,9 +204,9 @@ public class StateMachineTransitionForDecisionV3 {
 		// état de suivi des murs lorsqu'on s'en rapproche
 		case WALL_RIDER_NEAR :
 			// TODO : RIGHT ROTATION
-			if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
+			if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
 				nS = State3.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
-			else if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance <= LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
+			else if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance <= LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
 				nS = State3.FRONT_WALL_RIDER_ROTATION_1;
 			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
 				nS = State3.NO_RIGHT_WALL_RIDER_ROTATION_1;
@@ -219,9 +220,9 @@ public class StateMachineTransitionForDecisionV3 {
 		case WALL_RIDER_NEAR_BACK :
 			// TODO : RIGHT ROTATION
 			chronoWallRider.stop();
-			if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
+			if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
 				nS = State3.FRONT_WALL_RIDER_ROTATION_NO_RIGHT_WALL;
-			else if ( frontalDistance <= RobotConstant.HEIGHT && rightSideDistance <= LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
+			else if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance <= LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
 				nS = State3.FRONT_WALL_RIDER_ROTATION_1;
 			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
 				nS = State3.NO_RIGHT_WALL_RIDER_ROTATION_1;
