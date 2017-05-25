@@ -58,6 +58,7 @@ void loop() {
   assignDistanceUltrason();
   assignDistanceInfraRed();
   communication();
+  setDeplacemnt();
 }
 
 
@@ -94,6 +95,10 @@ void assignHeadPosition() {
     up_down = 0;
 }
 
+void setDeplacemnt() {
+    robot->deplacemnt(moveDirectionLeftMotor, moveDirectionRightMotor, leftMotorDutyCycle, rightMotorDutyCycle);
+}
+
 
 /********************************************************************
  * COMMUNICATION: SENDING SENSOR DISTANCE AND SCAN ANGLE
@@ -103,20 +108,23 @@ void assignHeadPosition() {
 ********************************************************************/
 void communication() {
   Serial.print("$0");
-  Serial.print(ultrasoundRemote);
-  Serial.print("$");
+  char c = ultrasoundRemote;
+  Serial.print(c);
+  Serial.print("!");
   Serial.print("$1");
-  Serial.print(infraRedRemote);
-  Serial.print("$");
+  char b = infraRedRemote;
+  Serial.print(b);
+  Serial.print("!");
   Serial.print("$2");
-  Serial.print(scanAngle);
-  Serial.print("$");
+  char a = scanAngle;
+  Serial.print(a);
+  Serial.print("!");
 }
 
 
 /********************************************************************
  * PROCESSING OF DATA FROM SERIAL DATA
- * FRAME RECEIVE EXAMPLE:   "$0A&" = "$TYPE;DCR;DCL$"
+ * FRAME RECEIVE EXAMPLE:   "$0A!"
  *    0 = Changing the operating mode
  *            0 = Manual  1 = Auto
  *    1 = Changing the right engine duty cycle
@@ -148,90 +156,90 @@ void serialEvent() {
       if(c == '$') {
         frameStart = true;
         increment = 0;
-        Serial.println("$ detect");
+        //Serial.println("$ detect");
       } else frameFinish = true;
     } else {
       increment++;
       if(frameSelectType == false) {
         type = c;
         if(type == '0') {
-          Serial.println("Changing the operating mode");
+          //Serial.println("Changing the operating mode");
           frameSelectType = true;
         } else if(type == '1') {
-          Serial.println("Changing the right engine duty cycle");
+          //Serial.println("Changing the right engine duty cycle");
           frameSelectType = true;
         } else if(type == '2') {
-          Serial.println("Changing the left engine duty cycle");
+          //Serial.println("Changing the left engine duty cycle");
           frameSelectType = true;
         } else if(type == '3') {
-        Serial.println("Changing the right engine movement direction");
+        //Serial.println("Changing the right engine movement direction");
         frameSelectType = true;
         } else if(type == '4') {
-        Serial.println("Changing the left engine movement direction");
+        //Serial.println("Changing the left engine movement direction");
         frameSelectType = true;
         } else {
-          Serial.println("TYPE ERROR");
+          //Serial.println("TYPE ERROR");
           frameFinish = true;
         }
       } else if(frameGetValue ==  false) {
         value = c;
-        Serial.print("Value save: ");
-        Serial.println(value);
+        //Serial.print("Value save: ");
+        //Serial.println(value);
         frameGetValue = true;
       } else if(frameFinish == false) {
-        if(c == '$') {
+        if(c == '!') {
           frameValid = true;
-          Serial.println("The Frame Is Valid");
-        } else Serial.println("The Frame Isn't Valid");
+          //Serial.println("The Frame Is Valid");
+        } //else Serial.println("The Frame Isn't Valid");
         frameFinish = true;
       }
     }
 
     if((frameFinish == true) || (increment == 3)) {
       if(frameValid == true) {
-        Serial.println("DATA UPDATE...");
+        //Serial.println("DATA UPDATE...");
         switch (type) {
           case '0':
             /* MODE UPDATE */
             if(value == '0') {
               mode = false;
-              Serial.println("MANUAL OPERATING MODE");
+              //Serial.println("MANUAL OPERATING MODE");
             } else {
               mode = true;
-              Serial.println("AUTO OPERATING MODE");
+              //Serial.println("AUTO OPERATING MODE");
             }
             break;
           case '1':
             /* DUTY CYCLE RIGHT ENGINE UPDATE */
             rightMotorDutyCycle = value;
-            Serial.print("DUTY CYCLE RIGHT: ");
-            Serial.println(rightMotorDutyCycle);
+            //Serial.print("DUTY CYCLE RIGHT: ");
+            //Serial.println(rightMotorDutyCycle);
             break;
           case '2':
             /* DUTY CYCLE LEFT ENGINE UPDATE */
             leftMotorDutyCycle = value;
-            Serial.print("DUTY CYCLE LEFT: ");
-            Serial.println(leftMotorDutyCycle);
+            //Serial.print("DUTY CYCLE LEFT: ");
+            //Serial.println(leftMotorDutyCycle);
             break;
           case '3':
             /* MOVEMENT DIRECTION RIGHT ENGINE UPDATE */
             moveDirectionRightMotor = value;
-            Serial.print("MOVEMENT DIRECTION RIGHT ENGINE: ");
-            Serial.println(leftMotorDutyCycle);
+            //Serial.print("MOVEMENT DIRECTION RIGHT ENGINE: ");
+            //Serial.println(leftMotorDutyCycle);
             break;
           case '4':
             /* MOVEMENT DIRECTION LEFT ENGINE UPDATE */
             moveDirectionLeftMotor = value;
-            Serial.print("MOVEMENT DIRECTION LEFT ENGINE: ");
-            Serial.println(leftMotorDutyCycle);
+            //Serial.print("MOVEMENT DIRECTION LEFT ENGINE: ");
+            //Serial.println(leftMotorDutyCycle);
             break;
         }
-        Serial.println("DATA UPDATED");
+        //Serial.println("DATA UPDATED");
       }
-      else Serial.println("FRAME ERROR");
+      //else Serial.println("FRAME ERROR");
 
       /* INITIALIZATION FOR THE NEXT FRAME */
-      Serial.println("INITIALIZATION FOR THE NEXT FRAME");
+      //Serial.println("INITIALIZATION FOR THE NEXT FRAME");
       frameStart = false;
       frameSelectType = false;
       frameGetValue = false;
