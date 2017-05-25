@@ -9,7 +9,6 @@
 
 #include "Arduino.h"
 
-#include "./Communication.h"
 #include "./ControlLed.h"
 #include "./Sensor.h"
 #include "./Mobility.h"

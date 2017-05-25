@@ -81,6 +81,8 @@ class Motor {
 
 		/*!
 		 *  \brief change the motor speed rotation
+		 *
+		 * \parama new_Speed : the new value of speed
 		 */
 		void setSpeed(int new_Speed);
 

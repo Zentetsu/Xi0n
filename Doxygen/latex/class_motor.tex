@@ -1,0 +1,179 @@
+\hypertarget{class_motor}{}\section{Motor Class Reference}
+\label{class_motor}\index{Motor@{Motor}}
+
+
+{\ttfamily \#include $<$Motor.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_motor_af153121a5e217901c8e3d47727b4e2d2}{Motor} (int init\+\_\+motor\+\_\+\+Pin1, int init\+\_\+motor\+\_\+\+Pin2, int init\+\_\+enable\+\_\+\+Pin)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hyperlink{class_motor_a2e57c7b2681efea1d3b7f253ee88ecd4}{$\sim$\+Motor} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{class_motor_a7ee681f77332ff9fd64365f90a12da50}{run} (int v1\+\_\+\+H\+I\+G\+H\+\_\+\+L\+OW, int v2\+\_\+\+H\+I\+G\+H\+\_\+\+L\+OW)
+\begin{DoxyCompactList}\small\item\em assign the new direction for the motor \end{DoxyCompactList}\item 
+void \hyperlink{class_motor_acdf6ea64d3bc32cec89103ea23521303}{enable} ()
+\begin{DoxyCompactList}\small\item\em allows the motor to ratote \end{DoxyCompactList}\item 
+void \hyperlink{class_motor_adf84e8f39fb82027b3343f5fb1cdbf96}{disable} ()
+\begin{DoxyCompactList}\small\item\em desables the rotation of the motor \end{DoxyCompactList}\item 
+void \hyperlink{class_motor_aab4e351cba813805bdcff0072e818510}{change\+Rotation\+Direction} ()
+\begin{DoxyCompactList}\small\item\em Change the rotation of the motor. \end{DoxyCompactList}\item 
+int \hyperlink{class_motor_a45a803953ffadfb187cbbad35702da69}{get\+Rotation\+Direction} ()
+\begin{DoxyCompactList}\small\item\em get the rotation direction of the motor \end{DoxyCompactList}\item 
+void \hyperlink{class_motor_ae8747855c2e4cb1992eaddf687db7a6f}{brake} ()
+\begin{DoxyCompactList}\small\item\em enable brake \end{DoxyCompactList}\item 
+void \hyperlink{class_motor_aeeb75807f8bda1d83456590e740b3c32}{stop\+Brake} ()
+\begin{DoxyCompactList}\small\item\em desable brake \end{DoxyCompactList}\item 
+void \hyperlink{class_motor_a6ac966a2639aaba6a19e1596a37bc475}{set\+Speed} (int new\+\_\+\+Speed)
+\begin{DoxyCompactList}\small\item\em change the motor speed rotation \end{DoxyCompactList}\item 
+int \hyperlink{class_motor_a4d03ea62bd9f5579d4fbe16d10462962}{get\+Speed} ()
+\begin{DoxyCompactList}\small\item\em get the motor speed rotation \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_motor_af153121a5e217901c8e3d47727b4e2d2}\label{class_motor_af153121a5e217901c8e3d47727b4e2d2}} 
+\index{Motor@{Motor}!Motor@{Motor}}
+\index{Motor@{Motor}!Motor@{Motor}}
+\subsubsection{\texorpdfstring{Motor()}{Motor()}}
+{\footnotesize\ttfamily Motor\+::\+Motor (\begin{DoxyParamCaption}\item[{int}]{init\+\_\+motor\+\_\+\+Pin1,  }\item[{int}]{init\+\_\+motor\+\_\+\+Pin2,  }\item[{int}]{init\+\_\+enable\+\_\+\+Pin }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+Constructor of the motor Class\textquotesingle{}
+
+
+\begin{DoxyParams}{Parameters}
+{\em init\+\_\+motor\+\_\+\+Pin1} & \+: first pin of the motor \\
+\hline
+{\em init\+\_\+motor\+\_\+\+Pin2} & \+: second pin of the motor \\
+\hline
+{\em init\+\_\+enable\+\_\+\+Pin} & \+: pin to start or stop the motor \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_motor_a2e57c7b2681efea1d3b7f253ee88ecd4}\label{class_motor_a2e57c7b2681efea1d3b7f253ee88ecd4}} 
+\index{Motor@{Motor}!````~Motor@{$\sim$\+Motor}}
+\index{````~Motor@{$\sim$\+Motor}!Motor@{Motor}}
+\subsubsection{\texorpdfstring{$\sim$\+Motor()}{~Motor()}}
+{\footnotesize\ttfamily Motor\+::$\sim$\+Motor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destructor. 
+
+Destructor of the motor Class\textquotesingle{} 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_motor_ae8747855c2e4cb1992eaddf687db7a6f}\label{class_motor_ae8747855c2e4cb1992eaddf687db7a6f}} 
+\index{Motor@{Motor}!brake@{brake}}
+\index{brake@{brake}!Motor@{Motor}}
+\subsubsection{\texorpdfstring{brake()}{brake()}}
+{\footnotesize\ttfamily void Motor\+::brake (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+enable brake 
+
+\mbox{\Hypertarget{class_motor_aab4e351cba813805bdcff0072e818510}\label{class_motor_aab4e351cba813805bdcff0072e818510}} 
+\index{Motor@{Motor}!change\+Rotation\+Direction@{change\+Rotation\+Direction}}
+\index{change\+Rotation\+Direction@{change\+Rotation\+Direction}!Motor@{Motor}}
+\subsubsection{\texorpdfstring{change\+Rotation\+Direction()}{changeRotationDirection()}}
+{\footnotesize\ttfamily void Motor\+::change\+Rotation\+Direction (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Change the rotation of the motor. 
+
+\mbox{\Hypertarget{class_motor_adf84e8f39fb82027b3343f5fb1cdbf96}\label{class_motor_adf84e8f39fb82027b3343f5fb1cdbf96}} 
+\index{Motor@{Motor}!disable@{disable}}
+\index{disable@{disable}!Motor@{Motor}}
+\subsubsection{\texorpdfstring{disable()}{disable()}}
+{\footnotesize\ttfamily void Motor\+::disable (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+desables the rotation of the motor 
+
+\mbox{\Hypertarget{class_motor_acdf6ea64d3bc32cec89103ea23521303}\label{class_motor_acdf6ea64d3bc32cec89103ea23521303}} 
+\index{Motor@{Motor}!enable@{enable}}
+\index{enable@{enable}!Motor@{Motor}}
+\subsubsection{\texorpdfstring{enable()}{enable()}}
+{\footnotesize\ttfamily void Motor\+::enable (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+allows the motor to ratote 
+
+enables the rotation of the motor \mbox{\Hypertarget{class_motor_a45a803953ffadfb187cbbad35702da69}\label{class_motor_a45a803953ffadfb187cbbad35702da69}} 
+\index{Motor@{Motor}!get\+Rotation\+Direction@{get\+Rotation\+Direction}}
+\index{get\+Rotation\+Direction@{get\+Rotation\+Direction}!Motor@{Motor}}
+\subsubsection{\texorpdfstring{get\+Rotation\+Direction()}{getRotationDirection()}}
+{\footnotesize\ttfamily int Motor\+::get\+Rotation\+Direction (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+get the rotation direction of the motor 
+
+\begin{DoxyReturn}{Returns}
+the direction of the motor 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_motor_a4d03ea62bd9f5579d4fbe16d10462962}\label{class_motor_a4d03ea62bd9f5579d4fbe16d10462962}} 
+\index{Motor@{Motor}!get\+Speed@{get\+Speed}}
+\index{get\+Speed@{get\+Speed}!Motor@{Motor}}
+\subsubsection{\texorpdfstring{get\+Speed()}{getSpeed()}}
+{\footnotesize\ttfamily int Motor\+::get\+Speed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+get the motor speed rotation 
+
+\begin{DoxyReturn}{Returns}
+this value 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_motor_a7ee681f77332ff9fd64365f90a12da50}\label{class_motor_a7ee681f77332ff9fd64365f90a12da50}} 
+\index{Motor@{Motor}!run@{run}}
+\index{run@{run}!Motor@{Motor}}
+\subsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void Motor\+::run (\begin{DoxyParamCaption}\item[{int}]{v1\+\_\+\+H\+I\+G\+H\+\_\+\+L\+OW,  }\item[{int}]{v2\+\_\+\+H\+I\+G\+H\+\_\+\+L\+OW }\end{DoxyParamCaption})}
+
+
+
+assign the new direction for the motor 
+
+assign the new value for the pin1 and pin2
+
+
+\begin{DoxyParams}{Parameters}
+{\em v1\+\_\+\+H\+I\+G\+H\+\_\+\+L\+OW} & \+: control the first part of the H-\/bridge \\
+\hline
+{\em v2\+\_\+\+H\+I\+G\+H\+\_\+\+L\+OW} & \+: control the second part of the H-\/bridge \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_motor_a6ac966a2639aaba6a19e1596a37bc475}\label{class_motor_a6ac966a2639aaba6a19e1596a37bc475}} 
+\index{Motor@{Motor}!set\+Speed@{set\+Speed}}
+\index{set\+Speed@{set\+Speed}!Motor@{Motor}}
+\subsubsection{\texorpdfstring{set\+Speed()}{setSpeed()}}
+{\footnotesize\ttfamily void Motor\+::set\+Speed (\begin{DoxyParamCaption}\item[{int}]{new\+\_\+\+Speed }\end{DoxyParamCaption})}
+
+
+
+change the motor speed rotation 
+
+new\+\_\+\+Speed \+: the new value of speed \mbox{\Hypertarget{class_motor_aeeb75807f8bda1d83456590e740b3c32}\label{class_motor_aeeb75807f8bda1d83456590e740b3c32}} 
+\index{Motor@{Motor}!stop\+Brake@{stop\+Brake}}
+\index{stop\+Brake@{stop\+Brake}!Motor@{Motor}}
+\subsubsection{\texorpdfstring{stop\+Brake()}{stopBrake()}}
+{\footnotesize\ttfamily void Motor\+::stop\+Brake (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+desable brake 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/thibautmorant/\+Documents/\+Xi0n/\+Xi0n\+Robot\+\_\+\+A\+R\+D\+U\+I\+N\+O/\hyperlink{_motor_8h}{Motor.\+h}\item 
+/\+Users/thibautmorant/\+Documents/\+Xi0n/\+Xi0n\+Robot\+\_\+\+A\+R\+D\+U\+I\+N\+O/\hyperlink{_motor_8cpp}{Motor.\+cpp}\end{DoxyCompactItemize}
