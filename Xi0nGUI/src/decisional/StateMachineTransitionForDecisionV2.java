@@ -125,7 +125,7 @@ public class StateMachineTransitionForDecisionV2 {
 		// état de suvit des murs
 		case WALL_RIDER :
 			if ( frontalDistance <= 50 )
-				nS = State2.FRONT_WALL_RIDER_ROTATION_2;
+				nS = State2.FRONT_WALL_RIDER_ROTATION;
 			/*
 			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
 				nS = State1.NO_RIGHT_WALL_RIDER_ROTATION_1;
@@ -142,37 +142,21 @@ public class StateMachineTransitionForDecisionV2 {
 				nS = State2.FRONT_WALL_RIDER_ROTATION_POST_FINDER;
 			break;
 
-		/*
-		case FRONT_WALL_RIDER_ROTATION_TEMP :
-			if ( rightSideDistance <= LateralSensor.STOP_LENGTH )
-				nS = State2.FRONT_WALL_RIDER_ROTATION_2;
-			else
-				nS = State2.FRONT_WALL_RIDER_ROTATION_TEMP;
-			break;
-		*/
 			
 		//état pour tourner à GAUCHE lorsque on rencontre un mur en face
-		case FRONT_WALL_RIDER_ROTATION_2 :
+		case FRONT_WALL_RIDER_ROTATION :
 			if ( rightSideDistance > LateralSensor.STOP_LENGTH )
 				nS = State2.WALL_RIDER;
 			else
-				nS = State2.FRONT_WALL_RIDER_ROTATION_2;
+				nS = State2.FRONT_WALL_RIDER_ROTATION;
 			break;
 		
 		//ï¿½tat pour tourner ï¿½ DROITE lorsque on perd le mur sur notre droite ï¿½tape 1
-		case NO_RIGHT_WALL_RIDER_ROTATION_1 :
+		case NO_RIGHT_WALL_RIDER_ROTATION :
 			if ( rightSideDistance < LateralSensor.WARNING_LENGTH && rightSideDistance >= LateralSensor.STOP_LENGTH )
-				nS = State2.NO_RIGHT_WALL_RIDER_ROTATION_2;
+				nS = State2.NO_RIGHT_WALL_RIDER_ROTATION;
 			else
-				nS = State2.NO_RIGHT_WALL_RIDER_ROTATION_1;
-			break;
-		
-		//ï¿½tat pour tourner ï¿½ DROITE lorsque on perd le mur sur notre droite ï¿½tape 2
-		case NO_RIGHT_WALL_RIDER_ROTATION_2 :
-			if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
-				nS = State2.WALL_RIDER;
-			else
-				nS = State2.NO_RIGHT_WALL_RIDER_ROTATION_2;
+				nS = State2.NO_RIGHT_WALL_RIDER_ROTATION;
 			break;
 			
 		// En cas d'erreur sur le typage on passe dans l'ï¿½tat des erreurs majeurs	
@@ -233,16 +217,12 @@ public class StateMachineTransitionForDecisionV2 {
 			return ( STANDING_LEFT_ROTATION_SPEED );
 				
 		//état pour tourner à GAUCHE lorsque on rencontre un mur en face
-		case FRONT_WALL_RIDER_ROTATION_2 :
+		case FRONT_WALL_RIDER_ROTATION :
 			speeds = STANDING_LEFT_ROTATION_SPEED;
 			return ( STANDING_LEFT_ROTATION_SPEED );
 			
 		//ï¿½tat pour tourner ï¿½ DROITE lorsque on perd le mur sur notre droite
-		case NO_RIGHT_WALL_RIDER_ROTATION_1 :
-			speeds = STANDING_RIGHT_ROTATION_SPEED;
-			return ( STANDING_RIGHT_ROTATION_SPEED );
-			
-		case NO_RIGHT_WALL_RIDER_ROTATION_2 :
+		case NO_RIGHT_WALL_RIDER_ROTATION :
 			speeds = STANDING_RIGHT_ROTATION_SPEED;
 			return ( STANDING_RIGHT_ROTATION_SPEED );
 		
