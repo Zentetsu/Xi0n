@@ -17,12 +17,14 @@
 /********************************************************************
  * GLOBAL VARIABLES
 ********************************************************************/
-boolean mode;             // Operating mode: Auto = true, Manual = false
-int infraRedRemote;       // Distance given by the infra-red sensor
-int ultrasoundRemote;     // Distance given by the ultrasound sensor
-int scanAngle;            // Sweep angle of the actuator
-int rightMotorDutyCycle;  // Duty cycle of the right motor
-int leftMotorDutyCycle;   // Duty cycle of the left motor
+boolean mode;               // Operating mode: Auto = true, Manual = false
+int infraRedRemote;         // Distance given by the infra-red sensor
+int ultrasoundRemote;       // Distance given by the ultrasound sensor
+int scanAngle;              // Sweep angle of the actuator
+int rightMotorDutyCycle;    // Duty cycle of the right motor
+int leftMotorDutyCycle;     // Duty cycle of the left motor
+int moveDirectionRightMotor;  // Right motor direction
+int moveDirectionLeftMotor;   // Left motor direction
 
 int incChar = 0;
 
@@ -106,6 +108,10 @@ void communication() {
  *            A = value of duty cycle
  *    2 = Changing the left engine duty cycle
  *            A = value of duty cycle
+ *    3 = Changing the right engine movement direction
+ *            A = sense
+ *    4 = Changing the left engine movement direction
+ *            A = sense
 *********************************************************************/
 void serialEvent() {
     /* PROGRESS VARIABLE IN THE FRAME */
@@ -142,6 +148,12 @@ void serialEvent() {
         } else if(type == '2') {
           Serial.println("Changing the left engine duty cycle");
           frameSelectType = true;
+        } else if(type == '3') {
+        Serial.println("Changing the right engine movement direction");
+        frameSelectType = true;
+        } else if(type == '4') {
+        Serial.println("Changing the left engine movement direction");
+        frameSelectType = true;
         } else {
           Serial.println("TYPE ERROR");
           frameFinish = true;
@@ -184,6 +196,18 @@ void serialEvent() {
             /* DUTY CYCLE LEFT ENGINE UPDATE */
             leftMotorDutyCycle = value;
             Serial.print("DUTY CYCLE LEFT: ");
+            Serial.println(leftMotorDutyCycle);
+            break;
+          case '3':
+            /* MOVEMENT DIRECTION RIGHT ENGINE UPDATE */
+            moveDirectionRightMotor = value;
+            Serial.print("MOVEMENT DIRECTION RIGHT ENGINE: ");
+            Serial.println(leftMotorDutyCycle);
+            break;
+          case '4':
+            /* MOVEMENT DIRECTION LEFT ENGINE UPDATE */
+            moveDirectionLeftMotor = value;
+            Serial.print("MOVEMENT DIRECTION LEFT ENGINE: ");
             Serial.println(leftMotorDutyCycle);
             break;
         }
