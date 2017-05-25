@@ -4,7 +4,7 @@ using namespace std;
 
 
 LED::LED(int init_pin) {
-	Serial.println ("CREATE LED");
+	//Serial.println ("CREATE LED");
 	pin = init_pin;
 	state = LOW;
 
@@ -12,7 +12,7 @@ LED::LED(int init_pin) {
 }
 
 LED::~LED() {
-	Serial.println ("DELETE LED");
+	//Serial.println ("DELETE LED");
 }
 
 void LED::enable() {

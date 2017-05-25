@@ -4,13 +4,13 @@ using namespace std;
 
 
 HeadServo::HeadServo(int new_ServoMotor_Pin) {
-	Serial.println ("CREATE HEADSERVO");
+	//Serial.println ("CREATE HEADSERVO");
 	servo.attach(new_ServoMotor_Pin);
 	setPosition(0);
 }
 
 HeadServo::~HeadServo() {
-	Serial.println ("DELETE HEADSERVO");	
+	//Serial.println ("DELETE HEADSERVO");	
 }
 
 void HeadServo::setPosition(int new_position) {

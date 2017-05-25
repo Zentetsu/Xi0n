@@ -4,10 +4,10 @@ using namespace std;
 
 
 Communication::Communication() {
-	Serial.println ("CREATE COMMUNICATION");
+	//Serial.println ("CREATE COMMUNICATION");
 
 }
 
 Communication::~Communication() {
-	Serial.println ("DELETE COMMUNICATION");
+	//Serial.println ("DELETE COMMUNICATION");
 }
