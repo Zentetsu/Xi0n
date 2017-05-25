@@ -48,7 +48,7 @@ public class LateralSensor extends Sensor {
 			return LateralSensor.STOP_LENGTH;
 		}
 		if (this.warningZone.collide(rectangle)) {
-			return LateralSensor.STOP_LENGTH;
+			return LateralSensor.WARNING_LENGTH;
 		}
 		return LateralSensor.WARNING_LENGTH + LateralSensor.STOP_LENGTH;
 	}
