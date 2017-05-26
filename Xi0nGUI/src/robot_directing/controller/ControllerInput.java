@@ -7,12 +7,13 @@ import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.math.Vector3;
 
-import physic.mapping.Room;
 import physic.robot.Robot;
 import robot_directing.AbstractInput;
 
 public class ControllerInput extends AbstractInput implements ControllerListener {
 
+	private boolean isTurning = false;
+	
 	public ControllerInput(Robot robot) {
 		super(robot);
 		Controllers.addListener(this);
@@ -24,24 +25,21 @@ public class ControllerInput extends AbstractInput implements ControllerListener
 		if(this.paused){
 			return false;
 		}
-
-		this.robot.input.LEFT = 0;
-		this.robot.input.RIGHT = 0;
+		
 		// LEFT AND RIGHT
 		if (axisIndex == 2){
 			if (Math.abs(value) > 0.2){
 				this.robot.input.LEFT = value * 255;
 				this.robot.input.RIGHT = -value * 255;
+				this.isTurning = true;
 			}
+			else
+				this.isTurning = false;
 		}
 
 		// FORWARD AND BACKWARD
-		if (axisIndex == 1){
-			if (Math.abs(value) < 0.2){
-				this.robot.input.DIRECTION = 0;
-			}
-			else{
-				this.robot.input.DIRECTION = -value;
+		if (axisIndex == 1 && !this.isTurning){
+			if (Math.abs(value) > 0.2){
 				this.robot.input.LEFT = 255 * value;
 				this.robot.input.RIGHT = 255 * value;
 			}
