@@ -10,11 +10,8 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-import mapping.Obstacle;
-import mapping.Room;
 import physic.Mode;
 import physic.RotableRectangle;
-import physic.SensorType;
 import robot_directing.InputManager;
 
 public class Robot {
@@ -157,17 +154,6 @@ public class Robot {
 
 	public Rectangle getBodyHitbox() {
 		return this.body.getBoundingRectangle();
-	}
-
-	public boolean detect(Obstacle obstacle, SensorType type) {
-		switch (type) {
-		case FRONTAL:
-			return this.frontalSensor.collide(obstacle.getBoundingRectangle());
-		case LATERAL:
-			return this.lateralSensor.collide(obstacle.getBoundingRectangle());
-		default:
-			return false;
-		}
 	}
 
 	public float getSensorAngle() {

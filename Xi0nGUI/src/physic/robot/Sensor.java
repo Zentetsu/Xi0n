@@ -3,11 +3,7 @@ package physic.robot;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
-import physic.SensorType;
-
 public abstract class Sensor {
-
-	public static SensorType type;
 
 	public abstract void setPosition(float x, float y);
 
