@@ -1,38 +1,42 @@
 package physic.robot;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 
+import physic.RotableRectangle;
+
 public class FrontalSensor extends Sensor {
 
-	private final float speed = 2.5f;
-	private final int maxAngle = 45;
+	//axe infra = centré et limite plateforme : margin de 3.5cm
+	//infra = 4.5*1.5
+	private final float speed = 1;
+	private final int maxAngle = 20;
 	
-	public static final int FRONTAL_LENGTH = 40;
-	public static final int FRONTAL_WIDTH = 5;
+	public static final int FRONTAL_LENGTH = 20;
+	public static final int FRONTAL_WIDTH = 4;
+	public static final float WIDTH = 13.5f;
+	public static final float HEIGHT = 4.5f;
+	
 
 	private Polygon cone;
 	private float angle;
 	private int sens;
-	private float x;
-	private float y;
+	private RotableRectangle sensor;
 
 	public FrontalSensor(float x, float y) {
-		this.cone = new Polygon(
-				new float[] { x, y, x - FRONTAL_WIDTH * 2, y + FRONTAL_LENGTH, x + FRONTAL_WIDTH * 2, y + FRONTAL_LENGTH });
+		this.sensor = new RotableRectangle(-WIDTH/2, -HEIGHT/2, WIDTH, HEIGHT);
+		this.cone = new Polygon(new float[] {0, 0, x-FRONTAL_WIDTH * 1.5f, y+FRONTAL_LENGTH, x+FRONTAL_WIDTH * 1.5f, y+FRONTAL_LENGTH });
 		this.sens = 1;
 		this.angle = 0;
-
-		this.x = x;
-		this.y = y;
-
 	}
 
-	public void setPosition(float x, float y) {
-		this.x = x;
-		this.y = y;
-		this.cone.setPosition(x, y);
+	public void setPosition(float x, float y, float angle) {
+		float cos = (float) Math.cos(Math.toRadians(angle));
+		float sin = (float) Math.sin(Math.toRadians(angle));
+		this.sensor.setPosition(x - sin*(6+RobotConstant.HEIGHT_2), y + cos*(6+RobotConstant.HEIGHT_2));
+		this.cone.setPosition(x - sin*(6+RobotConstant.HEIGHT_2),  y + cos*(6+RobotConstant.HEIGHT_2));
 	}
 
 	public boolean collide(Rectangle rectangle) {
@@ -44,15 +48,17 @@ public class FrontalSensor extends Sensor {
 			this.sens *= -1;
 		}
 		this.angle += this.speed * this.sens;
-		this.cone.rotate(this.speed * this.sens);
+		this.rotate(this.speed * this.sens);
 	}
 
 	public void render(ShapeRenderer sr) {
 		sr.polygon(this.cone.getTransformedVertices());
+		this.sensor.render(sr, Color.RED);
 	}
 
 	public void rotate(float angle) {
 		this.cone.rotate(angle);
+		this.sensor.rotate(angle);
 	}
 
 	public float getAngle() {
@@ -60,7 +66,7 @@ public class FrontalSensor extends Sensor {
 	}
 
 	@Override
-	public int getDistance(Rectangle rectangle) {
+	public float getDistance(Rectangle rectangle) {
 		if(this.collide(rectangle)){
 			return FRONTAL_LENGTH;
 		}

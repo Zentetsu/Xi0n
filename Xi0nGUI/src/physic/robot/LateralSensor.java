@@ -8,19 +8,25 @@ import physic.RotableRectangle;
 
 public class LateralSensor extends Sensor {
 
-	public static final int WARNING_LENGTH = 50;
-	public static final int STOP_LENGTH = 35;
+	//ultrason sur plateforme : 4.5*1.8
+	
+	public static final float WIDTH = 5.4f;
+	public static final float HEIGHT = 13.5f;
+	public static final float WARNING_LENGTH = 80;
+	public static final float STOP_LENGTH = 50;
 
 	private RotableRectangle warningZone;
 	private RotableRectangle stopZone;
+	private RotableRectangle sensor;
 
 	public LateralSensor(float x, float y) {
-		this.warningZone = new RotableRectangle(x, y, 10, this.WARNING_LENGTH);
-		this.stopZone = new RotableRectangle(x, y, 10, this.STOP_LENGTH);
+		this.sensor = new RotableRectangle(x, y, WIDTH, HEIGHT);
+		this.warningZone = new RotableRectangle(x, y, WARNING_LENGTH, 10);
+		this.stopZone = new RotableRectangle(x, y, STOP_LENGTH, 10);
 	}
 
-	@Override
 	public void setPosition(float x, float y) {
+		this.sensor.setPosition(x, y);
 		this.warningZone.setPosition(x, y);
 		this.stopZone.setPosition(x, y);
 	}
@@ -32,18 +38,20 @@ public class LateralSensor extends Sensor {
 
 	@Override
 	public void render(ShapeRenderer sr) {
+		this.sensor.render(sr, Color.RED);
 		this.warningZone.render(sr, Color.GREEN);
 		this.stopZone.render(sr, Color.RED);
 	}
 
 	@Override
 	public void rotate(float angle) {
+		this.sensor.rotate(angle);
 		this.warningZone.rotate(angle);
 		this.stopZone.rotate(angle);
 	}
 
 	@Override
-	public int getDistance(Rectangle rectangle) {
+	public float getDistance(Rectangle rectangle) {
 		if (this.stopZone.collide(rectangle)) {
 			return LateralSensor.STOP_LENGTH;
 		}

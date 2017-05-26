@@ -31,7 +31,6 @@ public class Robot {
 	private RotableRectangle leftWheel;
 	private RotableRectangle rightWheel;
 
-
 	private List<Circle> visited;
 	private static Robot instance;
 
@@ -41,9 +40,9 @@ public class Robot {
 		this.initialize(x, y);
 	}
 
-	public static Robot getInstance(){
-		if(instance == null){
-			instance =  new Robot(0, 0);
+	public static Robot getInstance() {
+		if (instance == null) {
+			instance = new Robot(0, 0);
 		}
 		return instance;
 	}
@@ -53,17 +52,18 @@ public class Robot {
 		this.position = new Vector2(x, y);
 
 		this.crazyWheel = new RotableRectangle(x - 2, y - 20, RobotConstant.WIDTH_2 / 2, RobotConstant.WIDTH_2 / 4);
-		this.leftWheel = new RotableRectangle(x - 8 - RobotConstant.WIDTH_2 / 2, y - 6, RobotConstant.WIDTH_2,
-				RobotConstant.WIDTH_2 / 2);
-		this.rightWheel = new RotableRectangle(x + 8, y - 6, RobotConstant.WIDTH_2, RobotConstant.WIDTH_2 / 2);
+		
+		// roue = margin 0.7 : 6.5*2.3
+		this.leftWheel = new RotableRectangle(x - RobotConstant.WIDTH_2 - 2, y - 14, 7, 20);
+		this.rightWheel = new RotableRectangle(x + RobotConstant.WIDTH_2 - 7 + 2, y - 14, 7, 20);
 
 		this.body = new Polygon(new float[] { -RobotConstant.WIDTH_2, -RobotConstant.HEIGHT_2, -RobotConstant.WIDTH_2,
 				RobotConstant.HEIGHT_2 - 10, -RobotConstant.WIDTH_2 + 10, RobotConstant.HEIGHT_2,
 				RobotConstant.WIDTH_2 - 10, RobotConstant.HEIGHT_2, RobotConstant.WIDTH_2, RobotConstant.HEIGHT_2 - 10,
 				RobotConstant.WIDTH_2, -RobotConstant.HEIGHT_2, });
 
-		this.frontalSensor = new FrontalSensor(x, y + RobotConstant.HEIGHT_2);
-		this.lateralSensor = new LateralSensor(x + RobotConstant.HEIGHT_2 - 5, y + 5);
+		this.frontalSensor = new FrontalSensor(0, RobotConstant.HEIGHT_2 + 11.5f);
+		this.lateralSensor = new LateralSensor(x + RobotConstant.WIDTH_2 - LateralSensor.WIDTH, y);
 
 		this.rotation = 0;
 		this.speed = 0;
@@ -103,15 +103,18 @@ public class Robot {
 		this.position.x = x;
 		this.position.y = y;
 
-		this.frontalSensor.setPosition(this.getDirectionX(0), this.getDirectionY(0));
-		this.lateralSensor.setPosition(this.getDirectionX(0), this.getDirectionY(0));
+		this.frontalSensor.setPosition(x, y, this.rotation);
+		this.lateralSensor.setPosition(x, y);
 
 		this.body.setPosition(x, y);
 
 		this.leftWheel.setPosition(x, y);
 		this.rightWheel.setPosition(x, y);
 		this.crazyWheel.setPosition(x, y);
-
+		
+		if (this.visited.size() > 1000){
+			this.visited.remove(0);
+		}
 		this.visited.add(new Circle(this.position.x, this.position.y, 3));
 	}
 
@@ -120,12 +123,12 @@ public class Robot {
 	}
 
 	private void updatePosition() {
-		this.speed = (this.input.RIGHT + this.input.LEFT)/400;
-		this.setPosition(this.getDirectionX(this.speed*2), this.getDirectionY(this.speed*2));
+		this.speed = (this.input.RIGHT + this.input.LEFT) / 400;
+		this.setPosition(this.getDirectionX(this.speed * 2), this.getDirectionY(this.speed * 2));
 	}
 
 	private void updateRotation() {
-		float angle = (this.input.RIGHT-this.input.LEFT)/400;
+		float angle = (this.input.RIGHT - this.input.LEFT) / 400;
 		this.rotation += angle;
 		this.body.rotate(angle);
 
@@ -160,23 +163,23 @@ public class Robot {
 		return this.frontalSensor.getAngle();
 	}
 
-	public int getLateralDistance(Rectangle rectangle) {
+	public float getLateralDistance(Rectangle rectangle) {
 		return this.lateralSensor.getDistance(rectangle);
 	}
 
-	public int getFrontalDistance(Rectangle rectangle) {
+	public float getFrontalDistance(Rectangle rectangle) {
 		return this.frontalSensor.getDistance(rectangle);
 	}
 
-	public void setMode(Mode mode){
+	public void setMode(Mode mode) {
 		this.input.setMode(mode);
 	}
 
-	public void pause(){
+	public void pause() {
 		this.input.pause();
 	}
 
-	public void start(){
+	public void start() {
 		this.input.start();
 	}
 

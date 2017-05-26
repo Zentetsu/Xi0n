@@ -73,9 +73,9 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.stage.addActor(new RestartButton(1800, 1025));
 		this.stage.addActor(new QuitButton(1860, 1025));
 
-		this.keyboardButton = new KeyboardButton(350, 15);
-		this.controllerButton = new ControllerButton(350, 75);
-		this.automaticButton = new AutomaticButton(350, 135);
+		this.keyboardButton = new KeyboardButton(320, 25);
+		this.controllerButton = new ControllerButton(320, 75);
+		this.automaticButton = new AutomaticButton(320, 125);
 
 		this.stage.addActor(this.keyboardButton);
 		this.stage.addActor(this.controllerButton);
@@ -132,7 +132,6 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.sr.end();
 		// TODO: extract
 		Robot robot = this.room.getRobot();
-
 		float left = robot.input.LEFT;
 		float right = robot.input.RIGHT;
 		this.shud.begin(ShapeType.Filled);
@@ -167,6 +166,9 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.font.draw(this.batch, "LATERAL SENSOR = " + this.getLateralDistance(), 1720, 80);
 		this.font.draw(this.batch, "FRONT   SENSOR = " + this.getFrontalDistance(), 1720, 60);
 		this.batch.end();
+		this.shud.begin(ShapeType.Filled);
+		this.room.renderHUD(this.shud);
+		this.shud.end();
 		this.stage.draw();
 
 		if (!this.connected) {
@@ -203,8 +205,8 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.connected = connected;
 	}
 
-	public int getLateralDistance() {
-		int min = LateralSensor.STOP_LENGTH + LateralSensor.WARNING_LENGTH + 20;
+	public float getLateralDistance() {
+		float min = LateralSensor.STOP_LENGTH + LateralSensor.WARNING_LENGTH + 20;
 		if ( this.room != null ) {
 			for (Obstacle obstacle : this.room.getObstacles()) {
 				if (min > this.room.getRobot().getLateralDistance(obstacle.getBoundingRectangle())) {

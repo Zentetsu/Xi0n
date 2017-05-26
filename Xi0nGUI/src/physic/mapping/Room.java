@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import physic.robot.Robot;
@@ -21,13 +22,12 @@ public class Room {
 	}
 	
 	private void initialize(){
-		
 		//walls
 		this.obstacles.add(new Obstacle(-500, -500, 1000, 20));
-		this.obstacles.add(new Obstacle(-520, -500, 20, 1000));
-		this.obstacles.add(new Obstacle(480, -500, 1000, 20));
-		this.obstacles.add(new Obstacle(-500, 500, 20, 1000));
-		this.obstacles.add(new Obstacle(0, -480, 150, 20));
+		this.obstacles.add(new Obstacle(-500, -500, 20, 1000));
+		this.obstacles.add(new Obstacle(500, -500, 20, 1000));
+		this.obstacles.add(new Obstacle(-500, 500, 1000, 20));
+		this.obstacles.add(new Obstacle(0, -480, 20, 150));
 	}
 
 	public void render(ShapeRenderer sr) {
@@ -39,6 +39,17 @@ public class Room {
 			}
 		}
 		this.robot.render(sr);
+	}
+
+	public void renderHUD(ShapeRenderer shud) {
+		shud.setColor(Color.BLACK);
+		for(Obstacle obstacle : this.obstacles){
+			Rectangle rect = obstacle.getBoundingRectangle();
+			shud.rect(100 + (rect.x) / 10, 100 + (rect.y) / 10, rect.width/10, rect.height/10);
+		}
+		shud.setColor(Color.RED);
+		shud.circle(100+this.robot.getPosition().x/10, 100+this.robot.getPosition().y/10, 3);
+		
 	}
 	
 	public List<Obstacle> getObstacles(){
@@ -57,5 +68,4 @@ public class Room {
 	public Robot getRobot() {
 		return this.robot;
 	}
-
 }

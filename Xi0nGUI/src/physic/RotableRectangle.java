@@ -9,7 +9,7 @@ public class RotableRectangle {
 	private Polygon polygon;
 
 	public RotableRectangle(float x, float y, float width, float height) {
-		this.polygon = new Polygon(new float[] { x, y, x + height, y, x + height, y + width, x, y + width });
+		this.polygon = new Polygon(new float[] { x, y, x + width, y, x + width, y + height, x, y + height });
 	}
 
 	public void rotate(float angle) {
