@@ -131,7 +131,6 @@ public enum Xi0nSimulation implements ApplicationListener {
 		float right = robot.input.RIGHT;
 		this.shud.begin(ShapeType.Filled);
 		this.shud.rect(800, 40, 500, 100, Color.GRAY, Color.GRAY, Color.GRAY, Color.GRAY);
-		System.out.println(right);
 
 		if (left > 0) {
 			Color forwardLeft = new Color(right / (left * 4), left / 255, left / (255 * 4), 0);
