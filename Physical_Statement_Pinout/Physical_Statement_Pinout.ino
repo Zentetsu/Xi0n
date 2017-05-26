@@ -98,15 +98,15 @@ void assignDistanceInfraRed() {
 ********************************************************************/
 void assignHeadPosition() {
   if(up_down)
-    scanAngle++;
+    scanAngle += 5;
   else
-    scanAngle--;
+    scanAngle -= 5;
 
   robot->setHeadPosition(scanAngle);
 
-  if(scanAngle == 44)
+  if(scanAngle == 66)
     up_down = 1;
-  else if(scanAngle == 134)
+  else if(scanAngle == 111)
     up_down = 0;
 }
 
