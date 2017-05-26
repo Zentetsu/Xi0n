@@ -92,7 +92,6 @@ class Robot {
 		int getHeadPosition();
 
 	private:
-		Communication *communication;/*!< object used in communication between robot and the IHM*/
 		ControlLed *controlLed;/*!< object used to control led*/
 		Mobility *mobility;/*!< object used to control the robot*/
 		Sensor *sensor;/*!< object used to get information from the sensor*/

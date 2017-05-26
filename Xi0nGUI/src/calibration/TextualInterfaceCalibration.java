@@ -5,8 +5,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import physic.robot.RobotConfig;
 import tools.Keyboard;
-import view.robot.RobotConfig;
 
 /* Description de la classe ===============
 Interface textuelle du programme permettant

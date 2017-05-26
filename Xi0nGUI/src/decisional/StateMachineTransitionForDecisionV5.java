@@ -1,10 +1,10 @@
 package decisional;
 
 /* Import de biblioth�ques =============*/
-import view.robot.RobotConfig;
-import view.Xi0nSimulation;
-import view.robot.FrontalSensor;
-import view.robot.LateralSensor;
+import physic.robot.RobotConfig;
+import gui.Xi0nSimulation;
+import physic.robot.FrontalSensor;
+import physic.robot.LateralSensor;
 import tools.Chrono;
 
 /* Description de la classe ===============

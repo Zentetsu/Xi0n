@@ -12,7 +12,6 @@ Robot::Robot(int init_motorL_Pin1, int init_motorL_Pin2, int init_enableL_Pin, i
 
 Robot::~Robot() {
 	//Serial.println ("DELETE ROBOT");
-	delete communication;
 	delete mobility;
 	delete sensor;
 	delete headServo;
@@ -20,7 +19,28 @@ Robot::~Robot() {
 
 void Robot::deplacemnt(int new_direction_M1, int new_direction_M2, int new_Speed_M1, int new_Speed_M2) {
 	//Serial.println ("Deplacemnt");
-	mobility->move(new_direction_M1, new_direction_M2, new_Speed_M1, new_Speed_M2);
+	switch(new_direction_M1+new_direction_M2) {
+		case -2:
+			if(!((getDistanceUltrasion() <= 5) && (new_Speed_M1 > new_Speed_M2)))
+				mobility->move(new_direction_M1, new_direction_M2, new_Speed_M1, new_Speed_M2);
+
+			break;
+		case 0:
+			mobility->move(new_direction_M1, new_direction_M2, new_Speed_M1, new_Speed_M2);
+
+			break;
+		case 2:
+			if(!(getDistanceInfraRedSensor() > 25))
+				if(!((getDistanceUltrasion() <= 5) && (new_Speed_M1 > new_Speed_M2)))
+					mobility->move(new_direction_M1, new_direction_M2, new_Speed_M1, new_Speed_M2);
+
+			break;
+
+		default:
+			mobility->move(new_direction_M1, new_direction_M2, new_Speed_M1, new_Speed_M2);
+
+			break;
+	}
 }
 
 float Robot::getDistanceUltrasion() {
