@@ -16,6 +16,8 @@ Sensor::~Sensor() {
 }
 
 float Sensor::getDistanceUltrasion() {
+	if (ultrason->getDistance() > 255)
+		return 255;
 
 	return ultrason->getDistance();
 }
