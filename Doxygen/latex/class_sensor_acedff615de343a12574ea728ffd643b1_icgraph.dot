@@ -6,4 +6,6 @@ digraph "Sensor::getDistanceInfraRedSensor"
   Node5 [label="Sensor::getDistanceInfra\lRedSensor",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node5 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid"];
   Node6 [label="Robot::getDistanceInfraRed\lSensor",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_robot.html#a2286627d02563b7a0c4710459bdf54f1",tooltip="return the distance between an object and the robot "];
+  Node6 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node7 [label="Robot::deplacemnt",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_robot.html#a53edd4c7204f04d0bb3e97f1f1574755",tooltip="Control the new direction and the new speed of the Robot. "];
 }

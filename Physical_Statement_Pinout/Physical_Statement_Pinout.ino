@@ -12,7 +12,6 @@
 /********************************************************************
  * LIBRAIRIES
 ********************************************************************/
-#include <Communication.h>
 #include <ControlLed.h>
 #include <InfraRedSensor.h>
 #include <LED.h>
