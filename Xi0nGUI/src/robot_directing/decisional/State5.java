@@ -1,4 +1,4 @@
-package decisional;
+package robot_directing.decisional;
 
 /* Import de biblioth�ques =============*/
 

@@ -8,7 +8,7 @@ public class DecisionInput extends AbstractInput {
 
 	private boolean found;
 	private int cpt;
-	StateMachineTransitionForDecisionV4 SMT;
+	StateMachineTransitionForDecisionV5 SMT;
 	FilterCalibration FT;
 	int cpt_simu = 0;
 
@@ -16,7 +16,7 @@ public class DecisionInput extends AbstractInput {
 		super(robot);
 		this.found = false;
 		this.cpt = 0;
-		SMT = new StateMachineTransitionForDecisionV4();
+		SMT = new StateMachineTransitionForDecisionV5();
 		FT = new FilterCalibration();
 		boolean testLoad = FT.loadCalibrationFile();
 	}
@@ -36,7 +36,7 @@ public class DecisionInput extends AbstractInput {
 	}
 
 	private void decisionAlgorithm() {
-		this.SMT.readSensors();
+		this.SMT.readSensorsSimu();
 		this.SMT.FBloc();
 		this.SMT.MBloc();
 		RobotConfig speeds = SMT.GBloc();

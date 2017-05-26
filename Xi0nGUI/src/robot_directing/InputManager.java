@@ -7,7 +7,7 @@ import physic.Mode;
 import physic.robot.Robot;
 import robot_directing.controller.ControllerInput;
 import robot_directing.decisional.DecisionInput;
-import robot_directing.decisional.State4;
+import robot_directing.decisional.State5;
 import robot_directing.keyborad.KeyboardInput;
 
 public class InputManager {
@@ -22,7 +22,7 @@ public class InputManager {
 
 	private Map<Mode, AbstractInput> inputs;
 	private Mode currentMode;
-	public State4 STATE;
+	public State5 STATE;
 
 	public InputManager(Robot robot, Mode currentMode) {
 		this.inputs = new HashMap<>();
