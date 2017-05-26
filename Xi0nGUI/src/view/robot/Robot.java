@@ -14,7 +14,7 @@ import view.Obstacle;
 import view.Room;
 
 public class Robot {
-	
+
 	public InputManager input;
 	private Vector2 position;
 	private Polygon body;
@@ -30,14 +30,18 @@ public class Robot {
 	private RotableRectangle leftWheel;
 	private RotableRectangle rightWheel;
 
+	private Room room;
+
 	private List<Circle> visited;
 	private static Robot instance;
 
 	private Robot(Room room, float x, float y) {
-		this.input = new InputManager(this, Mode.KEYBOARD, room);
+		this.input = new InputManager(this, Mode.CONTROLLER, room);
+		this.room = room;
+		this.setMode(Mode.KEYBOARD);
 		this.initialize(x, y);
 	}
-	
+
 	public static Robot getInstance(Room room){
 		if(instance == null){
 			instance =  new Robot(room, 0, 0);
@@ -46,7 +50,6 @@ public class Robot {
 	}
 
 	public void initialize(float x, float y) {
-System.out.println("0 0");
 		this.visited = new ArrayList<>();
 		this.position = new Vector2(x, y);
 
@@ -66,14 +69,6 @@ System.out.println("0 0");
 		this.rotation = 0;
 		this.speed = 0;
 		this.destroyed = false;
-
-		if (this.input.isMode(Mode.AUTOMATIC)) {
-			try {
-				Thread.sleep(2 * 1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 
 	public void render(ShapeRenderer sr) {
@@ -126,12 +121,12 @@ System.out.println("0 0");
 	}
 
 	private void updatePosition() {
-		this.speed = this.input.AXIS_Y;
-		this.setPosition(this.getDirectionX(this.speed * 2), this.getDirectionY(this.speed * 2));
+		this.speed = (this.input.RIGHT + this.input.LEFT)/400;
+		this.setPosition(this.getDirectionX(this.speed*2), this.getDirectionY(this.speed*2));
 	}
 
 	private void updateRotation() {
-		float angle = this.input.AXIS_X;
+		float angle = (this.input.RIGHT-this.input.LEFT)/400;
 		this.rotation += angle;
 		this.body.rotate(angle);
 
@@ -183,6 +178,22 @@ System.out.println("0 0");
 
 	public int getFrontalDistance(Rectangle rectangle) {
 		return this.frontalSensor.getDistance(rectangle);
+	}
+
+	public void setMode(Mode mode){
+		this.input = new InputManager(this, mode, this.room);
+	}
+
+	public void pause(){
+		this.input.pause();
+	}
+
+	public void start(){
+		this.input.start();
+	}
+
+	public float getOrientation() {
+		return this.rotation;
 	}
 
 	/*

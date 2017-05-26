@@ -7,7 +7,7 @@ import view.Xi0nSimulation;
 
 public class StartButton extends UIButton {
 
-	private final static String GRAPHIC_ELEMENT = "start.png";
+	private final static String GRAPHIC_ELEMENT = "start";
 
 	public StartButton(float x, float y) {
 		super(x, y, GRAPHIC_ELEMENT);
@@ -16,7 +16,7 @@ public class StartButton extends UIButton {
 	private class StartButtonListener extends ClickListener {
 		@Override
 		public void clicked(InputEvent input, float x, float y) {
-			
+			Xi0nSimulation.INSTANCE.startRobot();
 			Xi0nSimulation.INSTANCE.removeButton("start");
 			Xi0nSimulation.INSTANCE.addButton(new PauseButton(getX(), getY()));
 		}

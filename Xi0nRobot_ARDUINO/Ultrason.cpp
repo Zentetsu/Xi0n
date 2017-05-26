@@ -4,7 +4,7 @@ using namespace std;
 
 
 Ultrason::Ultrason(int new_echo_Pin, int new_trigger_Pin) {
-	Serial.println ("CREATE ULTRASON");
+	//Serial.println ("CREATE ULTRASON");
 
 	echo_Pin = new_echo_Pin;
 	trigger_Pin = new_trigger_Pin;
@@ -14,7 +14,7 @@ Ultrason::Ultrason(int new_echo_Pin, int new_trigger_Pin) {
 }
 
 Ultrason::~Ultrason() {
-	Serial.println ("DELETE ULTRASON");
+	//Serial.println ("DELETE ULTRASON");
 }
 
 float Ultrason::getDistance() {
@@ -22,5 +22,6 @@ float Ultrason::getDistance() {
 	delayMicroseconds(10);
 	digitalWrite(trigger_Pin, LOW);
 
-	return ((pulseIn(echo_Pin, HIGH) / 2) / 58); //check the model
+
+	return (pulseIn(echo_Pin, HIGH) / 58.0);
 }

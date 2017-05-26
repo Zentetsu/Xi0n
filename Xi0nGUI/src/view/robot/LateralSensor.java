@@ -4,19 +4,19 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
-public class LateralSensor extends Sensor { 
-	
-	private final int warningLength = 50;
-	private final int stopLength = 20;
-	
+public class LateralSensor extends Sensor {
+
+	public static final int WARNING_LENGTH = 50;
+	public static final int STOP_LENGTH = 35;
+
 	private RotableRectangle warningZone;
 	private RotableRectangle stopZone;
 
 	public LateralSensor(float x, float y) {
 		this.type = SensorType.LATERAL;
-		
-		this.warningZone = new RotableRectangle(x, y, 10, this.warningLength);
-		this.stopZone = new RotableRectangle(x, y, 10, this.stopLength);
+
+		this.warningZone = new RotableRectangle(x, y, 10, this.WARNING_LENGTH);
+		this.stopZone = new RotableRectangle(x, y, 10, this.STOP_LENGTH);
 	}
 
 	@Override
@@ -41,13 +41,16 @@ public class LateralSensor extends Sensor {
 		this.warningZone.rotate(angle);
 		this.stopZone.rotate(angle);
 	}
-	
+
 	@Override
-	public int getDistance(Rectangle rectangle){
-		if(this.stopZone.collide(rectangle)){
-			return this.stopLength;
+	public int getDistance(Rectangle rectangle) {
+		if (this.stopZone.collide(rectangle)) {
+			return LateralSensor.STOP_LENGTH;
 		}
-		return this.warningLength;
+		if (this.warningZone.collide(rectangle)) {
+			return LateralSensor.WARNING_LENGTH;
+		}
+		return LateralSensor.WARNING_LENGTH + LateralSensor.STOP_LENGTH;
 	}
 
 }

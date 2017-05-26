@@ -9,8 +9,11 @@ import view.robot.RobotConstant;
 
 public class FrontalSensor extends Sensor {
 
-	private final float speed = (float) 1.5 * 3;
+	private final float speed = (float) ( 2.5 ) ;
 	private final int maxAngle = 45;
+	
+	public static final int FRONTAL_LENGTH = 40;
+	public static final int FRONTAL_WIDTH = 5;
 
 	private Polygon cone;
 	private float angle;
@@ -21,8 +24,8 @@ public class FrontalSensor extends Sensor {
 	public FrontalSensor(float x, float y) {
 		this.type = SensorType.FRONTAL;
 
-		this.cone = new Polygon(new float[] { x, y, x - 10 * 2, y + RobotConstant.HEIGHT_2 * 8 + 40, x + 10 * 2,
-				y + RobotConstant.HEIGHT_2 * 8 + 40 });
+		this.cone = new Polygon(
+				new float[] { x, y, x - FRONTAL_WIDTH * 2, y + FRONTAL_LENGTH, x + FRONTAL_WIDTH * 2, y + FRONTAL_LENGTH });
 		this.sens = 1;
 		this.angle = 0;
 
@@ -63,10 +66,10 @@ public class FrontalSensor extends Sensor {
 
 	@Override
 	public int getDistance(Rectangle rectangle) {
-		Rectangle rect = new Rectangle();
-		boolean intersect = Intersector.intersectRectangles(rectangle, new Rectangle(this.x, this.y, 5, 50), rect);
-		System.out.println(intersect + " | " + rect);
-		return 0;
+		if(this.collide(rectangle)){
+			return FRONTAL_LENGTH;
+		}
+		return FRONTAL_LENGTH + 20;
 	}
 
 }

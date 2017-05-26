@@ -1,0 +1,175 @@
+\hypertarget{class_robot}{}\section{Robot Class Reference}
+\label{class_robot}\index{Robot@{Robot}}
+
+
+{\ttfamily \#include $<$Robot.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_robot_a48d1e4e995ff63500905212178deb76a}{Robot} (int init\+\_\+motor\+L\+\_\+\+Pin1, int init\+\_\+motor\+L\+\_\+\+Pin2, int init\+\_\+enable\+L\+\_\+\+Pin, int init\+\_\+motor\+R\+\_\+\+Pin1, int init\+\_\+motor\+R\+\_\+\+Pin2, int init\+\_\+enable\+R\+\_\+\+Pin, int init\+\_\+\+Infra\+Red\+Sensor\+\_\+\+Pin, int init\+\_\+echo\+\_\+\+Pin, int init\+\_\+trigger\+\_\+\+Pin, int new\+\_\+\+Servo\+Motor\+\_\+\+Pin)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hyperlink{class_robot_a924320124b09c2f2ac1621aa210d5f38}{$\sim$\+Robot} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{class_robot_a53edd4c7204f04d0bb3e97f1f1574755}{deplacemnt} (int direction\+\_\+\+M1, int direction\+\_\+\+M2, int speed\+\_\+\+M1, int speed\+\_\+\+M2)
+\begin{DoxyCompactList}\small\item\em Control the new direction and the new speed of the \hyperlink{class_robot}{Robot}. \end{DoxyCompactList}\item 
+float \hyperlink{class_robot_ae3e977cb38b69c31faafd993a2b4054d}{get\+Distance\+Ultrasion} ()
+\begin{DoxyCompactList}\small\item\em return the distance between an object and the robot \end{DoxyCompactList}\item 
+float \hyperlink{class_robot_a2286627d02563b7a0c4710459bdf54f1}{get\+Distance\+Infra\+Red\+Sensor} ()
+\begin{DoxyCompactList}\small\item\em return the distance between an object and the robot \end{DoxyCompactList}\item 
+void \hyperlink{class_robot_a69dad285c5a86e600b2ad94e7d30cf8b}{set\+Head\+Position} (int new\+\_\+position)
+\begin{DoxyCompactList}\small\item\em change the position of the servo motor \end{DoxyCompactList}\item 
+int \hyperlink{class_robot_a34039e49403d45d263e834f11d9c85e9}{get\+Head\+Position} ()
+\begin{DoxyCompactList}\small\item\em return the current position of the servo motor \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_robot_a48d1e4e995ff63500905212178deb76a}\label{class_robot_a48d1e4e995ff63500905212178deb76a}} 
+\index{Robot@{Robot}!Robot@{Robot}}
+\index{Robot@{Robot}!Robot@{Robot}}
+\subsubsection{\texorpdfstring{Robot()}{Robot()}}
+{\footnotesize\ttfamily Robot\+::\+Robot (\begin{DoxyParamCaption}\item[{int}]{init\+\_\+motor\+L\+\_\+\+Pin1,  }\item[{int}]{init\+\_\+motor\+L\+\_\+\+Pin2,  }\item[{int}]{init\+\_\+enable\+L\+\_\+\+Pin,  }\item[{int}]{init\+\_\+motor\+R\+\_\+\+Pin1,  }\item[{int}]{init\+\_\+motor\+R\+\_\+\+Pin2,  }\item[{int}]{init\+\_\+enable\+R\+\_\+\+Pin,  }\item[{int}]{init\+\_\+\+Infra\+Red\+Sensor\+\_\+\+Pin,  }\item[{int}]{init\+\_\+echo\+\_\+\+Pin,  }\item[{int}]{init\+\_\+trigger\+\_\+\+Pin,  }\item[{int}]{new\+\_\+\+Servo\+Motor\+\_\+\+Pin }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+Constructor of the \hyperlink{class_robot}{Robot} Class\textquotesingle{}
+
+
+\begin{DoxyParams}{Parameters}
+{\em init\+\_\+motor\+L\+\_\+\+Pin1} & \+: first pin of the left motor \\
+\hline
+{\em init\+\_\+motor\+L\+\_\+\+Pin2} & \+: second pin of the left motor \\
+\hline
+{\em init\+\_\+enable\+L\+\_\+\+Pin} & \+: pin to start or stop the left motor \\
+\hline
+{\em init\+\_\+motor\+R\+\_\+\+Pin1} & \+: first pin of the right motor \\
+\hline
+{\em init\+\_\+motor\+R\+\_\+\+Pin2} & \+: second pin of the right motor \\
+\hline
+{\em init\+\_\+enable\+R\+\_\+\+Pin} & \+: pin to start or stop the right motor \\
+\hline
+{\em init\+\_\+\+Infra\+Red\+Sensor\+\_\+\+Pin} & \+: pin of the Infra\+Red \hyperlink{class_sensor}{Sensor} \\
+\hline
+{\em init\+\_\+echo\+\_\+\+Pin} & \+: pin used to receive inforamtion from \hyperlink{class_ultrason}{Ultrason} \\
+\hline
+{\em init\+\_\+trigger\+\_\+\+Pin} & \+: pin used to send informotion to \hyperlink{class_ultrason}{Ultrason} \\
+\hline
+{\em new\+\_\+\+Servo\+Motor\+\_\+\+Pin} & \+: pin to control the Servo \hyperlink{class_motor}{Motor} \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_robot_a924320124b09c2f2ac1621aa210d5f38}\label{class_robot_a924320124b09c2f2ac1621aa210d5f38}} 
+\index{Robot@{Robot}!````~Robot@{$\sim$\+Robot}}
+\index{````~Robot@{$\sim$\+Robot}!Robot@{Robot}}
+\subsubsection{\texorpdfstring{$\sim$\+Robot()}{~Robot()}}
+{\footnotesize\ttfamily Robot\+::$\sim$\+Robot (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destructor. 
+
+Destructor of the \hyperlink{class_robot}{Robot} Class\textquotesingle{} 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_robot_a53edd4c7204f04d0bb3e97f1f1574755}\label{class_robot_a53edd4c7204f04d0bb3e97f1f1574755}} 
+\index{Robot@{Robot}!deplacemnt@{deplacemnt}}
+\index{deplacemnt@{deplacemnt}!Robot@{Robot}}
+\subsubsection{\texorpdfstring{deplacemnt()}{deplacemnt()}}
+{\footnotesize\ttfamily void Robot\+::deplacemnt (\begin{DoxyParamCaption}\item[{int}]{direction\+\_\+\+M1,  }\item[{int}]{direction\+\_\+\+M2,  }\item[{int}]{speed\+\_\+\+M1,  }\item[{int}]{speed\+\_\+\+M2 }\end{DoxyParamCaption})}
+
+
+
+Control the new direction and the new speed of the \hyperlink{class_robot}{Robot}. 
+
+change the state of the deplacement of the robot and set the new speed
+
+
+\begin{DoxyParams}{Parameters}
+{\em direction\+\_\+\+M1} & \+: the new direction of the left motor \\
+\hline
+{\em direction\+\_\+\+M2} & \+: the new direction of the right motor \\
+\hline
+{\em speed\+\_\+\+M1} & \+: the new speed of the left motor \\
+\hline
+{\em speed\+\_\+\+M2} & \+: the new speed of the right motor \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+% FIG 0
+\mbox{\Hypertarget{class_robot_a2286627d02563b7a0c4710459bdf54f1}\label{class_robot_a2286627d02563b7a0c4710459bdf54f1}} 
+\index{Robot@{Robot}!get\+Distance\+Infra\+Red\+Sensor@{get\+Distance\+Infra\+Red\+Sensor}}
+\index{get\+Distance\+Infra\+Red\+Sensor@{get\+Distance\+Infra\+Red\+Sensor}!Robot@{Robot}}
+\subsubsection{\texorpdfstring{get\+Distance\+Infra\+Red\+Sensor()}{getDistanceInfraRedSensor()}}
+{\footnotesize\ttfamily float Robot\+::get\+Distance\+Infra\+Red\+Sensor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+return the distance between an object and the robot 
+
+this distance is generated by the Infra\+Red sensor
+
+\begin{DoxyReturn}{Returns}
+the distance 
+\end{DoxyReturn}
+Here is the call graph for this function\+:
+% FIG 1
+\mbox{\Hypertarget{class_robot_ae3e977cb38b69c31faafd993a2b4054d}\label{class_robot_ae3e977cb38b69c31faafd993a2b4054d}} 
+\index{Robot@{Robot}!get\+Distance\+Ultrasion@{get\+Distance\+Ultrasion}}
+\index{get\+Distance\+Ultrasion@{get\+Distance\+Ultrasion}!Robot@{Robot}}
+\subsubsection{\texorpdfstring{get\+Distance\+Ultrasion()}{getDistanceUltrasion()}}
+{\footnotesize\ttfamily float Robot\+::get\+Distance\+Ultrasion (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+return the distance between an object and the robot 
+
+this distance is generated by the ultrason
+
+\begin{DoxyReturn}{Returns}
+the distance 
+\end{DoxyReturn}
+Here is the call graph for this function\+:
+% FIG 2
+\mbox{\Hypertarget{class_robot_a34039e49403d45d263e834f11d9c85e9}\label{class_robot_a34039e49403d45d263e834f11d9c85e9}} 
+\index{Robot@{Robot}!get\+Head\+Position@{get\+Head\+Position}}
+\index{get\+Head\+Position@{get\+Head\+Position}!Robot@{Robot}}
+\subsubsection{\texorpdfstring{get\+Head\+Position()}{getHeadPosition()}}
+{\footnotesize\ttfamily int Robot\+::get\+Head\+Position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+return the current position of the servo motor 
+
+get the current value
+
+\begin{DoxyReturn}{Returns}
+the position of the servo motor 
+\end{DoxyReturn}
+Here is the call graph for this function\+:
+% FIG 3
+\mbox{\Hypertarget{class_robot_a69dad285c5a86e600b2ad94e7d30cf8b}\label{class_robot_a69dad285c5a86e600b2ad94e7d30cf8b}} 
+\index{Robot@{Robot}!set\+Head\+Position@{set\+Head\+Position}}
+\index{set\+Head\+Position@{set\+Head\+Position}!Robot@{Robot}}
+\subsubsection{\texorpdfstring{set\+Head\+Position()}{setHeadPosition()}}
+{\footnotesize\ttfamily void Robot\+::set\+Head\+Position (\begin{DoxyParamCaption}\item[{int}]{new\+\_\+position }\end{DoxyParamCaption})}
+
+
+
+change the position of the servo motor 
+
+set the new value
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+position} & \+: the new position of the servo motor \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+% FIG 4
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/thibautmorant/\+Documents/\+Xi0n/\+Xi0n\+Robot\+\_\+\+A\+R\+D\+U\+I\+N\+O/\hyperlink{_robot_8h}{Robot.\+h}\item 
+/\+Users/thibautmorant/\+Documents/\+Xi0n/\+Xi0n\+Robot\+\_\+\+A\+R\+D\+U\+I\+N\+O/\hyperlink{_robot_8cpp}{Robot.\+cpp}\end{DoxyCompactItemize}

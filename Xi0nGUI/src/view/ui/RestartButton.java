@@ -7,7 +7,7 @@ import view.robot.Robot;
 
 public class RestartButton extends UIButton {
 
-	private final static String GRAPHIC_ELEMENT = "restart.png";
+	private final static String GRAPHIC_ELEMENT = "restart";
 
 	public RestartButton(float x, float y) {
 		super(x, y, GRAPHIC_ELEMENT);
@@ -17,7 +17,6 @@ public class RestartButton extends UIButton {
 		@Override
 		public void clicked(InputEvent input, float x, float y) {
 			Robot.getInstance(null).initialize(0, 0);
-			System.out.println("Restart");
 		}
 	}
 
