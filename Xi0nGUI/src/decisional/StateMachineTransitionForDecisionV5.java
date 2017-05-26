@@ -40,7 +40,7 @@ public class StateMachineTransitionForDecisionV5 {
     // ------------------------------------
 	
 	private int rightSideDistance;
-	private int frontalDistance;
+	private float frontalDistance;
 	private float servoAngle;
 	
 	// ------------------------------------
@@ -280,27 +280,18 @@ public class StateMachineTransitionForDecisionV5 {
 			if ( rightSideDistance <= LateralSensor.STOP_LENGTH )
 				nS = State5.LEFT_ROT_2;
 			else if ( rightSideDistance <= LateralSensor.WARNING_LENGTH )
-				nS = State5.LEFT_ROT_1_3;
+				nS = State5.LEFT_ROT_1_1;
 			else if ( MD_LEFT_ROT_1_2_MAX <= memorisedDurationLeftRot12 )
 				nS = State5.RIGHT_ROT_1;
 			else
 				nS = State5.LEFT_ROT_1_2;
 			break;
 			
-		case LEFT_ROT_1_3 :
-			if ( rightSideDistance <= LateralSensor.STOP_LENGTH )
-				nS = State5.LEFT_ROT_2;
-			else if ( rightSideDistance <= LateralSensor.WARNING_LENGTH )
-				nS = State5.LEFT_ROT_1_1;
-			else
-				nS = State5.LEFT_ROT_1_3;
-			break;
-			
 		//état pour tourner à GAUCHE lorsque on rencontre un mur en face étape 2
 		case LEFT_ROT_2 :
 			if ( rightSideDistance <= LateralSensor.WARNING_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH )
 				nS = State5.LEFT_ROT_1_1;
-			else if ( rightSideDistance > LateralSensor.STOP_LENGTH )
+			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
 				nS = State5.RIDER_AWAY;
 			else
 				nS = State5.LEFT_ROT_2;
@@ -475,10 +466,6 @@ public class StateMachineTransitionForDecisionV5 {
 			return ( STANDING_LEFT_ROTATION_SPEED );
 			
 		case LEFT_ROT_1_2 :
-			speeds = STANDING_LEFT_ROTATION_SPEED;
-			return ( STANDING_LEFT_ROTATION_SPEED );
-			
-		case LEFT_ROT_1_3 :
 			speeds = STANDING_LEFT_ROTATION_SPEED;
 			return ( STANDING_LEFT_ROTATION_SPEED );
 			
