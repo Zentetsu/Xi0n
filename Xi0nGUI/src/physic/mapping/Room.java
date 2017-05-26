@@ -1,4 +1,4 @@
-package mapping;
+package physic.mapping;
 
 import java.util.ArrayList;
 import java.util.List;

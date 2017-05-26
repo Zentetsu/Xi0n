@@ -36,7 +36,7 @@ public class StateMachineTransitionForDecisionV3 {
     // ------------------------------------
 	
 	private int rightSideDistance;
-	private int frontalDistance;
+	private float frontalDistance;
 	private float servoAngle;
 	
 	// ------------------------------------

@@ -39,7 +39,7 @@ public class StateMachineTransitionForDecisionV5 {
     // ------------------------------------
 	
 	private int rightSideDistance;
-	private int frontalDistance;
+	private float frontalDistance;
 	private float servoAngle;
 	
 	// ------------------------------------

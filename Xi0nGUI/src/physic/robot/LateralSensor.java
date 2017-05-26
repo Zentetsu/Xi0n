@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
 import physic.RotableRectangle;
-import physic.SensorType;
 
 public class LateralSensor extends Sensor {
 
@@ -16,8 +15,6 @@ public class LateralSensor extends Sensor {
 	private RotableRectangle stopZone;
 
 	public LateralSensor(float x, float y) {
-		this.type = SensorType.LATERAL;
-
 		this.warningZone = new RotableRectangle(x, y, 10, this.WARNING_LENGTH);
 		this.stopZone = new RotableRectangle(x, y, 10, this.STOP_LENGTH);
 	}

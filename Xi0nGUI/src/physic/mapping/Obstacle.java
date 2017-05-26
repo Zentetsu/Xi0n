@@ -1,4 +1,4 @@
-package mapping;
+package physic.mapping;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Polygon;

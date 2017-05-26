@@ -23,10 +23,10 @@ import gui.buttons.QuitButton;
 import gui.buttons.RestartButton;
 import gui.buttons.UIButton;
 import gui.buttons.XBee;
-import mapping.Obstacle;
-import mapping.Room;
 import network.XbeeSerialCommunication;
 import physic.Mode;
+import physic.mapping.Obstacle;
+import physic.mapping.Room;
 import physic.robot.LateralSensor;
 import physic.robot.Robot;
 import physic.robot.RobotConstant;
@@ -215,8 +215,8 @@ public enum Xi0nSimulation implements ApplicationListener {
 		return min;
 	}
 
-	public int getFrontalDistance() {
-		int min = RobotConstant.HEIGHT * 2;
+	public float getFrontalDistance() {
+		float min = RobotConstant.HEIGHT * 2;
 		if ( this.room != null ) {
 			for (Obstacle obstacle : this.room.getObstacles()) {
 				if (min > this.room.getRobot().getFrontalDistance(obstacle.getBoundingRectangle())) {

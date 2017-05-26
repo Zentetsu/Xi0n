@@ -3,7 +3,7 @@ package robot_directing;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
-import mapping.Room;
+import physic.mapping.Room;
 import physic.robot.Robot;
 
 public class AbstractInput {

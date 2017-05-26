@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 
-import physic.SensorType;
-
 public class FrontalSensor extends Sensor {
 
 	private final float speed = 2.5f;
@@ -21,8 +19,6 @@ public class FrontalSensor extends Sensor {
 	private float y;
 
 	public FrontalSensor(float x, float y) {
-		this.type = SensorType.FRONTAL;
-
 		this.cone = new Polygon(
 				new float[] { x, y, x - FRONTAL_WIDTH * 2, y + FRONTAL_LENGTH, x + FRONTAL_WIDTH * 2, y + FRONTAL_LENGTH });
 		this.sens = 1;

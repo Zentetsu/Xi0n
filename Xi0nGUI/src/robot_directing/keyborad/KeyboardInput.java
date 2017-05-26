@@ -3,7 +3,7 @@ package robot_directing.keyborad;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
-import mapping.Room;
+import physic.mapping.Room;
 import physic.robot.Robot;
 import robot_directing.AbstractInput;
 
