@@ -19,18 +19,18 @@ public class StateMachineTransitionForDecisionV3 {
 	// PARAMETERS -------------------------
     // ------------------------------------
 	
-	public static final RobotConfig WALL_FINDER_SPEED = new RobotConfig ( 170, 170, 1, 1 );
-	public static final RobotConfig WALL_RIDER_SPEED = new RobotConfig ( 170, 170, 1, 1 );
-	public static final RobotConfig WALL_RIDER_AWAY_SPEED = new RobotConfig ( 170, 102, 1, 1 );
-	public static final RobotConfig WALL_RIDER_NEAR_SPEED = new RobotConfig ( 102, 170, 1, 1 );
+	public static final RobotConfig WALL_FINDER_SPEED = new RobotConfig ( 150, 150, 1, 1 );
+	public static final RobotConfig WALL_RIDER_SPEED = new RobotConfig ( 150, 170, 1, 1 );
+	public static final RobotConfig WALL_RIDER_AWAY_SPEED = new RobotConfig ( 150, 102, 1, 1 );
+	public static final RobotConfig WALL_RIDER_NEAR_SPEED = new RobotConfig ( 102, 150, 1, 1 );
 	public static final RobotConfig WALL_RIDER_AWAY_BACK_SPEED = new RobotConfig ( WALL_RIDER_AWAY_SPEED.getRightPower0to255(), WALL_RIDER_AWAY_SPEED.getLeftPower0to255(), 1, 1 );
 	public static final RobotConfig WALL_RIDER_NEAR_BACK_SPEED = new RobotConfig ( WALL_RIDER_NEAR_SPEED.getRightPower0to255(), WALL_RIDER_NEAR_SPEED.getLeftPower0to255(), 1, 1 );
 	public static final RobotConfig EMERGENCY_STANDING_STILL_SPEED = new RobotConfig ( 0, 0, 2, 2 );
 	public static final RobotConfig STANDING_STILL_SPEED = new RobotConfig ( 0, 0, 0, 0 );
-	public static final RobotConfig STANDING_LEFT_ROTATION_SPEED = new RobotConfig ( 170, 170, -1, 1 );
-	public static final RobotConfig STANDING_RIGHT_ROTATION_SPEED = new RobotConfig ( 170, 170, 1, -1 );
+	public static final RobotConfig STANDING_LEFT_ROTATION_SPEED = new RobotConfig ( 102, 102, -1, 1 );
+	public static final RobotConfig STANDING_RIGHT_ROTATION_SPEED = new RobotConfig ( 102, 102, 1, -1 );
 	
-	public static final float THRESHOLD_ANGLE = 20;
+	public static final float THRESHOLD_ANGLE = 35;
 	
 	// ------------------------------------
     // SENSORS ----------------------------
@@ -177,7 +177,7 @@ public class StateMachineTransitionForDecisionV3 {
 			else if ( rightSideDistance <= LateralSensor.STOP_LENGTH )
 				nS = State3.WALL_RIDER_AWAY_BACK;
 			else
-				nS = State3.WALL_RIDER;
+				nS = State3.WALL_RIDER_AWAY;
 			break;
 		
 		// état de suivi des murs lorqu'on se rapproche après s'être éloigné

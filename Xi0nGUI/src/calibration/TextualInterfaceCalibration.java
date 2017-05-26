@@ -884,14 +884,14 @@ public class TextualInterfaceCalibration {
 		Keyboard keyboard = new Keyboard ();
 		TextualInterfaceCalibration textualInterfaceCalibration = new TextualInterfaceCalibration();
 		
-		textualInterfaceCalibration.addnew(MovementEnum.FORWARD, true, (float)0.45, (float)0.4);
-		textualInterfaceCalibration.addnew(MovementEnum.FORWARD, false, 1, (float)0.97);
-		textualInterfaceCalibration.addnew(MovementEnum.BACK, true, (float)0.43, (float)0.4);
-		textualInterfaceCalibration.addnew(MovementEnum.BACK, true, (float)0.98, 1);
-		textualInterfaceCalibration.addnew(MovementEnum.ROTATIONLEFT, true, (float)0.45, (float)0.4);
+		textualInterfaceCalibration.addnew(MovementEnum.FORWARD, true, (float)0.4, (float)0.4);
+		textualInterfaceCalibration.addnew(MovementEnum.FORWARD, true, 1, (float)1);
+		textualInterfaceCalibration.addnew(MovementEnum.BACK, true, (float)0.4, (float)0.4);
+		textualInterfaceCalibration.addnew(MovementEnum.BACK, true, (float)1, 1);
+		textualInterfaceCalibration.addnew(MovementEnum.ROTATIONLEFT, true, (float)0.4, (float)0.4);
 		textualInterfaceCalibration.addnew(MovementEnum.ROTATIONLEFT, true, 1, 1);
-		textualInterfaceCalibration.addnew(MovementEnum.ROTATIONRIGHT, true, (float)0.43, (float)0.4);
-		textualInterfaceCalibration.addnew(MovementEnum.ROTATIONRIGHT, true, (float)0.99, 1);
+		textualInterfaceCalibration.addnew(MovementEnum.ROTATIONRIGHT, true, (float)0.4, (float)0.4);
+		textualInterfaceCalibration.addnew(MovementEnum.ROTATIONRIGHT, true, (float)1, 1);
 		
 		while ( !textualInterfaceCalibration.getQuit() ) {
 			textualInterfaceCalibration.mainPrint();

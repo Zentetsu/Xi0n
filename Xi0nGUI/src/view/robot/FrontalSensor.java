@@ -9,10 +9,11 @@ import view.robot.RobotConstant;
 
 public class FrontalSensor extends Sensor {
 
-	private final float speed = (float) ( 2.75) ;
+	private final float speed = (float) ( 3.5 ) ;
 	private final int maxAngle = 45;
 	
 	public static final int FRONTAL_LENGTH = 40;
+	public static final int FRONTAL_WIDTH = 5;
 
 	private Polygon cone;
 	private float angle;
@@ -24,7 +25,7 @@ public class FrontalSensor extends Sensor {
 		this.type = SensorType.FRONTAL;
 
 		this.cone = new Polygon(
-				new float[] { x, y, x - 3 * 2, y + FRONTAL_LENGTH, x + 3 * 2, y + FRONTAL_LENGTH });
+				new float[] { x, y, x - FRONTAL_WIDTH * 2, y + FRONTAL_LENGTH, x + FRONTAL_WIDTH * 2, y + FRONTAL_LENGTH });
 		this.sens = 1;
 		this.angle = 0;
 
