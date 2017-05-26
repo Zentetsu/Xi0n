@@ -7,6 +7,7 @@ import decisional.State1;
 import decisional.State2;
 import decisional.State3;
 import decisional.State4;
+import decisional.State5;
 import view.Room;
 
 public class InputManager {
@@ -21,7 +22,7 @@ public class InputManager {
 
 	private Map<Mode, CustomInput> inputs;
 	private Mode currentMode;
-	public State4 STATE;
+	public State5 STATE;
 
 	public InputManager(Robot robot, Mode currentMode, Room room) {
 		this.inputs = new HashMap<>();
