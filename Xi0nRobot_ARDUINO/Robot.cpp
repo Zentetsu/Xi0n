@@ -28,7 +28,7 @@ void Robot::deplacemnt(int new_direction_M1, int new_direction_M2, int new_Speed
 			capture = getDistanceInfraRedSensor();
 
 			if((capture > 18)) {
-				Serial.println ("stop Deplacemnt IR");
+				//Serial.println ("stop Deplacemnt IR");
 
 				if (forward) {
 					mobility->move(-1, -1, 255, 255);
@@ -40,12 +40,12 @@ void Robot::deplacemnt(int new_direction_M1, int new_direction_M2, int new_Speed
 
 				count = 0;
 			} else if((lastCapture < 18) && (count > 2)) {
-				Serial.println ("Deplacemnt");
+				//Serial.println ("Deplacemnt");
 				mobility->stopBrake();
 				mobility->move(new_direction_M1, new_direction_M2, new_Speed_M1, new_Speed_M2);
 				forward = true;
 			} else {
-				Serial.println ("stop Deplacemnt IR ++");
+				//Serial.println ("stop Deplacemnt IR ++");
 				count++;
 			}
 
