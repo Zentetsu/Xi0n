@@ -63,6 +63,7 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.sr = new ShapeRenderer();
 		this.shud = new ShapeRenderer();
 		this.font = new BitmapFont();
+		this.font.setColor(0.1f, 0.1f, 0.1f, 1);
 		this.stage = new Stage();
 		this.batch = new SpriteBatch();
 		this.HUD = new Texture("assets/HUD.png");
