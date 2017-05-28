@@ -3,7 +3,7 @@ digraph "Robot::getHeadPosition"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node19 [label="Robot::getHeadPosition",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node19 -> Node20 [color="midnightblue",fontsize="10",style="solid"];
-  Node20 [label="HeadServo::getPosition",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_head_servo.html#a84eadc00f5cdd262d1b212a306a0930c",tooltip="return the position of the servo motor "];
+  Node18 [label="Robot::getHeadPosition",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node18 -> Node19 [color="midnightblue",fontsize="10",style="solid"];
+  Node19 [label="HeadServo::getPosition",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_head_servo.html#a84eadc00f5cdd262d1b212a306a0930c",tooltip="return the position of the servo motor "];
 }

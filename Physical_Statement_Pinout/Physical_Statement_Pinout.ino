@@ -42,7 +42,7 @@
 ********************************************************************/
 boolean mode;                 // Operating mode: Auto = true, Manual = false
 int infraRedRemote;           // Distance given by the infra-red sensor
-int ultrasoundRemote;         // Distance given by the ultrasound sensor
+float ultrasoundRemote;         // Distance given by the ultrasound sensor
 int scanAngle;                // Sweep angle of the ServoMotor
 int rightMotorDutyCycle;      // Duty cycle of the right motor
 int leftMotorDutyCycle;       // Duty cycle of the left motor
@@ -61,6 +61,7 @@ void setup() {
   Serial.begin(9600);
   robot = new Robot(PinDigitalMotorLeft1, PinDigitalMotorLeft2, PinPWMMotorLeft, PinDigitalMotorRight1, PinDigitalMotorRight2, PinPWMMotorRight, PinIR,PinUltrasoundEcho, PinUltrasoundTrig, PinServoMotor);
   scanAngle = 89;
+  robot->setHeadPosition(scanAngle);
   up_down = 1;
 }
 
@@ -73,7 +74,8 @@ void loop() {
   assignDistanceInfraRed();
   communication();
   setDeplacemnt();
-  delay(50);
+  //robot->deplacemnt(1, 1, 255, 255);
+  delay(100);
 }
 
 
@@ -82,6 +84,7 @@ void loop() {
 ********************************************************************/
 void assignDistanceUltrason() {
   ultrasoundRemote = robot->getDistanceUltrasion();
+  //Serial.println(ultrasoundRemote);
 }
 
 
@@ -90,6 +93,7 @@ void assignDistanceUltrason() {
 ********************************************************************/
 void assignDistanceInfraRed() {
   infraRedRemote = robot->getDistanceInfraRedSensor();
+  //Serial.println(infraRedRemote);
 }
 
 
@@ -104,9 +108,9 @@ void assignHeadPosition() {
 
   robot->setHeadPosition(scanAngle);
 
-  if(scanAngle == 66)
+  if(scanAngle <= 66)
     up_down = 1;
-  else if(scanAngle == 111)
+  else if(scanAngle >= 111)
     up_down = 0;
 }
 

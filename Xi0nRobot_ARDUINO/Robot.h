@@ -96,6 +96,11 @@ class Robot {
 		Mobility *mobility;/*!< object used to control the robot*/
 		Sensor *sensor;/*!< object used to get information from the sensor*/
 		HeadServo *headServo;/*!< object used to control the servo motor*/
+
+		float lastCapture;/*!< last capture of the ultrasound*/
+		int count;/*!< count number of capture after limit*/
+		bool forward;/*!< use to check if you last move is forward*/
+
 		
 };
 

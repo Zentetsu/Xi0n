@@ -8,6 +8,9 @@ Robot::Robot(int init_motorL_Pin1, int init_motorL_Pin2, int init_enableL_Pin, i
 	mobility = new Mobility(init_motorL_Pin1, init_motorL_Pin2, init_enableL_Pin, init_motorR_Pin1, init_motorR_Pin2, init_enableR_Pin);
 	sensor = new Sensor(init_InfraRedSensor_Pin, init_echo_Pin, init_trigger_Pin);
 	headServo = new HeadServo(new_ServoMotor_Pin);
+
+	lastCapture = 0;
+	count = 2;
 }
 
 Robot::~Robot() {
@@ -18,21 +21,35 @@ Robot::~Robot() {
 }
 
 void Robot::deplacemnt(int new_direction_M1, int new_direction_M2, int new_Speed_M1, int new_Speed_M2) {
+	float capture;
 	//Serial.println ("Deplacemnt");
 	switch(new_direction_M1+new_direction_M2) {
-		case -2:
-			if(!((getDistanceUltrasion() <= 5) && (new_Speed_M1 > new_Speed_M2)))
-				mobility->move(new_direction_M1, new_direction_M2, new_Speed_M1, new_Speed_M2);
-
-			break;
-		case 0:
-			mobility->move(new_direction_M1, new_direction_M2, new_Speed_M1, new_Speed_M2);
-
-			break;
 		case 2:
-			if(!(getDistanceInfraRedSensor() > 25))
-				if(!((getDistanceUltrasion() <= 5) && (new_Speed_M1 > new_Speed_M2)))
-					mobility->move(new_direction_M1, new_direction_M2, new_Speed_M1, new_Speed_M2);
+			capture = getDistanceInfraRedSensor();
+
+			if((capture > 18)) {
+				Serial.println ("stop Deplacemnt IR");
+
+				if (forward) {
+					mobility->move(-1, -1, 255, 255);
+					delay(400);
+				}
+
+				mobility->brake();
+				forward = false;
+
+				count = 0;
+			} else if((lastCapture < 18) && (count > 2)) {
+				Serial.println ("Deplacemnt");
+				mobility->stopBrake();
+				mobility->move(new_direction_M1, new_direction_M2, new_Speed_M1, new_Speed_M2);
+				forward = true;
+			} else {
+				Serial.println ("stop Deplacemnt IR ++");
+				count++;
+			}
+
+			lastCapture = capture;
 
 			break;
 
