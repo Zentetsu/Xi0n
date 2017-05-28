@@ -56,7 +56,7 @@ public enum Xi0nSimulation implements ApplicationListener {
 
 	@Override
 	public void create() {
-		this.xbeeCommunation = new XbeeSerialCommunication(false);
+		//this.xbeeCommunation = new XbeeSerialCommunication(false);
 		this.camera = new OrthographicCamera();
 		this.camera.setToOrtho(false);
 		this.room = new Room();
@@ -119,7 +119,7 @@ public enum Xi0nSimulation implements ApplicationListener {
 
 	@Override
 	public void render() {
-		this.xbeeCommunation.draw();
+		//this.xbeeCommunation.draw();
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		Gdx.gl.glClearColor(0.95f, 0.95f, 0.95f, 0.95f);
 		this.camera.position.set(this.room.getCameraPosition(), 0);

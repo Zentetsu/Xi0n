@@ -21,11 +21,11 @@ public class StateMachineTransitionForDecisionV5 {
 	
 	public static final RobotConfig WALL_FINDER_SPEED = new RobotConfig ( 200, 200, 1, 1 );
 	public static final RobotConfig WALL_RIDER_SPEED = new RobotConfig ( 200, 200, 1, 1 );
-	public static final RobotConfig WALL_RIDER_AWAY_SPEED = new RobotConfig ( 200, 150, 1, 1 );
-	public static final RobotConfig WALL_RIDER_NEAR_SPEED = new RobotConfig ( 150, 200, 1, 1 );
+	public static final RobotConfig WALL_RIDER_AWAY_SPEED = new RobotConfig ( 200, 190, 1, 1 );
+	public static final RobotConfig WALL_RIDER_NEAR_SPEED = new RobotConfig ( 160, 200, 1, 1 );
 	public static final RobotConfig WALL_RIDER_AWAY_BACK_SPEED = new RobotConfig ( WALL_RIDER_AWAY_SPEED.getRightPower0to255(), WALL_RIDER_AWAY_SPEED.getLeftPower0to255(), 1, 1 );
 	public static final RobotConfig WALL_RIDER_NEAR_BACK_SPEED = new RobotConfig ( WALL_RIDER_NEAR_SPEED.getRightPower0to255(), WALL_RIDER_NEAR_SPEED.getLeftPower0to255(), 1, 1 );
-	public static final RobotConfig WALL_RIDER_FAR_AWAY_SPEED = new RobotConfig ( 255, 102, 1, 1 );
+	public static final RobotConfig WALL_RIDER_FAR_AWAY_SPEED = new RobotConfig ( 200, 150, 1, 1 );
 	public static final RobotConfig EMERGENCY_STANDING_STILL_SPEED = new RobotConfig ( 0, 0, 2, 2 );
 	public static final RobotConfig STANDING_STILL_SPEED = new RobotConfig ( 0, 0, 0, 0 );
 	public static final RobotConfig STANDING_LEFT_ROTATION_SPEED = new RobotConfig ( 150, 150, -1, 1 );
@@ -62,6 +62,8 @@ public class StateMachineTransitionForDecisionV5 {
     // STATE MEMORY -----------------------
     // ------------------------------------
 	
+	private State5 pre2PS;
+	private State5 pre1PS;
 	private State5 pS;
 	private State5 nS;
 	
@@ -76,6 +78,8 @@ public class StateMachineTransitionForDecisionV5 {
 	
 	public StateMachineTransitionForDecisionV5 () {
 		readSensorsSimu();
+		pre2PS = State5.FINDER;
+		pre1PS = State5.FINDER;
 		pS = State5.FINDER;
 		nS = State5.FINDER;
 		memorisedDurationWallRider_1 = 0;
@@ -92,6 +96,8 @@ public class StateMachineTransitionForDecisionV5 {
 	
 	public void reset () {
 		readSensorsSimu();
+		pre2PS = State5.FINDER;
+		pre1PS = State5.FINDER;
 		pS = State5.FINDER;
 		nS = State5.FINDER;
 		memorisedDurationWallRider_1 = 0;
@@ -185,8 +191,10 @@ public class StateMachineTransitionForDecisionV5 {
 				nS = State5.LEFT_ROT_2;
 			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
 				nS = State5.RIDER_FAR_AWAY;
-			else if ( rightSideDistance <= LateralSensor.STOP_LENGTH )
+			else if ( rightSideDistance <= LateralSensor.STOP_LENGTH && ( ! ( pre1PS == State5.RIDER && pre2PS == State5.RIDER_NEAR_BACK ) ) )
 				nS = State5.RIDER_AWAY_BACK;
+			else if ( rightSideDistance <= LateralSensor.STOP_LENGTH )
+				nS = State5.RIDER;
 			else
 				nS = State5.RIDER_AWAY;
 			break;
@@ -392,6 +400,12 @@ public class StateMachineTransitionForDecisionV5 {
 			memorisedDurationLeftRot12 = 0;
 		}
 		
+		if ( pS != nS ) {
+			pre2PS = pre1PS;
+			pre1PS = pS;
+		}
+			
+		
 		pS = nS;
 	}
 	
@@ -433,8 +447,15 @@ public class StateMachineTransitionForDecisionV5 {
 			
 		//ï¿½tat pour longer un mur lorsque l'on s'en éloigne
 		case RIDER_AWAY :
-			speeds = WALL_RIDER_AWAY_SPEED;
-			return ( WALL_RIDER_AWAY_SPEED );
+			if ( pre1PS == State5.RIDER && pre2PS == State5.RIDER_NEAR_BACK ) {
+				speeds = WALL_RIDER_SPEED;
+				return ( WALL_RIDER_SPEED );
+			}
+			else {
+				speeds = WALL_RIDER_AWAY_SPEED;
+				return ( WALL_RIDER_AWAY_SPEED );
+			}
+
 			
 		// état de suivi des murs lorqu'on se rapproche après s'être éloigné
 		case RIDER_AWAY_BACK :
