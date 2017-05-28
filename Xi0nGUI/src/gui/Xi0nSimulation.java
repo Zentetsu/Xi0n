@@ -57,6 +57,7 @@ public enum Xi0nSimulation implements ApplicationListener {
 	@Override
 	public void create() {
 		this.xbeeCommunation = new XbeeSerialCommunication(false);
+		this.connected = this.xbeeCommunation.isConnected();
 		this.camera = new OrthographicCamera();
 		this.camera.setToOrtho(false);
 		this.room = new Room();
@@ -90,8 +91,6 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.buttonGroup.setUncheckLast(true);
 
 		this.stage.addActor(this.xbeeLogo);
-		this.connected = true;
-
 	}
 
 	public void addButton(UIButton button) {

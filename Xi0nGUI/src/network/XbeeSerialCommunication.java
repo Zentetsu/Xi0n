@@ -33,6 +33,7 @@ public class XbeeSerialCommunication extends PApplet implements Runnable{
 	boolean frameGetValue = false;
 	boolean frameFinish = false;
 	boolean frameValid = false;
+	private boolean isConnected;
 	int frameType;
 	int frameValue;
 	int increment;
@@ -49,8 +50,15 @@ public class XbeeSerialCommunication extends PApplet implements Runnable{
 			this.myPort = new Serial(this, myList[0], 9600);
 			Thread com = new Thread(this);
 			com.start();
+			this.isConnected = true;
 		}
+		else
+			this.isConnected = false;
 	}
+	
+	public boolean isConnected() {
+		return this.isConnected;
+	}	
 
 	/*******************************************************
 	 * MAIN PROGRAM LOOP
@@ -217,5 +225,5 @@ public class XbeeSerialCommunication extends PApplet implements Runnable{
 		}
 		this.leftMotorDutyCycle = Math.round(Math.abs(input.LEFT));
 		//this.isAutomatic = input.getMode();
-	}	
+	}
 }
