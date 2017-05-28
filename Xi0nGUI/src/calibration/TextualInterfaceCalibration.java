@@ -17,10 +17,10 @@ public class TextualInterfaceCalibration {
 // ========================================
 // ATTRIBUTS
 	
-	private MotorParrallelCalibration motorParrallelCalibration = new MotorParrallelCalibration ();
-	private boolean printCom = true;
-	private boolean run = false;
-	private boolean runcon = false;
+	private MotorParrallelCalibration motorParrallelCalibration = new MotorParrallelCalibration (); // enregistrement des étalons
+	private boolean printCom = true; // affichage des commandes dans le prochain print
+	private boolean run = false; // lancement du mouvement du robot par l'étalon sélectionné
+	private boolean runcon = false; // 
 	private int selected = 0;
 	private boolean quit = false;
 	private ParrallelCalibration pCtry = new ParrallelCalibration ( MovementEnum.STAND, 0 );

@@ -36,7 +36,7 @@ public class DecisionInput extends AbstractInput {
 	}
 
 	private void decisionAlgorithm() {
-		this.SMT.readSensorsSimu();
+		this.SMT.readSensors();
 		this.SMT.FBloc();
 		this.SMT.MBloc();
 		RobotConfig speeds = SMT.GBloc();

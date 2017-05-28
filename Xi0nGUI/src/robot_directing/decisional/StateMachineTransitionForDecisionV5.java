@@ -81,7 +81,11 @@ public class StateMachineTransitionForDecisionV5 {
 	
 	public StateMachineTransitionForDecisionV5 () {
 		//readSensorsSimu();
+<<<<<<< HEAD
 		//readSensorsCapteur();
+=======
+		readSensors();
+>>>>>>> branch 'dev' of https://github.com/haze-sama/Xi0n.git
 		pre2PS = State5.FINDER;
 		pre1PS = State5.FINDER;
 		pS = State5.FINDER;
@@ -134,7 +138,7 @@ public class StateMachineTransitionForDecisionV5 {
 	/* Description des fonctions ----------
 	Lecture des capteurs
 	*/
-	public void readSensorsCapteur () {
+	public void readSensors () {
 		rightSideDistance = Xi0nSimulation.INSTANCE.getLateralDistanceFromRobot();
 		frontalDistance = Xi0nSimulation.INSTANCE.getFrontalDistanceFromRobot();
 		servoAngle = Xi0nSimulation.INSTANCE.getSensorAngle();
