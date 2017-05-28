@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import physic.robot.FrontalSensor;
 import physic.robot.LateralSensor;
 import physic.robot.Robot;
+import physic.robot.Sensor;
 
 public class Room {
 
@@ -70,8 +71,7 @@ public class Room {
 		//TODO: Calculate the distance between the obstacle and the sensor to simulate it before mathieu's work
 		this.robot.update(angle, FDistance, LDistance);
 		LateralSensor ls = this.robot.getLateralSensor();
-		FrontalSensor fs = this.robot.getFrontalSensor();
-		if (ls.getDistance() >= 5 && ls.getDistance() <= 100)
+		if (ls.getDistance() >= Sensor.RENDERING_DISTANCE_MIN && ls.getDistance() <= Sensor.RENDERING_DISTANCE_MAX)
 			this.obstacles.add(new Obstacle(ls.getObstacle()));
 	}
 

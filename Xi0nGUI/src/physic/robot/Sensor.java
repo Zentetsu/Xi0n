@@ -8,8 +8,8 @@ import physic.mapping.Obstacle;
 
 public abstract class Sensor {
 	
-	private static final float RENDERING_DISTANCE_MIN = 5;
-	private static final float RENDERING_DISTANCE_MAX = 100;
+	public static final float RENDERING_DISTANCE_MIN = 5;
+	public static final float RENDERING_DISTANCE_MAX = 100;
 	public float distance;
 	private Obstacle obstacle;
 	
