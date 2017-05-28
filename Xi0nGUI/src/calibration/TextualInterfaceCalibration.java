@@ -18,14 +18,14 @@ public class TextualInterfaceCalibration {
 // ATTRIBUTS
 	
 	private MotorParrallelCalibration motorParrallelCalibration = new MotorParrallelCalibration (); // enregistrement des étalons
-	private boolean printCom = true; // affichage des commandes dans le prochain print
+	private boolean printCom = true; // affichage des commandes dans le prochain Mainprint
 	private boolean run = false; // lancement du mouvement du robot par l'étalon sélectionné
-	private boolean runcon = false; // 
-	private int selected = 0;
-	private boolean quit = false;
-	private ParrallelCalibration pCtry = new ParrallelCalibration ( MovementEnum.STAND, 0 );
-	private boolean calSelected = false;
-	private boolean calShown = false;
+	private boolean runcon = false; // lancement du mouvement du robot par l'étalon sélectionné sur commande du controleur
+	private int selected = 0; // étalon sélectionne
+	private boolean quit = false; // quitter le programme avant le prochain Mainprint
+	private ParrallelCalibration pCtry = new ParrallelCalibration ( MovementEnum.STAND, 0 ); // étalonnage d'essai
+	private boolean calSelected = false; // si l'étalon test est sélectionné
+	private boolean calShown = false; // si l'étalon test est smontré
 	
 // ========================================	
 // METHODES
@@ -105,23 +105,23 @@ public class TextualInterfaceCalibration {
 		}
 		if ( printCom ) {
 			System.out.println ( " * ---COMMANDS---                                                                            *" );
-			System.out.println ( " * >> s [x]                                                                                  *" );
-			System.out.println ( " * >> s cal                                                                                  *" );
-			System.out.println ( " * >> add [type] [power]                                                                     *" );
-			System.out.println ( " * >> del                                                                                    *" );
-			System.out.println ( " * >> del [x]                                                                                *" );
-			System.out.println ( " * >> delall                                                                                 *" );
-			System.out.println ( " * >> lp [power]                                                                             *" );
-			System.out.println ( " * >> rp [power]                                                                             *" );
-			System.out.println ( " * >> showcal [type] [power]                                                                 *" );
-			System.out.println ( " * >> trycal [type] [power]                                                                  *" );
-			System.out.println ( " * >> run                                                                                    *" );
-			System.out.println ( " * >> runcon //TODO                                                                          *" );
-			System.out.println ( " * >> stop                                                                                   *" );
-			System.out.println ( " * >> generate                                                                               *" );
-			System.out.println ( " * >> order                                                                                  *" );
-			System.out.println ( " * >> com                                                                                    *" );
-			System.out.println ( " * >> quit                                                                                   *" );
+			System.out.println ( " * >> s [x]                   : sélectionne l'étalon x                                       *" );
+			System.out.println ( " * >> s cal                   : sélectionne l'étalon test                                    *" );
+			System.out.println ( " * >> add [type] [power]      : ajoute un étalon du type et CentralPower sélectionné         *" );
+			System.out.println ( " * >> del                     : supprime l'étalon sélectionné                                *" );
+			System.out.println ( " * >> del [x]                 : supprime l'étalon x                                          *" );
+			System.out.println ( " * >> delall                  : supprime tous les étalons                                    *" );
+			System.out.println ( " * >> lp [power]              : affecte le power à la roue gauche de l'étalon sélectionné    *" );
+			System.out.println ( " * >> rp [power]              : affecte le power à la roue droite de l'étalon sélectionné    *" );
+			System.out.println ( " * >> showcal [type] [power]  : affiche l'étalon test pour le type et le power proposé       *" );
+			System.out.println ( " * >> trycal [type] [power]   : affiche et sel l'étalon test pour le type et le power proposé*" );
+			System.out.println ( " * >> run                     : fait avancer le robot à l'étalon sélectionné                 *" );
+			System.out.println ( " * >> runcon //TODO           : fait avancer le robot à l'étalon sélectionné sur controleur  *" );
+			System.out.println ( " * >> stop                    : stoppe le robot                                              *" );
+			System.out.println ( " * >> generate                : génère le fichier d'étalonnage                               *" );
+			System.out.println ( " * >> order                   : ordonne les étalonnages                                      *" );
+			System.out.println ( " * >> com                     : affiche les commandes                                        *" );
+			System.out.println ( " * >> quit                    : quitte le programme                                          *" );
 			System.out.println ( " *********************************************************************************************" );
 			printCom = false;
 		}
