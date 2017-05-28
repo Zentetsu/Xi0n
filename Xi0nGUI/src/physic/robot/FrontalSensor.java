@@ -51,12 +51,14 @@ public class FrontalSensor extends Sensor {
 		if (Math.abs(this.angle) > this.maxAngle) {
 			this.sens *= -1;
 		}
+		/*
 		this.angle += this.speed * this.sens;
 		this.rotate(this.speed * this.sens);
-		//float dif = angle - 90 - this.angle;
-		//this.angle = angle - 90;
-		//this.setDistance(distance);
-		//this.rotate(dif);
+		*/
+		float dif = angle - 90 - this.angle;
+		this.angle = angle - 90;
+		this.setDistance(distance);
+		this.rotate(dif);
 	}
 
 	public void render(ShapeRenderer sr) {
