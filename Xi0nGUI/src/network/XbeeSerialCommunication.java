@@ -88,14 +88,14 @@ public class XbeeSerialCommunication extends PApplet implements Runnable{
 		// Read the data on serial
 		int n = myPort.read();
 		char serialValue = (char) n;
-		System.out.println(serialValue);
+		//System.out.println(serialValue);
 
 		// Frame Decoding
 		if (frameStart == false) {
 			if (serialValue == '$') {
 				frameStart = true;
 				increment = 0;
-				System.out.println("$ detect");
+				//System.out.println("$ detect");
 			} else
 				frameFinish = true;
 		} else {
@@ -112,7 +112,7 @@ public class XbeeSerialCommunication extends PApplet implements Runnable{
 					System.out.println("Changing scan angle");
 					frameSelectType = true;
 				} else {
-					System.out.println("TYPE ERROR");
+					//System.out.println("TYPE ERROR");
 					frameFinish = true;
 				}
 			} else if (frameGetValue == false) {
@@ -123,16 +123,17 @@ public class XbeeSerialCommunication extends PApplet implements Runnable{
 			} else if (frameFinish == false) {
 				if (serialValue == '!') {
 					frameValid = true;
-					System.out.println("The Frame Is Valid");
-				} else
-					System.out.println("The Frame Isn't Valid");
+					//System.out.println("The Frame Is Valid");
+				} else {
+					//System.out.println("The Frame Isn't Valid");
+				}
 				frameFinish = true;
 			}
 		}
 
 		if ((frameFinish == true) || (increment == 3)) {
 			if (frameValid == true) {
-				System.out.println("DATA UPDATE...");
+				//System.out.println("DATA UPDATE...");
 				switch (frameType) {
 				case '0':
 					/* ULTRASOUND REMOTE UPDATE */
@@ -147,12 +148,13 @@ public class XbeeSerialCommunication extends PApplet implements Runnable{
 					scanAngle = frameValue;
 					break;
 				}
-				System.out.println("DATA UPDATED");
-			} else
-				System.out.println("FRAME ERROR");
+				//System.out.println("DATA UPDATED");
+			} else {
+				//System.out.println("FRAME ERROR");
+			}
 
 			/* INITIALIZATION FOR THE NEXT FRAME */
-			System.out.println("INITIALIZATION FOR THE NEXT FRAME");
+			//System.out.println("INITIALIZATION FOR THE NEXT FRAME");
 			frameStart = false;
 			frameSelectType = false;
 			frameGetValue = false;

@@ -1,11 +1,11 @@
 package robot_directing.decisional;
 
-/* Import de bibliothï¿½ques =============*/
+/* Import de bibliothèques =============*/
 
 
-/* Description de l'enumï¿½ration ===========
-Enueration des ï¿½tats pour la machine ï¿½
-ï¿½tat de la prise de dï¿½cision.
+/* Description de l'enumération ===========
+Enueration des états pour la machine à
+état de la prise de décision.
 =========================================*/
 public enum State5 {
 

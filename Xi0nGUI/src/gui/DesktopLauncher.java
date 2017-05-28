@@ -13,7 +13,7 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = WIDTH;
 		config.height = HEIGHT;
-		config.fullscreen = true;
+		config.fullscreen = false;
 		new LwjglApplication(Xi0nSimulation.INSTANCE, config);
 	}
 }
