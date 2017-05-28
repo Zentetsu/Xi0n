@@ -44,14 +44,12 @@ public class XbeeSerialCommunication extends PApplet implements Runnable{
 	public XbeeSerialCommunication(boolean isAutomatic) {
 		// Xbee serial initialization
 		String[] myList = Serial.list();
-		this.myPort = new Serial(this, myList[0], 9600);
-
-		// Global Variables initialization
 		this.isAutomatic = isAutomatic;
-		this.rightMotorDutyCycle = 2;
-		this.leftMotorDutyCycle = 4;
-		Thread com = new Thread(this);
-		com.start();
+		if (myList.length > 0){
+			this.myPort = new Serial(this, myList[0], 9600);
+			Thread com = new Thread(this);
+			com.start();
+		}
 	}
 
 	/*******************************************************
@@ -218,5 +216,6 @@ public class XbeeSerialCommunication extends PApplet implements Runnable{
 			this.moveDirectionLeftMotor = 0;
 		}
 		this.leftMotorDutyCycle = Math.round(Math.abs(input.LEFT));
+		//this.isAutomatic = input.getMode();
 	}	
 }
