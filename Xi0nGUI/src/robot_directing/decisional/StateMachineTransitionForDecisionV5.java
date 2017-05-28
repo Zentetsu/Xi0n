@@ -254,8 +254,6 @@ public class StateMachineTransitionForDecisionV5 {
 				nS = State5.LEFT_ROT_2;
 			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
 				nS = State5.RIGHT_ROT_1;
-			else if ( rightSideDistance > LateralSensor.STOP_LENGTH )
-				nS = State5.RIDER_AWAY;
 			else if ( this.memorisedDurationWallRider_2 > ( this.memorisedDurationWallRider_1 / 2 ) )
 				nS = State5.RIDER;
 			else
@@ -315,8 +313,10 @@ public class StateMachineTransitionForDecisionV5 {
 		case RIGHT_ROT_2 :
 			if ( rightSideDistance > LateralSensor.STOP_LENGTH )
 				nS = State5.RIDER;
-			else if ( rightSideDistance <= LateralSensor.STOP_LENGTH )
+			else if ( rightSideDistance <= LateralSensor.STOP_LENGTH && ( ( pre1PS == State5.RIDER || pre1PS == State5.RIDER_AWAY || pre1PS == State5.RIDER_NEAR || pre1PS == State5.RIDER_AWAY_BACK || pre1PS == State5.RIDER_NEAR_BACK ) || ( pre1PS == State5.RIDER || pre1PS == State5.RIDER_AWAY || pre1PS == State5.RIDER_NEAR || pre1PS == State5.RIDER_AWAY_BACK || pre1PS == State5.RIDER_NEAR_BACK ) ) )
 				nS = State5.LEFT_ROT_1_1;
+			else if ( rightSideDistance <= LateralSensor.STOP_LENGTH )
+				nS = State5.RIDER_AWAY;
 			else
 				nS = State5.RIGHT_ROT_2;
 			break;
@@ -350,7 +350,10 @@ public class StateMachineTransitionForDecisionV5 {
 				case RIDER_AWAY_BACK:
 				case RIDER_NEAR_BACK:
 					chronoWallRider.stop();
-					//chrono = new Chrono();
+					if ( ( pS == State5.RIDER_AWAY && nS == State5.RIDER_NEAR ) || ( pS == State5.RIDER_NEAR_BACK && nS == State5.RIDER_AWAY_BACK ) || ( pS == State5.RIDER_NEAR_BACK && nS == State5.RIDER_AWAY ) || ( pS == State5.RIDER_AWAY_BACK && nS == State5.RIDER_NEAR ) ) {
+						memorisedDurationWallRider_1 = 0;
+						memorisedDurationWallRider_2 = 0;
+					}
 					chronoWallRider.start();
 					break;
 				default:
@@ -401,7 +404,6 @@ public class StateMachineTransitionForDecisionV5 {
 			pre1PS = pS;
 		}
 			
-		
 		pS = nS;
 	}
 	

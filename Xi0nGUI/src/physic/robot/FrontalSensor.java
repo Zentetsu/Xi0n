@@ -11,7 +11,7 @@ public class FrontalSensor extends Sensor {
 
 	//axe infra = centré et limite plateforme : margin de 3.5cm
 	//infra = 4.5*1.5
-	private final float speed = 1;
+	private final float speed = 1 ;
 	private final int maxAngle = 20;
 	
 	public static final int FRONTAL_LENGTH = 20;
