@@ -132,7 +132,7 @@ public class StateMachineTransitionForDecisionV5 {
 	/* Description des fonctions ----------
 	Lecture des capteurs
 	*/
-	public void readSensorsCapteur () {
+	public void readSensors () {
 		// TODO
 	}
 	

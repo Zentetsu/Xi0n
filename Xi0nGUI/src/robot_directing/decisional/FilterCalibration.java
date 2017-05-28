@@ -233,7 +233,7 @@ public class FilterCalibration {
 	/* Description de la fonction ---------
 	éffectue l'adaptation de la valeur
 	entrée en fonction des valeurs
-	invalides et de l'atalonnage
+	invalides et de l'étalonnage
 	*/
 	public RobotConfig filter ( int leftPower0to255, int rightPower0to255, int leftDirection, int rightDirection ){
 		if ( leftDirection < -1 || leftDirection > 2 || rightDirection < -1 || rightDirection > 2  ) {
@@ -277,18 +277,6 @@ public class FilterCalibration {
 	
 	public String toString () {
 		return ( leftMotorSL.toString()+"\n"+rightMotorSL.toString()+"\n"+leftMotorR.toString()+"\n"+rightMotorR.toString()+"\n" );
-	}
-	
-// ========================================	
-// MAIN PROGRAMME - TEST
-	
-	public static void main(String[] args) {
-		FilterCalibration filterCalibration = new FilterCalibration();
-		boolean testLoad = filterCalibration.loadCalibrationFile();
-		if ( testLoad )
-			System.out.println(filterCalibration);
-		else
-			System.out.println("LOADING ERROR");
 	}
 
 // ========================================  	
