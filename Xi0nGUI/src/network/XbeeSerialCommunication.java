@@ -103,13 +103,13 @@ public class XbeeSerialCommunication extends PApplet implements Runnable{
 			if (frameSelectType == false) {
 				frameType = serialValue;
 				if (frameType == '0') {
-					System.out.println("Changing ultrasound remote");
+					//System.out.println("Changing ultrasound remote");
 					frameSelectType = true;
 				} else if (frameType == '1') {
-					System.out.println("Changing infra-red remote");
+					//System.out.println("Changing infra-red remote");
 					frameSelectType = true;
 				} else if (frameType == '2') {
-					System.out.println("Changing scan angle");
+					//System.out.println("Changing scan angle");
 					frameSelectType = true;
 				} else {
 					//System.out.println("TYPE ERROR");
@@ -117,8 +117,8 @@ public class XbeeSerialCommunication extends PApplet implements Runnable{
 				}
 			} else if (frameGetValue == false) {
 				frameValue = serialValue;
-				System.out.print("Value save: ");
-				System.out.println(frameValue);
+				//System.out.print("Value save: ");
+				//System.out.println(frameValue);
 				frameGetValue = true;
 			} else if (frameFinish == false) {
 				if (serialValue == '!') {
