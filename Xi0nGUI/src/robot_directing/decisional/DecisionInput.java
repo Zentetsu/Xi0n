@@ -52,6 +52,11 @@ public class DecisionInput extends AbstractInput {
 		this.robot.input.STATE = this.SMT.getState();
 		this.cpt_simu++;
 	}
+	
+	@Override
+	public void reset() {
+		this.SMT.reset();
+	}
 }
 
 

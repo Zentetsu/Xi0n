@@ -48,6 +48,7 @@ public class Robot {
 	}
 
 	public void initialize(float x, float y) {
+		this.input.reset();
 		this.visited = new ArrayList<>();
 		this.position = new Vector2(x, y);
 

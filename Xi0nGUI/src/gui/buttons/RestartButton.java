@@ -3,6 +3,7 @@ package gui.buttons;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import gui.Xi0nSimulation;
 import physic.robot.Robot;
 
 public class RestartButton extends UIButton {
@@ -17,6 +18,7 @@ public class RestartButton extends UIButton {
 		@Override
 		public void clicked(InputEvent input, float x, float y) {
 			Robot.getInstance().initialize(0, 0);
+			Xi0nSimulation.INSTANCE.restart();
 		}
 	}
 

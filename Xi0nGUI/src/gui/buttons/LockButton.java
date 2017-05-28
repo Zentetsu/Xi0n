@@ -4,7 +4,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import gui.Xi0nSimulation;
-import physic.Mode;
 
 public class LockButton extends UIButton {
 
@@ -33,6 +32,11 @@ public class LockButton extends UIButton {
 	@Override
 	protected ClickListener getButtonListener() {
 		return new LockButtonListener();
+	}
+	
+	public void lock(){
+		this.setChecked(false);
+		Xi0nSimulation.INSTANCE.pauseRobot();
 	}
 
 }

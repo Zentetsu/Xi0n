@@ -52,6 +52,7 @@ public enum Xi0nSimulation implements ApplicationListener {
 	private XBee xbeeLogo;
 
 	ButtonGroup<UIButton> buttonGroup;
+	private LockButton lockButton;
 
 	@Override
 	public void create() {
@@ -70,7 +71,8 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.xbeeLogo = new XBee(1490, 50);
 
 		Gdx.input.setInputProcessor(this.stage);
-		this.stage.addActor(new LockButton(510, 30));
+		this.lockButton = new LockButton(510, 30);
+		this.stage.addActor(this.lockButton);
 		this.stage.addActor(new RestartButton(1800, 1025));
 		this.stage.addActor(new QuitButton(1860, 1025));
 
@@ -242,6 +244,10 @@ public enum Xi0nSimulation implements ApplicationListener {
 			return this.room.getRobot().getSensorAngle();
 		}
 		else return 0;
+	}
+
+	public void restart() {
+		this.lockButton.lock();
 	}
 
 }
