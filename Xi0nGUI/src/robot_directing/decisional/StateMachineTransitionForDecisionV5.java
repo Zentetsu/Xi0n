@@ -80,12 +80,8 @@ public class StateMachineTransitionForDecisionV5 {
 // CONSTRUCTOR
 	
 	public StateMachineTransitionForDecisionV5 () {
-<<<<<<< HEAD
-		readSensorsSimu();
-=======
 		//readSensorsSimu();
 		//readSensorsCapteur();
->>>>>>> branch 'dev' of https://github.com/haze-sama/Xi0n.git
 		pre2PS = State5.FINDER;
 		pre1PS = State5.FINDER;
 		pS = State5.FINDER;
