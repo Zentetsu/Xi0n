@@ -137,11 +137,11 @@ public class XbeeSerialCommunication extends PApplet implements Runnable{
 				switch (frameType) {
 				case '0':
 					/* ULTRASOUND REMOTE UPDATE */
-					ultrasoundRemote = frameValue;
+					ultrasoundRemote = frameValue * 3; 
 					break;
 				case '1':
 					/* INFRARED REMOTE UPDATE */
-					infraredRemote = frameValue;
+					infraredRemote = frameValue * 3;
 					break;
 				case '2':
 					/* SCAN ANGLE UPDATE */
