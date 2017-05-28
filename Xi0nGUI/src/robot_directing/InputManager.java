@@ -18,8 +18,6 @@ public class InputManager {
 	public float LEFT;
 	public float RIGHT;
 	
-	public float DIRECTION;
-
 	private Map<Mode, AbstractInput> inputs;
 	private Mode currentMode;
 	public State5 STATE;
@@ -45,7 +43,6 @@ public class InputManager {
 	}
 	
 	public void reset(){
-		this.DIRECTION = 0;
 		this.LEFT = 0;
 		this.RIGHT = 0;
 		this.QUIT = false;

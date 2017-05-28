@@ -25,11 +25,15 @@ public class LateralSensor extends Sensor {
 		this.stopZone = new RotableRectangle(x, y, STOP_LENGTH, 10);
 	}
 
-	public void setPosition(float x, float y) {
+	public void setPosition(float x, float y, float angle) {
 		this.sensor.setPosition(x, y);
 		this.warningZone.setPosition(x, y);
 		this.stopZone.setPosition(x, y);
+		float cos = (float) Math.cos(Math.toRadians(angle-90));
+		float sin = (float) Math.sin(Math.toRadians(angle-90));
+		this.updateObstaclePosition(x , y, sin*(RobotConstant.WIDTH_2 + this.getDistance()), cos*(RobotConstant.WIDTH_2 + this.getDistance()));
 	}
+	
 
 	@Override
 	public boolean collide(Rectangle rectangle) {
@@ -38,6 +42,7 @@ public class LateralSensor extends Sensor {
 
 	@Override
 	public void render(ShapeRenderer sr) {
+		super.render(sr);
 		this.sensor.render(sr, Color.RED);
 		this.warningZone.render(sr, Color.GREEN);
 		this.stopZone.render(sr, Color.RED);
