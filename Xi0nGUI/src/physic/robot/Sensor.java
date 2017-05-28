@@ -22,7 +22,7 @@ public abstract class Sensor {
 	}
 
 	public float getDistance() {
-		return this.distance;
+		return this.distance + 50;
 	}
 
 	public void setDistance(float distance) {
