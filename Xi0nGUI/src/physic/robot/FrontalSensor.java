@@ -25,6 +25,7 @@ public class FrontalSensor extends Sensor {
 	private RotableRectangle sensor;
 
 	public FrontalSensor(float x, float y) {
+		super();
 		this.sensor = new RotableRectangle(-WIDTH/2, -HEIGHT/2, WIDTH, HEIGHT);
 		this.cone = new Polygon(new float[] {0, 0, x-FRONTAL_WIDTH * 1.5f, y+FRONTAL_LENGTH, x+FRONTAL_WIDTH * 1.5f, y+FRONTAL_LENGTH });
 		this.sens = 1;
@@ -50,12 +51,14 @@ public class FrontalSensor extends Sensor {
 		if (Math.abs(this.angle) > this.maxAngle) {
 			this.sens *= -1;
 		}
+		/*
 		this.angle += this.speed * this.sens;
 		this.rotate(this.speed * this.sens);
-		//float dif = angle - 90 - this.angle;
-		//this.angle = angle - 90;
-		//this.setDistance(distance);
-		//this.rotate(dif);
+		*/
+		float dif = angle - 90 - this.angle;
+		this.angle = angle - 90;
+		this.setDistance(distance);
+		this.rotate(dif);
 	}
 
 	public void render(ShapeRenderer sr) {
