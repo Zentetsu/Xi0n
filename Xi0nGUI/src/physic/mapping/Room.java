@@ -20,16 +20,24 @@ public class Room {
 	public Room() {
 		this.robot = Robot.getInstance();
 		this.obstacles = new ArrayList<Obstacle>();
-		//this.createRoom();
+		this.createRoom();
 	}
 	
 	private void createRoom(){
 		//walls
-		this.obstacles.add(new Obstacle(-500, -500, 1000, 20));
-		this.obstacles.add(new Obstacle(-500, -500, 20, 1000));
-		this.obstacles.add(new Obstacle(500, -500, 20, 1000));
-		this.obstacles.add(new Obstacle(-500, 500, 1000, 20));
-		this.obstacles.add(new Obstacle(0, -480, 20, 150));
+		this.obstacles.add(new Obstacle(-200, -1200, 720, 20));
+		this.obstacles.add(new Obstacle(-500, -1000, 20, 1020));
+		this.obstacles.add(new Obstacle(500, -1200, 20, 2220));
+		this.obstacles.add(new Obstacle(-500, 500, 1020, 20));
+		this.obstacles.add(new Obstacle (-1000, 1000, 1520, 20 ));
+		this.obstacles.add(new Obstacle (-1000, 0, 520, 20 ));
+		this.obstacles.add(new Obstacle (-1000, 0, 20, 1020 ));
+		this.obstacles.add(new Obstacle (-500, -1000, 300, 20 ));
+		this.obstacles.add(new Obstacle (-200, -1200, 20, 220 ));
+		this.obstacles.add(new Obstacle (0, 930, 20, 70));
+		this.obstacles.add(new Obstacle (-500, 830, 20, 170));
+		this.obstacles.add(new Obstacle (0, 500, 20, 40));
+		this.obstacles.add(new Obstacle (-1000, 100, 70, 20));
 	}
 
 	public void render(ShapeRenderer sr) {
