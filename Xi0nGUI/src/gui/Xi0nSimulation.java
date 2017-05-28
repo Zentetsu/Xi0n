@@ -56,7 +56,7 @@ public enum Xi0nSimulation implements ApplicationListener {
 
 	@Override
 	public void create() {
-		this.xbeeCommunation = new XbeeSerialCommunication(false);
+		//this.xbeeCommunation = new XbeeSerialCommunication(false);
 		this.camera = new OrthographicCamera();
 		this.camera.setToOrtho(false);
 		this.room = new Room();
