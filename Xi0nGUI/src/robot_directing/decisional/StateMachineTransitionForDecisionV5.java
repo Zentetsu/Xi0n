@@ -80,7 +80,8 @@ public class StateMachineTransitionForDecisionV5 {
 // CONSTRUCTOR
 	
 	public StateMachineTransitionForDecisionV5 () {
-		readSensorsSimu();
+		//readSensorsSimu();
+		readSensors();
 		pre2PS = State5.FINDER;
 		pre1PS = State5.FINDER;
 		pS = State5.FINDER;
@@ -103,7 +104,7 @@ public class StateMachineTransitionForDecisionV5 {
 	du même format que le constructeur
 	*/
 	public void reset () {
-		readSensorsSimu();
+		readSensors();
 		pre2PS = State5.FINDER;
 		pre1PS = State5.FINDER;
 		pS = State5.FINDER;
@@ -133,7 +134,9 @@ public class StateMachineTransitionForDecisionV5 {
 	Lecture des capteurs
 	*/
 	public void readSensors () {
-		// TODO
+		rightSideDistance = Xi0nSimulation.INSTANCE.getLateralDistanceFromRobot();
+		frontalDistance = Xi0nSimulation.INSTANCE.getFrontalDistanceFromRobot();
+		servoAngle = Xi0nSimulation.INSTANCE.getSensorAngle();
 	}
 	
 	/* Description des fonctions ----------
