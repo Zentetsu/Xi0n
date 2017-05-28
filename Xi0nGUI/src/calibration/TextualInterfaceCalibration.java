@@ -116,7 +116,7 @@ public class TextualInterfaceCalibration {
 			System.out.println ( " * >> showcal [type] [power]                                                                 *" );
 			System.out.println ( " * >> trycal [type] [power]                                                                  *" );
 			System.out.println ( " * >> run                                                                                    *" );
-			System.out.println ( " * >> runcon //TODO                                                                         *" );
+			System.out.println ( " * >> runcon //TODO                                                                          *" );
 			System.out.println ( " * >> stop                                                                                   *" );
 			System.out.println ( " * >> generate                                                                               *" );
 			System.out.println ( " * >> order                                                                                  *" );
