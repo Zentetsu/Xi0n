@@ -73,7 +73,7 @@ void loop() {
   assignDistanceInfraRed();
   communication();
   setDeplacemnt();
-  delay(100);
+  delay(50);
 }
 
 
