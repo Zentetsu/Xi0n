@@ -5,6 +5,7 @@ package network;
  *******************************************************/
 import processing.core.PApplet;
 import processing.serial.Serial;
+import robot_directing.InputManager;
 
 
 
@@ -14,14 +15,14 @@ public class XbeeSerialCommunication extends PApplet implements Runnable{
 	 * GLOBAL STATES VARIABLES
 	 *******************************************************/
 
-	public boolean isAutomatic;                 // Operating mode: Auto = true, Manual = false
+	public boolean isAutomatic;          // Operating mode: Auto = true, Manual = false
 	public int infraredRemote;           // Distance given by the infra-red sensor
 	public int ultrasoundRemote;         // Distance given by the ultrasound sensor
 	public int scanAngle;                // Sweep angle of the servomotor
-	public int rightMotorDutyCycle;      // Duty cycle of the right motor
-	public int leftMotorDutyCycle;       // Duty cycle of the left motor
-	public int moveDirectionRightMotor;  // Move direction to the right motor
-	public int moveDirectionLeftMotor;   // Move direction to the left motor
+	private int rightMotorDutyCycle;      // Duty cycle of the right motor
+	private int leftMotorDutyCycle;       // Duty cycle of the left motor
+	private int moveDirectionRightMotor;  // Move direction to the right motor
+	private int moveDirectionLeftMotor;   // Move direction to the left motor
 	public Serial myPort;                // xbee serial communication on the computer side
 
 	/*******************************************************
@@ -191,9 +192,31 @@ public class XbeeSerialCommunication extends PApplet implements Runnable{
 		myPort.write(moveDirectionLeftMotor);
 		myPort.write("!");
 	}
-	/*/
-	public static void main(String[] args) {
-		PApplet.main("Network");
-	}
-	 */	
+
+	// UPDATE DE VALUES OF MOTORS
+	public void update(InputManager input) {
+		if (input.RIGHT > 0){
+			this.moveDirectionRightMotor = 1;
+		}
+		else if (input.RIGHT < 0){
+			this.moveDirectionRightMotor = 2;
+		}
+		else {
+			this.moveDirectionRightMotor = 0;
+		}
+		
+		this.rightMotorDutyCycle = Math.round(Math.abs(input.RIGHT));
+		
+		if (input.LEFT > 0){
+			this.moveDirectionLeftMotor = 1;
+		}
+		else if (input.LEFT < 0){
+			this.moveDirectionLeftMotor = 2;
+		}
+		else {
+			this.moveDirectionLeftMotor = 0;
+		}
+		 
+		this.leftMotorDutyCycle = Math.round(Math.abs(input.LEFT));
+	}	
 }

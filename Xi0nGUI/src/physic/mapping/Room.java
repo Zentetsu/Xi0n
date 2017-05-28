@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import network.XbeeSerialCommunication;
 import physic.robot.Robot;
 
 public class Room {
@@ -45,10 +46,10 @@ public class Room {
 		shud.setColor(Color.BLACK);
 		for(Obstacle obstacle : this.obstacles){
 			Rectangle rect = obstacle.getBoundingRectangle();
-			shud.rect(100 + (rect.x) / 10, 100 + (rect.y) / 10, rect.width/10, rect.height/10);
+			shud.rect(150 + (rect.x) / 10, 150 + (rect.y) / 10, rect.width/10, rect.height/10);
 		}
 		shud.setColor(Color.RED);
-		shud.circle(100+this.robot.getPosition().x/10, 100+this.robot.getPosition().y/10, 3);
+		shud.circle(150+this.robot.getPosition().x/10, 150+this.robot.getPosition().y/10, 3);
 		
 	}
 	
@@ -56,9 +57,9 @@ public class Room {
 		return obstacles;
 	}
 
-	public void update() {
+	public void update(float angle){
 		//TODO: Calculate the distance between the obstacle and the sensor to simulate it before mathieu's work
-		this.robot.update();
+		this.robot.update(angle);
 	}
 
 	public Vector2 getCameraPosition() {

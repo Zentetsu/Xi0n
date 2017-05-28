@@ -63,6 +63,7 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.sr = new ShapeRenderer();
 		this.shud = new ShapeRenderer();
 		this.font = new BitmapFont();
+		this.font.setColor(0.1f, 0.1f, 0.1f, 1);
 		this.stage = new Stage();
 		this.batch = new SpriteBatch();
 		this.HUD = new Texture("assets/HUD.png");
@@ -119,13 +120,13 @@ public enum Xi0nSimulation implements ApplicationListener {
 
 	@Override
 	public void render() {
-		//this.xbeeCommunation.draw();
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		Gdx.gl.glClearColor(0.95f, 0.95f, 0.95f, 0.95f);
 		this.camera.position.set(this.room.getCameraPosition(), 0);
 		this.camera.update();
 
-		this.room.update();
+		this.room.update(this.xbeeCommunation.scanAngle);
+		this.xbeeCommunation.update(this.room.getRobot().input);
 		this.sr.begin(ShapeType.Line);
 		this.sr.setProjectionMatrix(this.camera.combined);
 		this.room.render(this.sr);
@@ -135,7 +136,7 @@ public enum Xi0nSimulation implements ApplicationListener {
 		float left = robot.input.LEFT;
 		float right = robot.input.RIGHT;
 		this.shud.begin(ShapeType.Filled);
-		this.shud.rect(800, 40, 500, 100, Color.GRAY, Color.GRAY, Color.GRAY, Color.GRAY);
+		this.shud.rect(800, 40, 500, 100, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE);
 
 		if (left > 0) {
 			Color forwardLeft = new Color(right / (left * 4), left / 255, left / (255 * 4), 0);
@@ -155,26 +156,27 @@ public enum Xi0nSimulation implements ApplicationListener {
 			Color backwardRight = new Color(-right / 255, -right / (255 * 4), -right / (255 * 4), 0);
 			this.shud.rect(1050 + right, 40, -right, 30, backwardRight, backwardRight, backwardRight, backwardRight);
 		}
-		this.shud.rect(1050, 40, 10, 100, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK);
+		this.shud.rect(1050, 40, 10, 100, Color.GRAY, Color.GRAY, Color.GRAY, Color.GRAY);
 		this.shud.end();
 		this.batch.begin();
 		this.batch.draw(this.HUD, 0, 0);
-		this.font.draw(this.batch,
-				"X = " + Math.round(robot.getPosition().x) + " , Y = " + Math.round(robot.getPosition().y), 1720, 140);
-		this.font.draw(this.batch, "ROTATION = " + Math.round(robot.getOrientation()) + " deg", 1720, 120);
-		this.font.draw(this.batch, "STATE = " + robot.input.STATE, 1720, 100);
-		this.font.draw(this.batch, "LATERAL SENSOR = " + this.getLateralDistance(), 1720, 80);
+		if (this.connected)
+			this.font.draw(this.batch, this.xbeeCommunation.myPort.port.getPortName(), 1505, 40);
+		else{
+			this.font.draw(this.batch, "DISCONNECTED", 1470, 40);
+			this.xbeeLogo.blink();
+			this.stage.addActor(new CellBar(320, 13));
+		}
+		this.font.draw(this.batch, "X = " + Math.round(robot.getPosition().x) + "   ;   Y = " + Math.round(robot.getPosition().y), 1720, 180);
+		this.font.draw(this.batch, "ROTATION = " + Math.round(robot.getOrientation())%360 + " deg", 1720, 150);
+		this.font.draw(this.batch, "STATE = " + robot.input.STATE, 1720, 120);
+		this.font.draw(this.batch, "LATERAL SENSOR = " + this.getLateralDistance(), 1720, 90);
 		this.font.draw(this.batch, "FRONT   SENSOR = " + this.getFrontalDistance(), 1720, 60);
 		this.batch.end();
 		this.shud.begin(ShapeType.Filled);
 		this.room.renderHUD(this.shud);
 		this.shud.end();
 		this.stage.draw();
-
-		if (!this.connected) {
-			this.xbeeLogo.blink();
-			this.stage.addActor(new CellBar(320, 13));
-		}
 	}
 
 	@Override

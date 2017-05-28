@@ -43,12 +43,13 @@ public class FrontalSensor extends Sensor {
 		return this.cone.getBoundingRectangle().overlaps(rectangle);
 	}
 
-	public void update() {
+	public void update(float angle) {
 		if (Math.abs(this.angle) > this.maxAngle) {
 			this.sens *= -1;
 		}
-		this.angle += this.speed * this.sens;
-		this.rotate(this.speed * this.sens);
+		//this.angle += this.speed * this.sens;
+		//this.rotate(this.speed * this.sens);
+		this.rotate(angle);
 	}
 
 	public void render(ShapeRenderer sr) {
