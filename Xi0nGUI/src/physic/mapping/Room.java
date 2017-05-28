@@ -8,7 +8,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-import network.XbeeSerialCommunication;
+import physic.robot.FrontalSensor;
+import physic.robot.LateralSensor;
 import physic.robot.Robot;
 
 public class Room {
@@ -19,10 +20,10 @@ public class Room {
 	public Room() {
 		this.robot = Robot.getInstance();
 		this.obstacles = new ArrayList<Obstacle>();
-		this.initialize();
+		//this.createRoom();
 	}
 	
-	private void initialize(){
+	private void createRoom(){
 		//walls
 		this.obstacles.add(new Obstacle(-500, -500, 1000, 20));
 		this.obstacles.add(new Obstacle(-500, -500, 20, 1000));
@@ -57,9 +58,15 @@ public class Room {
 		return obstacles;
 	}
 
-	public void update(float angle){
+	public void update(float angle, float FDistance, float LDistance){
 		//TODO: Calculate the distance between the obstacle and the sensor to simulate it before mathieu's work
-		this.robot.update(angle);
+		this.robot.update(angle, FDistance, LDistance);
+		LateralSensor ls = this.robot.getLateralSensor();
+		FrontalSensor fs = this.robot.getFrontalSensor();
+		if (ls.getDistance() >= 5 && ls.getDistance() <= 100)
+			this.obstacles.add(new Obstacle(ls.getObstacle()));
+		if (fs.getDistance() >= 5 && fs.getDistance() <= 100)
+			this.obstacles.add(new Obstacle(fs.getObstacle()));
 	}
 
 	public Vector2 getCameraPosition() {

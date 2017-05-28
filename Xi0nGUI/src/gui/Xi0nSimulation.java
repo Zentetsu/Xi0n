@@ -66,11 +66,11 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.font.setColor(0.1f, 0.1f, 0.1f, 1);
 		this.stage = new Stage();
 		this.batch = new SpriteBatch();
-		this.HUD = new Texture("assets/HUD.png");
+		this.HUD = new Texture("assets/ui/HUD.png");
 		this.xbeeLogo = new XBee(1490, 50);
 
 		Gdx.input.setInputProcessor(this.stage);
-		this.stage.addActor(new LockButton(480, 15));
+		this.stage.addActor(new LockButton(510, 30));
 		this.stage.addActor(new RestartButton(1800, 1025));
 		this.stage.addActor(new QuitButton(1860, 1025));
 
@@ -125,7 +125,7 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.camera.position.set(this.room.getCameraPosition(), 0);
 		this.camera.update();
 
-		this.room.update(this.xbeeCommunation.scanAngle);
+		this.room.update(this.xbeeCommunation.scanAngle, this.xbeeCommunation.infraredRemote, this.xbeeCommunation.ultrasoundRemote);
 		this.xbeeCommunation.update(this.room.getRobot().input);
 		this.sr.begin(ShapeType.Line);
 		this.sr.setProjectionMatrix(this.camera.combined);

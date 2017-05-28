@@ -10,7 +10,6 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-import network.XbeeSerialCommunication;
 import physic.Mode;
 import physic.RotableRectangle;
 import robot_directing.InputManager;
@@ -72,7 +71,7 @@ public class Robot {
 	}
 
 	public void render(ShapeRenderer sr) {
-		sr.setColor(Color.YELLOW);
+		sr.setColor(Color.ORANGE);
 		for (Circle circle : this.visited) {
 			sr.circle(circle.x, circle.y, circle.radius);
 		}
@@ -85,7 +84,7 @@ public class Robot {
 		this.leftWheel.render(sr);
 		this.rightWheel.render(sr);
 		this.crazyWheel.render(sr);
-
+		sr.setColor(Color.DARK_GRAY);
 	}
 
 	private float getDirectionX(float value) {
@@ -105,7 +104,7 @@ public class Robot {
 		this.position.y = y;
 
 		this.frontalSensor.setPosition(x, y, this.rotation);
-		this.lateralSensor.setPosition(x, y);
+		this.lateralSensor.setPosition(x, y, this.rotation);
 
 		this.body.setPosition(x, y);
 
@@ -116,7 +115,7 @@ public class Robot {
 		if (this.visited.size() > 1000){
 			this.visited.remove(0);
 		}
-		this.visited.add(new Circle(this.position.x, this.position.y, 3));
+		this.visited.add(new Circle(this.position.x, this.position.y, 2));
 	}
 
 	private void updateInputs() {
@@ -124,12 +123,12 @@ public class Robot {
 	}
 
 	private void updatePosition() {
-		this.speed = (this.input.RIGHT + this.input.LEFT) / 400;
-		this.setPosition(this.getDirectionX(this.speed * 2), this.getDirectionY(this.speed * 2));
+		this.speed = (this.input.RIGHT + this.input.LEFT) / 200;
+		this.setPosition(this.getDirectionX(this.speed), this.getDirectionY(this.speed));
 	}
 
 	private void updateRotation() {
-		float angle = (this.input.RIGHT - this.input.LEFT) / 400;
+		float angle = (this.input.RIGHT - this.input.LEFT) / 200;
 		this.rotation += angle;
 		this.body.rotate(angle);
 
@@ -141,11 +140,12 @@ public class Robot {
 		this.crazyWheel.rotate(angle);
 	}
 
-	public void update(float angle) {
+	public void update(float angle, float frontalDistance, float lateralDistance) {
 		this.updateInputs();
 		this.updatePosition();
 		this.updateRotation();
-		this.frontalSensor.update(angle);
+		this.frontalSensor.update(angle, frontalDistance);
+		this.lateralSensor.setDistance(lateralDistance);
 	}
 
 	public boolean collide(Vector2 pos) {
@@ -186,5 +186,13 @@ public class Robot {
 
 	public float getOrientation() {
 		return this.rotation;
+	}
+
+	public LateralSensor getLateralSensor() {
+		return this.lateralSensor;
+	}
+
+	public FrontalSensor getFrontalSensor() {
+		return this.frontalSensor;
 	}
 }

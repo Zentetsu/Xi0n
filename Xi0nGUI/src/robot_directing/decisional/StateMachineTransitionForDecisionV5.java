@@ -127,8 +127,6 @@ public class StateMachineTransitionForDecisionV5 {
 	*/
 	public void FBloc () {
 		
-		System.out.println(pS);
-		
 		switch ( pS ) {
 		
 		// �tat d'erreur majeur : la machine est pi�g�e dans cet �tat
@@ -376,9 +374,7 @@ public class StateMachineTransitionForDecisionV5 {
 				break;
 			}
 		}
-		
-		System.out.println(memorisedDurationLeftRot12);
-		
+				
 		if ( pS != State5.LEFT_ROT_1_2 &&  nS == State5.LEFT_ROT_1_2 ) {
 			chronoLeftRot12.start();
 		}

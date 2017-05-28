@@ -19,7 +19,6 @@ public class FrontalSensor extends Sensor {
 	public static final float WIDTH = 13.5f;
 	public static final float HEIGHT = 4.5f;
 	
-
 	private Polygon cone;
 	private float angle;
 	private int sens;
@@ -30,6 +29,7 @@ public class FrontalSensor extends Sensor {
 		this.cone = new Polygon(new float[] {0, 0, x-FRONTAL_WIDTH * 1.5f, y+FRONTAL_LENGTH, x+FRONTAL_WIDTH * 1.5f, y+FRONTAL_LENGTH });
 		this.sens = 1;
 		this.angle = 0;
+		
 	}
 
 	public void setPosition(float x, float y, float angle) {
@@ -37,24 +37,27 @@ public class FrontalSensor extends Sensor {
 		float sin = (float) Math.sin(Math.toRadians(angle));
 		this.sensor.setPosition(x - sin*(6+RobotConstant.HEIGHT_2), y + cos*(6+RobotConstant.HEIGHT_2));
 		this.cone.setPosition(x - sin*(6+RobotConstant.HEIGHT_2),  y + cos*(6+RobotConstant.HEIGHT_2));
+		this.updateObstaclePosition(x, y, sin*(RobotConstant.HEIGHT_2 + 11.5f + this.getDistance()), cos*(RobotConstant.HEIGHT_2 + + 11.5f + this.getDistance()));
 	}
 
 	public boolean collide(Rectangle rectangle) {
 		return this.cone.getBoundingRectangle().overlaps(rectangle);
 	}
 
-	public void update(float angle) {
+	public void update(float angle, float distance) {
 		if (Math.abs(this.angle) > this.maxAngle) {
 			this.sens *= -1;
 		}
 		//this.angle += this.speed * this.sens;
 		//this.rotate(this.speed * this.sens);
+		this.setDistance(distance);
 		this.rotate(angle);
 	}
 
 	public void render(ShapeRenderer sr) {
+		super.render(sr);
 		sr.polygon(this.cone.getTransformedVertices());
-		this.sensor.render(sr, Color.RED);
+		this.sensor.render(sr, Color.DARK_GRAY);
 	}
 
 	public void rotate(float angle) {
@@ -73,5 +76,4 @@ public class FrontalSensor extends Sensor {
 		}
 		return FRONTAL_LENGTH + 20;
 	}
-
 }

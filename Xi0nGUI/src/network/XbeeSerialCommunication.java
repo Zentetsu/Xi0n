@@ -44,8 +44,7 @@ public class XbeeSerialCommunication extends PApplet implements Runnable{
 	public XbeeSerialCommunication(boolean isAutomatic) {
 		// Xbee serial initialization
 		String[] myList = Serial.list();
-		System.out.println(myList[0]);
-		this.myPort = new Serial(this, Serial.list()[0], 9600);
+		this.myPort = new Serial(this, myList[0], 9600);
 
 		// Global Variables initialization
 		this.isAutomatic = isAutomatic;
@@ -195,6 +194,7 @@ public class XbeeSerialCommunication extends PApplet implements Runnable{
 
 	// UPDATE DE VALUES OF MOTORS
 	public void update(InputManager input) {
+		// RIGHT MOTOR
 		if (input.RIGHT > 0){
 			this.moveDirectionRightMotor = 1;
 		}
@@ -204,9 +204,10 @@ public class XbeeSerialCommunication extends PApplet implements Runnable{
 		else {
 			this.moveDirectionRightMotor = 0;
 		}
-		
 		this.rightMotorDutyCycle = Math.round(Math.abs(input.RIGHT));
 		
+		
+		// LEFT MOTOR
 		if (input.LEFT > 0){
 			this.moveDirectionLeftMotor = 1;
 		}
@@ -216,7 +217,6 @@ public class XbeeSerialCommunication extends PApplet implements Runnable{
 		else {
 			this.moveDirectionLeftMotor = 0;
 		}
-		 
 		this.leftMotorDutyCycle = Math.round(Math.abs(input.LEFT));
 	}	
 }

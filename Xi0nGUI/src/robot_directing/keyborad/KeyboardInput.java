@@ -3,7 +3,6 @@ package robot_directing.keyborad;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
-import physic.mapping.Room;
 import physic.robot.Robot;
 import robot_directing.AbstractInput;
 
@@ -36,8 +35,6 @@ public class KeyboardInput extends AbstractInput {
 				this.robot.input.LEFT = -150;
 				this.robot.input.RIGHT = -150;
 			}
-			else
-				this.robot.input.DIRECTION = 0;
 		}		
 
 
