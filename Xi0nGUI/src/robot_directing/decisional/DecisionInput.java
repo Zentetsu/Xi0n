@@ -41,6 +41,7 @@ public class DecisionInput extends AbstractInput {
 		this.SMT.MBloc();
 		RobotConfig speeds = SMT.GBloc();
 		RobotConfig calibratedSpeeds = new RobotConfig(FT.filter(speeds));
+		// TODO : communication de la vitesse en passant par l'homme mort
 		if ( speeds.getRightDirection() != 2 && speeds.getLeftDirection() != 2 ) {
 			this.robot.input.RIGHT = speeds.getRightPower0to255() * speeds.getRightDirection();
 			this.robot.input.LEFT = speeds.getLeftPower0to255() * speeds.getLeftDirection();
