@@ -15,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 
 import gui.buttons.AutomaticButton;
-import gui.buttons.CellBar;
 import gui.buttons.ControllerButton;
 import gui.buttons.KeyboardButton;
 import gui.buttons.LockButton;
@@ -169,8 +168,8 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.font.draw(this.batch, "X = " + Math.round(robot.getPosition().x) + "   ;   Y = " + Math.round(robot.getPosition().y), 1720, 180);
 		this.font.draw(this.batch, "ROTATION = " + Math.round(robot.getOrientation())%360 + " deg", 1720, 150);
 		this.font.draw(this.batch, "STATE = " + robot.input.STATE, 1720, 120);
-		this.font.draw(this.batch, "LATERAL SENSOR = " + this.getLateralDistance(), 1720, 90);
-		this.font.draw(this.batch, "FRONT   SENSOR = " + this.getFrontalDistance(), 1720, 60);
+		this.font.draw(this.batch, "LATERAL SENSOR = " + this.getLateralDistanceFromRobot(), 1720, 90);
+		this.font.draw(this.batch, "FRONT   SENSOR = " + this.getFrontalDistanceFromRobot(), 1720, 60);
 		this.batch.end();
 		this.shud.begin(ShapeType.Filled);
 		this.room.renderHUD(this.shud);
@@ -206,6 +205,14 @@ public enum Xi0nSimulation implements ApplicationListener {
 		this.connected = connected;
 	}
 
+	public float getLateralDistanceFromRobot(){
+		return this.room.getRobot().getLateralSensor().distance;
+	}
+	
+	public float getFrontalDistanceFromRobot(){
+		return this.room.getRobot().getFrontalSensor().distance;
+	}
+	
 	public float getLateralDistance() {
 		float min = LateralSensor.STOP_LENGTH + LateralSensor.WARNING_LENGTH + 20;
 		if ( this.room != null ) {
