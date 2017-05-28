@@ -25,6 +25,7 @@ public class FrontalSensor extends Sensor {
 	private RotableRectangle sensor;
 
 	public FrontalSensor(float x, float y) {
+		super();
 		this.sensor = new RotableRectangle(-WIDTH/2, -HEIGHT/2, WIDTH, HEIGHT);
 		this.cone = new Polygon(new float[] {0, 0, x-FRONTAL_WIDTH * 1.5f, y+FRONTAL_LENGTH, x+FRONTAL_WIDTH * 1.5f, y+FRONTAL_LENGTH });
 		this.sens = 1;

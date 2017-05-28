@@ -20,6 +20,7 @@ public class LateralSensor extends Sensor {
 	private RotableRectangle sensor;
 
 	public LateralSensor(float x, float y) {
+		super();
 		this.sensor = new RotableRectangle(x, y, WIDTH, HEIGHT);
 		this.warningZone = new RotableRectangle(x, y, WARNING_LENGTH, 10);
 		this.stopZone = new RotableRectangle(x, y, STOP_LENGTH, 10);

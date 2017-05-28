@@ -81,7 +81,7 @@ public class StateMachineTransitionForDecisionV5 {
 	
 	public StateMachineTransitionForDecisionV5 () {
 		//readSensorsSimu();
-		readSensorsCapteur();
+		//readSensorsCapteur();
 		pre2PS = State5.FINDER;
 		pre1PS = State5.FINDER;
 		pS = State5.FINDER;
@@ -104,7 +104,8 @@ public class StateMachineTransitionForDecisionV5 {
 	du même format que le constructeur
 	*/
 	public void reset () {
-		readSensorsSimu();
+		// readSensorsSimu();
+		//readSensorsCapteur();
 		pre2PS = State5.FINDER;
 		pre1PS = State5.FINDER;
 		pS = State5.FINDER;

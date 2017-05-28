@@ -35,6 +35,8 @@ public class Robot {
 	private static Robot instance;
 
 	private Robot(float x, float y) {
+		this.frontalSensor = new FrontalSensor(0, RobotConstant.HEIGHT_2 + 11.5f);
+		this.lateralSensor = new LateralSensor(x + RobotConstant.WIDTH_2 - LateralSensor.WIDTH, y);
 		this.input = new InputManager(this, Mode.CONTROLLER);
 		this.setMode(Mode.KEYBOARD);
 		this.initialize(x, y);
@@ -62,9 +64,6 @@ public class Robot {
 				RobotConstant.HEIGHT_2 - 10, -RobotConstant.WIDTH_2 + 10, RobotConstant.HEIGHT_2,
 				RobotConstant.WIDTH_2 - 10, RobotConstant.HEIGHT_2, RobotConstant.WIDTH_2, RobotConstant.HEIGHT_2 - 10,
 				RobotConstant.WIDTH_2, -RobotConstant.HEIGHT_2, });
-
-		this.frontalSensor = new FrontalSensor(0, RobotConstant.HEIGHT_2 + 11.5f);
-		this.lateralSensor = new LateralSensor(x + RobotConstant.WIDTH_2 - LateralSensor.WIDTH, y);
 
 		this.rotation = 0;
 		this.speed = 0;
