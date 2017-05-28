@@ -164,7 +164,7 @@ public enum Xi0nSimulation implements ApplicationListener {
 		else{
 			this.font.draw(this.batch, "DISCONNECTED", 1470, 40);
 			this.xbeeLogo.blink();
-			this.stage.addActor(new CellBar(320, 13));
+			//this.stage.addActor(new CellBar(320, 13));
 		}
 		this.font.draw(this.batch, "X = " + Math.round(robot.getPosition().x) + "   ;   Y = " + Math.round(robot.getPosition().y), 1720, 180);
 		this.font.draw(this.batch, "ROTATION = " + Math.round(robot.getOrientation())%360 + " deg", 1720, 150);
