@@ -202,26 +202,26 @@ public class XbeeSerialCommunication extends PApplet implements Runnable{
 	public void update(InputManager input) {
 		// RIGHT MOTOR
 		if (input.RIGHT > 0){
-			this.moveDirectionRightMotor = 1;
+			this.moveDirectionRightMotor = 1; // FORWARD
 		}
 		else if (input.RIGHT < 0){
-			this.moveDirectionRightMotor = 2;
+			this.moveDirectionRightMotor = 2; // BACKWARD
 		}
 		else {
-			this.moveDirectionRightMotor = 0;
+			this.moveDirectionRightMotor = 0; // STOP
 		}
 		this.rightMotorDutyCycle = Math.round(Math.abs(input.RIGHT));
 		
 		
 		// LEFT MOTOR
 		if (input.LEFT > 0){
-			this.moveDirectionLeftMotor = 1;
+			this.moveDirectionLeftMotor = 1; // FORWARD
 		}
 		else if (input.LEFT < 0){
-			this.moveDirectionLeftMotor = 2;
+			this.moveDirectionLeftMotor = 2; // BACKWARD
 		}
 		else {
-			this.moveDirectionLeftMotor = 0;
+			this.moveDirectionLeftMotor = 0; // STOP
 		}
 		this.leftMotorDutyCycle = Math.round(Math.abs(input.LEFT));
 		//this.isAutomatic = input.getMode();

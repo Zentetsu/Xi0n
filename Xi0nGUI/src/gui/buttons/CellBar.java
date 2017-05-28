@@ -3,9 +3,6 @@ package gui.buttons;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import gui.Xi0nSimulation;
-import physic.Mode;
-
 public class CellBar extends UIButton {
 
 	private final static String GRAPHIC_ELEMENT = "cell_bar";
