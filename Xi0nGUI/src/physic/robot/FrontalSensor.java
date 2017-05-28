@@ -50,8 +50,12 @@ public class FrontalSensor extends Sensor {
 		}
 		this.angle += this.speed * this.sens;
 		this.rotate(this.speed * this.sens);
+		//this.angle += this.speed * this.sens;
+		//this.rotate(this.speed * this.sens);
+		//float dif = angle - this.angle;
+		//this.angle = angle;
 		//this.setDistance(distance);
-		//this.rotate(angle);
+		//this.rotate(dif);
 	}
 
 	public void render(ShapeRenderer sr) {
