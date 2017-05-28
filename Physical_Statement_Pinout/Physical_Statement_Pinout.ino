@@ -75,7 +75,7 @@ void loop() {
   communication();
   setDeplacemnt();
   //robot->deplacemnt(1, 1, 255, 255);
-  delay(50);
+  delay(70);
 }
 
 
@@ -102,9 +102,9 @@ void assignDistanceInfraRed() {
 ********************************************************************/
 void assignHeadPosition() {
   if(up_down)
-    scanAngle += 2;
+    scanAngle += 5;
   else
-    scanAngle -= 2;
+    scanAngle -= 5;
 
   robot->setHeadPosition(scanAngle);
 
