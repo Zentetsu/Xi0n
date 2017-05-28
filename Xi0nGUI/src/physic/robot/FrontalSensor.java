@@ -37,7 +37,9 @@ public class FrontalSensor extends Sensor {
 		float sin = (float) Math.sin(Math.toRadians(angle));
 		this.sensor.setPosition(x - sin*(6+RobotConstant.HEIGHT_2), y + cos*(6+RobotConstant.HEIGHT_2));
 		this.cone.setPosition(x - sin*(6+RobotConstant.HEIGHT_2),  y + cos*(6+RobotConstant.HEIGHT_2));
-		this.updateObstaclePosition(x, y, sin*(RobotConstant.HEIGHT_2 + 11.5f + this.getDistance()), cos*(RobotConstant.HEIGHT_2 + + 11.5f + this.getDistance()));
+		float cos2 = (float) Math.cos(Math.toRadians(this.angle + angle));
+		float sin2 = (float) Math.sin(Math.toRadians(this.angle + angle));
+		this.updateObstaclePosition(x, y, sin*(RobotConstant.HEIGHT_2 + 11.5f) + sin2*this.getDistance(), cos*(RobotConstant.HEIGHT_2 + + 11.5f) + cos2*this.getDistance());
 	}
 
 	public boolean collide(Rectangle rectangle) {
@@ -50,12 +52,12 @@ public class FrontalSensor extends Sensor {
 		}
 		this.angle += this.speed * this.sens;
 		this.rotate(this.speed * this.sens);
-		//this.angle += this.speed * this.sens;
-		//this.rotate(this.speed * this.sens);
-		//float dif = angle - this.angle;
-		//this.angle = angle;
-		//this.setDistance(distance);
-		//this.rotate(dif);
+		/*
+		float dif = angle - this.angle;
+		this.angle = angle;
+		this.setDistance(distance);
+		this.rotate(dif);
+		*/
 	}
 
 	public void render(ShapeRenderer sr) {

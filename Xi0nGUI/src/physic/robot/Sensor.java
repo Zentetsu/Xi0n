@@ -8,6 +8,8 @@ import physic.mapping.Obstacle;
 
 public abstract class Sensor {
 	
+	private static final float RENDERING_DISTANCE_MIN = 5;
+	private static final float RENDERING_DISTANCE_MAX = 100;
 	public float distance;
 	private Obstacle obstacle;
 	
@@ -36,7 +38,7 @@ public abstract class Sensor {
 	public abstract boolean collide(Rectangle rectangle);
 
 	public void render(ShapeRenderer sr){
-		if (this.distance >= 0 && this.distance < 500){
+		if (this.distance >= RENDERING_DISTANCE_MIN && this.distance < RENDERING_DISTANCE_MAX){
 			sr.setColor(Color.DARK_GRAY);
 			sr.circle(this.obstacle.getX(), this.obstacle.getY(), 3);
 		}

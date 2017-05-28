@@ -73,8 +73,6 @@ public class Room {
 		FrontalSensor fs = this.robot.getFrontalSensor();
 		if (ls.getDistance() >= 5 && ls.getDistance() <= 100)
 			this.obstacles.add(new Obstacle(ls.getObstacle()));
-		if (fs.getDistance() >= 5 && fs.getDistance() <= 100)
-			this.obstacles.add(new Obstacle(fs.getObstacle()));
 	}
 
 	public Vector2 getCameraPosition() {
