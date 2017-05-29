@@ -32,7 +32,7 @@ void Robot::deplacemnt(int new_direction_M1, int new_direction_M2, int new_Speed
 
 				if (forward) {
 					mobility->move(-1, -1, 255, 255);
-					delay(400);
+					delay(300);
 				}
 
 				mobility->brake();

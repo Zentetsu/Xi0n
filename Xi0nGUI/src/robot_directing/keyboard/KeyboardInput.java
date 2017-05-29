@@ -1,4 +1,4 @@
-package robot_directing.keyborad;
+package robot_directing.keyboard;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -27,24 +27,24 @@ public class KeyboardInput extends AbstractInput {
 		}
 
 		if (Gdx.input.isKeyPressed(Input.Keys.Z)) {
-			this.robot.input.LEFT = 150;
-			this.robot.input.RIGHT = 150;
+			this.robot.input.LEFT = 255;
+			this.robot.input.RIGHT = 255;
 		}
 		else{
 			if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-				this.robot.input.LEFT = -150;
-				this.robot.input.RIGHT = -150;
+				this.robot.input.LEFT = -255;
+				this.robot.input.RIGHT = -255;
 			}
 		}		
 
 
 		if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-			this.robot.input.LEFT = -100;
-			this.robot.input.RIGHT = 100;
+			this.robot.input.LEFT = -255;
+			this.robot.input.RIGHT = 255;
 		}
 		else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-			this.robot.input.LEFT = 100;
-			this.robot.input.RIGHT = -100;
+			this.robot.input.LEFT = 255;
+			this.robot.input.RIGHT = -255;
 		}
 	}
 }
