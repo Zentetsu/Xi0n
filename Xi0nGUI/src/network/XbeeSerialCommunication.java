@@ -66,6 +66,9 @@ public class XbeeSerialCommunication extends PApplet implements Runnable{
 	private void update() {
 		if (this.myPort.available() > 0)
 			readSerial();
+		//System.out.println("RIGHT MOTOR : " + this.rightMotorDutyCycle + " " + this.moveDirectionRightMotor);
+		//System.out.println("LEFT  MOTOR : " + this.leftMotorDutyCycle + " " + this.moveDirectionLeftMotor);
+		
 		writeSerial();
 	}
 
@@ -73,7 +76,7 @@ public class XbeeSerialCommunication extends PApplet implements Runnable{
 	public void run() {
 		while(true){
 			this.update();
-			delay(100);
+			delay(50);
 		}
 
 	}
