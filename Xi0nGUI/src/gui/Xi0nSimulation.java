@@ -33,6 +33,8 @@ import physic.robot.RobotConstant;
 public enum Xi0nSimulation implements ApplicationListener {
 
 	INSTANCE;
+	
+	private static boolean SIMULATION = false;
 
 	private XbeeSerialCommunication xbeeCommunation;
 	private ShapeRenderer sr;
@@ -249,5 +251,15 @@ public enum Xi0nSimulation implements ApplicationListener {
 	public void restart() {
 		this.lockButton.lock();
 	}
+	
+	public boolean getSimulation () {
+		return this.SIMULATION;
+	}
+	
+	public void setSimulation ( boolean simulation ) {
+		this.SIMULATION = simulation;
+	}
+	
+	
 
 }

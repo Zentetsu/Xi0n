@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
+import gui.Xi0nSimulation;
 
 import physic.RotableRectangle;
 
@@ -52,13 +53,16 @@ public class FrontalSensor extends Sensor {
 			this.sens *= -1;
 		}
 		
-		//this.angle += this.speed * this.sens;
-		//this.rotate(this.speed * this.sens);
-		
-		float dif = angle - 90 - this.angle;
-		this.angle = angle - 90;
-		this.setDistance(distance);
-		this.rotate(dif);
+		if ( Xi0nSimulation.INSTANCE.getSimulation() ) {
+			this.angle += this.speed * this.sens;
+			this.rotate(this.speed * this.sens);
+		}
+		else {
+			float dif = angle - 90 - this.angle;
+			this.angle = angle - 90;
+			this.setDistance(distance);
+			this.rotate(dif);
+		}
 	}
 
 	public void render(ShapeRenderer sr) {

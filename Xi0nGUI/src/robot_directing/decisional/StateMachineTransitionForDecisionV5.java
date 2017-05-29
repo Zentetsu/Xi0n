@@ -38,6 +38,11 @@ public class StateMachineTransitionForDecisionV5 {
 	public static final float THRESHOLD_ANGLE = 35; // seuil d'angle utilisé pour détecter les obstacles sur le capteur frontal
 	public static final int MD_LEFT_ROT_1_2_MAX = 1000; // seuil temporel avant de redémarrer la rotation vers la droite après une rotation vers la gauche ( RIGHT_ROT_1 après LEFT_ROT_1_2 )
 	
+	// Seuils de sécurité
+	
+	public static final float THRESHOLD_EMERGENCY_STANDS= 3; // seuil de détection à droite avant l'arrêt d'urgence
+	public static final float THRESHOLD_STANDS= 5; // seuil de détection à droite avant l'arrêt d'urgence
+	
 	// ------------------------------------
     // SENSORS ----------------------------
     // ------------------------------------
@@ -113,6 +118,18 @@ public class StateMachineTransitionForDecisionV5 {
 	}
 	
 	/* Description des fonctions ----------
+	Lecture des capteurs sur la simulation
+	ou le système réel selon le boolean
+	Simulation de Xi0nSimulation
+	*/
+	public void readSensorsGen () {
+		if ( Xi0nSimulation.INSTANCE.getSimulation() )
+			readSensorsSimu ();
+		else
+			readSensors ();
+	}
+	
+	/* Description des fonctions ----------
 	Lecture des capteurs pour la simultion,
 	Les valeurs des capteurs sont celles
 	renvoyés par la simulation
@@ -182,7 +199,11 @@ public class StateMachineTransitionForDecisionV5 {
 		
 		// état permettant d'aller droit jusqu'à trouver un mur pour démarrer la cartographie
 		case FINDER :
-			if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.WARNING_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
+			if ( rightSideDistance <= THRESHOLD_EMERGENCY_STANDS )
+				nS = State5.EMERGENCY_STAND;
+			else if ( rightSideDistance <= THRESHOLD_STANDS )
+				nS = State5.STAND;
+			else if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.WARNING_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
 				nS = State5.LEFT_ROT_NO_RIGHT_WALL;
 			else if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance <= LateralSensor.WARNING_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
 				nS = State5.LEFT_ROT_1_1;
@@ -196,7 +217,11 @@ public class StateMachineTransitionForDecisionV5 {
 		
 		// état de suivi des murs
 		case RIDER :
-			if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
+			if ( rightSideDistance <= THRESHOLD_EMERGENCY_STANDS )
+				nS = State5.EMERGENCY_STAND;
+			else if ( rightSideDistance <= THRESHOLD_STANDS )
+				nS = State5.STAND;
+			else if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
 				nS = State5.LEFT_ROT_1_1;
 			else if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance <= LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
 				nS = State5.LEFT_ROT_2;
@@ -212,7 +237,11 @@ public class StateMachineTransitionForDecisionV5 {
 			
 		// état de suivi des murs lorqu'on s'en éloigne
 		case RIDER_AWAY :
-			if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
+			if ( rightSideDistance <= THRESHOLD_EMERGENCY_STANDS )
+				nS = State5.EMERGENCY_STAND;
+			else if ( rightSideDistance <= THRESHOLD_STANDS )
+				nS = State5.STAND;
+			else if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
 				nS = State5.LEFT_ROT_1_1;
 			else if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance <= LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
 				nS = State5.LEFT_ROT_2;
@@ -229,7 +258,11 @@ public class StateMachineTransitionForDecisionV5 {
 		// état de suivi des murs lorqu'on se rapproche après s'être éloigné
 		case RIDER_AWAY_BACK :
 			chronoWallRider.stop();
-			if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
+			if ( rightSideDistance <= THRESHOLD_EMERGENCY_STANDS )
+				nS = State5.EMERGENCY_STAND;
+			else if ( rightSideDistance <= THRESHOLD_STANDS )
+				nS = State5.STAND;
+			else if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
 				nS = State5.LEFT_ROT_1_1;
 			else if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance <= LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
 				nS = State5.LEFT_ROT_2;
@@ -246,7 +279,11 @@ public class StateMachineTransitionForDecisionV5 {
 			
 		// état de suivi des murs lorqu'on s'est beaucoup éloigné
 		case RIDER_FAR_AWAY :
-			if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
+			if ( rightSideDistance <= THRESHOLD_EMERGENCY_STANDS )
+				nS = State5.EMERGENCY_STAND;
+			else if ( rightSideDistance <= THRESHOLD_STANDS )
+				nS = State5.STAND;
+			else if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
 				nS = State5.LEFT_ROT_1_1;
 			else if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance <= LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
 				nS = State5.LEFT_ROT_2;
@@ -260,8 +297,11 @@ public class StateMachineTransitionForDecisionV5 {
 			
 		// état de suivi des murs lorsqu'on s'en rapproche
 		case RIDER_NEAR :
-			// TODO : RIGHT ROTATION
-			if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
+			if ( rightSideDistance <= THRESHOLD_EMERGENCY_STANDS )
+				nS = State5.EMERGENCY_STAND;
+			else if ( rightSideDistance <= THRESHOLD_STANDS )
+				nS = State5.STAND;
+			else if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
 				nS = State5.LEFT_ROT_1_1;
 			else if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance <= LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
 				nS = State5.LEFT_ROT_2;
@@ -275,9 +315,12 @@ public class StateMachineTransitionForDecisionV5 {
 			
 		// état de suivi des murs lorsqu'on s'en éloigne après s'être rapproché
 		case RIDER_NEAR_BACK :
-			// TODO : RIGHT ROTATION
 			chronoWallRider.stop();
-			if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
+			if ( rightSideDistance <= THRESHOLD_EMERGENCY_STANDS )
+				nS = State5.EMERGENCY_STAND;
+			else if ( rightSideDistance <= THRESHOLD_STANDS )
+				nS = State5.STAND;
+			else if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
 				nS = State5.LEFT_ROT_1_1;
 			else if ( frontalDistance <= FrontalSensor.FRONTAL_LENGTH && rightSideDistance <= LateralSensor.STOP_LENGTH && servoAngle < THRESHOLD_ANGLE && servoAngle > (-1)*THRESHOLD_ANGLE )
 				nS = State5.LEFT_ROT_2;
@@ -292,7 +335,11 @@ public class StateMachineTransitionForDecisionV5 {
 		
 		// état pour tourner à GAUCHE lorsque on rencontre un mur en face après le wall finder
 		case LEFT_ROT_NO_RIGHT_WALL :
-			if ( rightSideDistance <= LateralSensor.WARNING_LENGTH )
+			if ( rightSideDistance <= THRESHOLD_EMERGENCY_STANDS )
+				nS = State5.EMERGENCY_STAND;
+			else if ( rightSideDistance <= THRESHOLD_STANDS )
+				nS = State5.STAND;
+			else if ( rightSideDistance <= LateralSensor.WARNING_LENGTH )
 				nS = State5.LEFT_ROT_1_1;
 			else
 				nS = State5.LEFT_ROT_NO_RIGHT_WALL;
@@ -301,7 +348,11 @@ public class StateMachineTransitionForDecisionV5 {
 			
 		// état pour tourner à GAUCHE lorsque on rencontre un mur en face étape 1
 		case LEFT_ROT_1_1 :
-			if ( rightSideDistance <= LateralSensor.STOP_LENGTH )
+			if ( rightSideDistance <= THRESHOLD_EMERGENCY_STANDS )
+				nS = State5.EMERGENCY_STAND;
+			else if ( rightSideDistance <= THRESHOLD_STANDS )
+				nS = State5.STAND;
+			else if ( rightSideDistance <= LateralSensor.STOP_LENGTH )
 				nS = State5.LEFT_ROT_2;
 			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
 				nS = State5.LEFT_ROT_1_2;
@@ -311,7 +362,11 @@ public class StateMachineTransitionForDecisionV5 {
 		
 		// état pour tourner à GAUCHE lorsque on rencontre un mur en face, état suivant LEFT_ROT_1_1 lorsqu'on ne détecte plus de mur, un timer se lance et si on ne retrouve pas de mur avant le dépassement su seuil, on entame une rotation vers la droite pour retrouver le mur le plus proche étape 1
 		case LEFT_ROT_1_2 :
-			if ( rightSideDistance <= LateralSensor.STOP_LENGTH )
+			if ( rightSideDistance <= THRESHOLD_EMERGENCY_STANDS )
+				nS = State5.EMERGENCY_STAND;
+			else if ( rightSideDistance <= THRESHOLD_STANDS )
+				nS = State5.STAND;
+			else if ( rightSideDistance <= LateralSensor.STOP_LENGTH )
 				nS = State5.LEFT_ROT_2;
 			else if ( rightSideDistance <= LateralSensor.WARNING_LENGTH )
 				nS = State5.LEFT_ROT_1_1;
@@ -323,7 +378,11 @@ public class StateMachineTransitionForDecisionV5 {
 			
 		//état pour tourner à GAUCHE lorsque on rencontre un mur en face étape 2
 		case LEFT_ROT_2 :
-			if ( rightSideDistance <= LateralSensor.WARNING_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH )
+			if ( rightSideDistance <= THRESHOLD_EMERGENCY_STANDS )
+				nS = State5.EMERGENCY_STAND;
+			else if ( rightSideDistance <= THRESHOLD_STANDS )
+				nS = State5.STAND;
+			else if ( rightSideDistance <= LateralSensor.WARNING_LENGTH && rightSideDistance > LateralSensor.STOP_LENGTH )
 				nS = State5.LEFT_ROT_1_1;
 			else if ( rightSideDistance > LateralSensor.WARNING_LENGTH )
 				nS = State5.RIDER_AWAY;
@@ -333,7 +392,11 @@ public class StateMachineTransitionForDecisionV5 {
 		
 		// état pour tourner à DROITE lorsque on perd le mur sur notre droite étape 1
 		case RIGHT_ROT_1 :
-			if ( rightSideDistance <= LateralSensor.WARNING_LENGTH )
+			if ( rightSideDistance <= THRESHOLD_EMERGENCY_STANDS )
+				nS = State5.EMERGENCY_STAND;
+			else if ( rightSideDistance <= THRESHOLD_STANDS )
+				nS = State5.STAND;
+			else if ( rightSideDistance <= LateralSensor.WARNING_LENGTH )
 				nS = State5.RIGHT_ROT_2;
 			else
 				nS = State5.RIGHT_ROT_1;
@@ -341,7 +404,11 @@ public class StateMachineTransitionForDecisionV5 {
 			
 		// état pour tourner à DROITE lorsque on perd le mur sur notre droite, après en avoir retrouvé un avec la capteur latéral étape 2
 		case RIGHT_ROT_2 :
-			if ( rightSideDistance > LateralSensor.STOP_LENGTH )
+			if ( rightSideDistance <= THRESHOLD_EMERGENCY_STANDS )
+				nS = State5.EMERGENCY_STAND;
+			else if ( rightSideDistance <= THRESHOLD_STANDS )
+				nS = State5.STAND;
+			else if ( rightSideDistance > LateralSensor.STOP_LENGTH )
 				nS = State5.RIDER;
 			else if ( rightSideDistance <= LateralSensor.STOP_LENGTH && ( ( pre1PS == State5.RIDER || pre1PS == State5.RIDER_AWAY || pre1PS == State5.RIDER_NEAR || pre1PS == State5.RIDER_AWAY_BACK || pre1PS == State5.RIDER_NEAR_BACK ) || ( pre1PS == State5.RIDER || pre1PS == State5.RIDER_AWAY || pre1PS == State5.RIDER_NEAR || pre1PS == State5.RIDER_AWAY_BACK || pre1PS == State5.RIDER_NEAR_BACK ) ) )
 				nS = State5.LEFT_ROT_1_1;
