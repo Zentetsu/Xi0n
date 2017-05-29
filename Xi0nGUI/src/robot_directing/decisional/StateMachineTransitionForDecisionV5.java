@@ -21,15 +21,15 @@ public class StateMachineTransitionForDecisionV5 {
 	
 	// Confiugration des vitesses et parité des roues utilisés comme sorties par la machine à état
 	
-	public static final RobotConfig WALL_FINDER_SPEED = new RobotConfig ( 200, 200, 1, 1 ); // vitesse d'avancement avec une même tension sur chauqe roue, pour la recherche de mur
-	public static final RobotConfig WALL_RIDER_SPEED = new RobotConfig ( 200, 200, 1, 1 ); // vitesse d'avancement avec une même tension sur chauqe roue, pour le suivit de mur
-	public static final RobotConfig WALL_RIDER_AWAY_SPEED = new RobotConfig ( 200, 190, 1, 1 ); // vitesse d'avancement avec une tension légèrement plus forte à gauche qu'à droite pour effectuer un léger virage vers la droite
-	public static final RobotConfig WALL_RIDER_NEAR_SPEED = new RobotConfig ( 160, 200, 1, 1 ); // vitesse d'avancement avec une tension légèrement plus forte à droite qu'à gauche pour effectuer un léger virage vers la gauche
+	public static final RobotConfig WALL_FINDER_SPEED = new RobotConfig ( 255, 255, 1, 1 ); // vitesse d'avancement avec une même tension sur chauqe roue, pour la recherche de mur
+	public static final RobotConfig WALL_RIDER_SPEED = new RobotConfig ( 255, 255, 1, 1 ); // vitesse d'avancement avec une même tension sur chauqe roue, pour le suivit de mur
+	public static final RobotConfig WALL_RIDER_AWAY_SPEED = new RobotConfig ( 255, 190, 1, 1 ); // vitesse d'avancement avec une tension légèrement plus forte à gauche qu'à droite pour effectuer un léger virage vers la droite
+	public static final RobotConfig WALL_RIDER_NEAR_SPEED = new RobotConfig ( 0, 102, 1, 1 ); // vitesse d'avancement avec une tension légèrement plus forte à droite qu'à gauche pour effectuer un léger virage vers la gauche
 	public static final RobotConfig WALL_RIDER_AWAY_BACK_SPEED = new RobotConfig ( WALL_RIDER_AWAY_SPEED.getRightPower0to255(), WALL_RIDER_AWAY_SPEED.getLeftPower0to255(), 1, 1 ); // vitesses des roues échangées entre chaque roue de la version classique de cette vitesses
 	public static final RobotConfig WALL_RIDER_NEAR_BACK_SPEED = new RobotConfig ( WALL_RIDER_NEAR_SPEED.getRightPower0to255(), WALL_RIDER_NEAR_SPEED.getLeftPower0to255(), 1, 1 ); // vitesses des roues échangées entre chaque roue de la version classique de cette vitesses
-	public static final RobotConfig WALL_RIDER_FAR_AWAY_SPEED = new RobotConfig ( 200, 150, 1, 1 ); // vitesse d'avancement avec une tension plus forte à gauche qu'à droite pour effectuer un fort virage vers la droite
-	public static final RobotConfig STANDING_LEFT_ROTATION_SPEED = new RobotConfig ( 150, 150, -1, 1 ); // vitesse de rotation sur place vers la gauche
-	public static final RobotConfig STANDING_RIGHT_ROTATION_SPEED = new RobotConfig ( 150, 150, 1, -1 ); // vitesse de rotation sur place vers la droite
+	public static final RobotConfig WALL_RIDER_FAR_AWAY_SPEED = new RobotConfig ( 255, 150, 1, 1 ); // vitesse d'avancement avec une tension plus forte à gauche qu'à droite pour effectuer un fort virage vers la droite
+	public static final RobotConfig STANDING_LEFT_ROTATION_SPEED = new RobotConfig ( 255, 255, -1, 1 ); // vitesse de rotation sur place vers la gauche
+	public static final RobotConfig STANDING_RIGHT_ROTATION_SPEED = new RobotConfig ( 255, 255, 1, -1 ); // vitesse de rotation sur place vers la droite
 	public static final RobotConfig EMERGENCY_STANDING_STILL_SPEED = new RobotConfig ( 0, 0, 2, 2 ); // vitesse pour l'arrête d'urgence
 	public static final RobotConfig STANDING_STILL_SPEED = new RobotConfig ( 0, 0, 0, 0 ); // vitesses pour l'arrêt du robot
 	
