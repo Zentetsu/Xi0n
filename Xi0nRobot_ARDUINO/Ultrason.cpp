@@ -23,5 +23,5 @@ float Ultrason::getDistance() {
 	digitalWrite(trigger_Pin, LOW);
 
 
-	return (pulseIn(echo_Pin, HIGH) / 580.0);
+	return (pulseIn(echo_Pin, HIGH) / 58.0);
 }

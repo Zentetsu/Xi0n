@@ -42,7 +42,7 @@
 ********************************************************************/
 boolean mode;                 // Operating mode: Auto = true, Manual = false
 int infraRedRemote;           // Distance given by the infra-red sensor
-float ultrasoundRemote;         // Distance given by the ultrasound sensor
+int ultrasoundRemote;         // Distance given by the ultrasound sensor
 int scanAngle;                // Sweep angle of the ServoMotor
 int rightMotorDutyCycle;      // Duty cycle of the right motor
 int leftMotorDutyCycle;       // Duty cycle of the left motor
@@ -75,7 +75,7 @@ void loop() {
   communication();
   setDeplacemnt();
   //robot->deplacemnt(1, 1, 255, 255);
-  delay(70);
+  delay(100);
 }
 
 
