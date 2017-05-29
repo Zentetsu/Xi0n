@@ -64,8 +64,12 @@ public class XbeeSerialCommunication extends PApplet implements Runnable{
 	 * MAIN PROGRAM LOOP
 	 *******************************************************/
 	private void update() {
-		if (this.myPort.available() > 0)
+		while (this.myPort.available() > 0) {
 			readSerial();
+			//System.out.println("RIGHT MOTOR : " + this.rightMotorDutyCycle + " " + this.moveDirectionRightMotor);
+			//System.out.println("LEFT  MOTOR : " + this.leftMotorDutyCycle + " " + this.moveDirectionLeftMotor);
+		}
+		
 		writeSerial();
 	}
 
@@ -73,7 +77,7 @@ public class XbeeSerialCommunication extends PApplet implements Runnable{
 	public void run() {
 		while(true){
 			this.update();
-			delay(100);
+			//delay(10);
 		}
 
 	}
@@ -88,7 +92,7 @@ public class XbeeSerialCommunication extends PApplet implements Runnable{
 		// Read the data on serial
 		int n = myPort.read();
 		char serialValue = (char) n;
-		//System.out.println(serialValue);
+		//System.out.println(n);
 
 		// Frame Decoding
 		if (frameStart == false) {
@@ -186,17 +190,17 @@ public class XbeeSerialCommunication extends PApplet implements Runnable{
 
 		/* LEFT ENGINE DUTY CYCLE FRAME */
 		myPort.write("$2");
-		myPort.write(leftMotorDutyCycle);
+		myPort.write((char)leftMotorDutyCycle);
 		myPort.write("!");
 
 		/* RIGHT ENGINE MOVEMENT DIRECTION */
 		myPort.write("$3");
-		myPort.write(moveDirectionRightMotor);
+		myPort.write((char)moveDirectionRightMotor);
 		myPort.write("!");
 
 		/* LEFT ENGINE MOVEMENT DIRECTION */
 		myPort.write("$4");
-		myPort.write(moveDirectionLeftMotor);
+		myPort.write((char)moveDirectionLeftMotor);
 		myPort.write("!");
 	}
 

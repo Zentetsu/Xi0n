@@ -14,7 +14,6 @@ public enum State5 {
 	
 	EMERGENCY_STAND,
 	STAND,
-	MANUAL,
 	FINDER,
 	RIDER,
 	RIDER_AWAY,
