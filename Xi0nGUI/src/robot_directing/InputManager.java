@@ -8,7 +8,7 @@ import physic.robot.Robot;
 import robot_directing.controller.ControllerInput;
 import robot_directing.decisional.DecisionInput;
 import robot_directing.decisional.State5;
-import robot_directing.keyborad.KeyboardInput;
+import robot_directing.keyboard.KeyboardInput;
 
 public class InputManager {
 
