@@ -190,12 +190,6 @@ public class StateMachineTransitionForDecisionV5 {
 		case STAND :
 			nS = State5.STAND;
 			break;
-			
-		// état d'erreur mineur : le robot ne peut pas prendre seul une décision, il doit passr en mode manuel pour être extrait de sa position. Cet état permet la commande manuelle du robot même via le mode Automatique
-		case MANUAL :
-			// TODO : Waiting for controler command
-			nS = State5.MANUAL;
-			break;
 		
 		// état permettant d'aller droit jusqu'à trouver un mur pour démarrer la cartographie
 		case FINDER :
@@ -522,12 +516,6 @@ public class StateMachineTransitionForDecisionV5 {
 		
 		// état d'erreur mineur : la machine est piégïé dans cet état
 		case STAND :
-			speeds = STANDING_STILL_SPEED;
-			return ( STANDING_STILL_SPEED );
-		
-		// état d'erreur mineur : le robot ne peut pas prendre seul une décision, il doit passr en mode manuel pour être extrait de sa position. Cet état permet la commande manuelle du robot même via le mode Automatique
-		case MANUAL :
-			// TODO : Waiting for controler command
 			speeds = STANDING_STILL_SPEED;
 			return ( STANDING_STILL_SPEED );
 		
