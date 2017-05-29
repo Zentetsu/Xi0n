@@ -23,8 +23,6 @@ public class ControllerInput extends CustomInput implements ControllerListener {
 			return false;
 		}
 
-		this.robot.input.LEFT = 0;
-		this.robot.input.RIGHT = 0;
 		// LEFT AND RIGHT
 		if (axisIndex == 2){
 			if (Math.abs(value) > 0.2){
@@ -39,9 +37,8 @@ public class ControllerInput extends CustomInput implements ControllerListener {
 				this.robot.input.DIRECTION = 0;
 			}
 			else{
-				this.robot.input.DIRECTION = -value;
-				this.robot.input.LEFT = 255 * value;
-				this.robot.input.RIGHT = 255 * value;
+				this.robot.input.LEFT = this.robot.input.LEFT * value;
+				this.robot.input.RIGHT = this.robot.input.RIGHT * value;
 			}
 		}
 
