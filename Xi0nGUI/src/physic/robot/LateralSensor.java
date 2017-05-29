@@ -12,8 +12,8 @@ public class LateralSensor extends Sensor {
 	
 	public static final float WIDTH = 5.4f;
 	public static final float HEIGHT = 13.5f;
-	public static final float WARNING_LENGTH = 80;
-	public static final float STOP_LENGTH = 50;
+	public static final float WARNING_LENGTH = 100;
+	public static final float STOP_LENGTH = 60;
 
 	private RotableRectangle warningZone;
 	private RotableRectangle stopZone;

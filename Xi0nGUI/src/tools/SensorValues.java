@@ -27,6 +27,14 @@ public class SensorValues {
 		values.set ( size - 1, value );
 	}
 	
+	public float average () {
+		float sum = 0;
+		for ( int i = 0; i < this.size(); i++ ) {
+			sum+=this.get(i);
+		}
+		return ( sum / this.size() );
+	}
+	
 	public int size () {
 		return size;
 	}
