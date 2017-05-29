@@ -9,7 +9,7 @@ import physic.RotableRectangle;
 
 public class FrontalSensor extends Sensor {
 
-	//axe infra = centré et limite plateforme : margin de 3.5cm
+	//axe infra = centrï¿½ et limite plateforme : margin de 3.5cm
 	//infra = 4.5*1.5
 	private final float speed = 1 ;
 	private final int maxAngle = 20;
@@ -47,7 +47,7 @@ public class FrontalSensor extends Sensor {
 		return this.cone.getBoundingRectangle().overlaps(rectangle);
 	}
 
-	public void update(float angle, float distance) {
+	public void update(float angle, int distance) {
 		if (Math.abs(this.angle) > this.maxAngle) {
 			this.sens *= -1;
 		}

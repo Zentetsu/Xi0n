@@ -67,7 +67,7 @@ public class Room {
 		return obstacles;
 	}
 
-	public void update(float angle, float FDistance, float LDistance){
+	public void update(float angle, int FDistance, int LDistance){
 		//TODO: Calculate the distance between the obstacle and the sensor to simulate it before mathieu's work
 		this.robot.update(angle, FDistance, LDistance);
 		LateralSensor ls = this.robot.getLateralSensor();

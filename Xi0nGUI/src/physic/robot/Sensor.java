@@ -10,7 +10,7 @@ public abstract class Sensor {
 	
 	public static final float RENDERING_DISTANCE_MIN = 5;
 	public static final float RENDERING_DISTANCE_MAX = 100;
-	public float distance;
+	public int distance;
 	private Obstacle obstacle;
 	
 	public Sensor() {
@@ -27,7 +27,7 @@ public abstract class Sensor {
 		return this.distance;
 	}
 
-	public void setDistance(float distance) {
+	public void setDistance(int distance) {
 		this.distance = distance;
 	}
 

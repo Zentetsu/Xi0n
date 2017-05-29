@@ -140,7 +140,7 @@ public class Robot {
 		this.crazyWheel.rotate(angle);
 	}
 
-	public void update(float angle, float frontalDistance, float lateralDistance) {
+	public void update(float angle, int frontalDistance, int lateralDistance) {
 		this.updateInputs();
 		this.updatePosition();
 		this.updateRotation();
