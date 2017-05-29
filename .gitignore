@@ -13,6 +13,7 @@
 *.a
 *.la
 *.lo
+lib/*
 
 # Shared objects (inc. Windows DLLs)
 *.dll
@@ -31,3 +32,9 @@
 # Debug files
 *.dSYM/
 *.su
+
+# Project
+*classpath
+
+.metadata
+.recommenders

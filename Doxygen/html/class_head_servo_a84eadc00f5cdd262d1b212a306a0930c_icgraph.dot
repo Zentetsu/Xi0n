@@ -1,0 +1,9 @@
+digraph "HeadServo::getPosition"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node5 [label="HeadServo::getPosition",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node5 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="Robot::getHeadPosition",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_robot.html#a34039e49403d45d263e834f11d9c85e9",tooltip="return the current position of the servo motor "];
+}

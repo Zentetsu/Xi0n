@@ -1,0 +1,221 @@
+\hypertarget{class_mobility}{}\section{Mobility Class Reference}
+\label{class_mobility}\index{Mobility@{Mobility}}
+
+
+{\ttfamily \#include $<$Mobility.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_mobility_ab6cb1a6fd521e9442486cf38de1c5249}{Mobility} (int init\+\_\+motor\+L\+\_\+\+Pin1, int init\+\_\+motor\+L\+\_\+\+Pin2, int init\+\_\+enable\+L\+\_\+\+Pin, int init\+\_\+motor\+R\+\_\+\+Pin1, int init\+\_\+motor\+R\+\_\+\+Pin2, int init\+\_\+enable\+R\+\_\+\+Pin)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hyperlink{class_mobility_ae4069466d32ea90d59ab5cdbf97177b6}{$\sim$\+Mobility} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{class_mobility_a67abccf01ad4f50a3bd135a4f105cb6d}{set\+Direction} (int new\+\_\+direction)
+\begin{DoxyCompactList}\small\item\em change the direction of the robot \end{DoxyCompactList}\item 
+int \hyperlink{class_mobility_a88345203cab73996114673a780440048}{get\+Direction} ()
+\begin{DoxyCompactList}\small\item\em return the direction of the robot \end{DoxyCompactList}\item 
+void \hyperlink{class_mobility_a6bb0a09af7f98a5ea18d9752e277de26}{enable} ()
+\begin{DoxyCompactList}\small\item\em allows the motor to ratote \end{DoxyCompactList}\item 
+void \hyperlink{class_mobility_a9208362074642bb10b5868e7cc75395c}{disable} ()
+\begin{DoxyCompactList}\small\item\em desables the rotation of the motor \end{DoxyCompactList}\item 
+void \hyperlink{class_mobility_a678e74e5f334b25f14a17ad611b6b655}{move} (int new\+\_\+direction\+\_\+\+M1, int new\+\_\+direction\+\_\+\+M2, int new\+\_\+\+Speed\+\_\+\+M1, int new\+\_\+\+Speed\+\_\+\+M2)
+\begin{DoxyCompactList}\small\item\em Control the new direction and the new speed of the \hyperlink{class_robot}{Robot}. \end{DoxyCompactList}\item 
+void \hyperlink{class_mobility_afc3f555847c7beaa9bdbef2217286406}{forward} ()
+\begin{DoxyCompactList}\small\item\em change the old direction to forword \end{DoxyCompactList}\item 
+void \hyperlink{class_mobility_a201de04cf2f094283d20f77f2520a96f}{backward} ()
+\begin{DoxyCompactList}\small\item\em change the old direction to backward \end{DoxyCompactList}\item 
+void \hyperlink{class_mobility_a487708a29fef93b02a79efb466c44148}{standing\+Rotation} (int new\+\_\+direction)
+\begin{DoxyCompactList}\small\item\em change the old direction to a standing rotation \end{DoxyCompactList}\item 
+void \hyperlink{class_mobility_a287c595643b0ac17019ee9b875e96c72}{brake} ()
+\begin{DoxyCompactList}\small\item\em enable brake \end{DoxyCompactList}\item 
+void \hyperlink{class_mobility_a527a6fba662394c8e2d9ac5409b4f14a}{stop\+Brake} ()
+\begin{DoxyCompactList}\small\item\em desable brake \end{DoxyCompactList}\item 
+void \hyperlink{class_mobility_a781cf34ac40fc1a5a55063daa29f72a4}{set\+Speed} (int speed\+\_\+\+M1, int speed\+\_\+\+M2)
+\begin{DoxyCompactList}\small\item\em change the motor speed rotation \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_mobility_ab6cb1a6fd521e9442486cf38de1c5249}\label{class_mobility_ab6cb1a6fd521e9442486cf38de1c5249}} 
+\index{Mobility@{Mobility}!Mobility@{Mobility}}
+\index{Mobility@{Mobility}!Mobility@{Mobility}}
+\subsubsection{\texorpdfstring{Mobility()}{Mobility()}}
+{\footnotesize\ttfamily Mobility\+::\+Mobility (\begin{DoxyParamCaption}\item[{int}]{init\+\_\+motor\+L\+\_\+\+Pin1,  }\item[{int}]{init\+\_\+motor\+L\+\_\+\+Pin2,  }\item[{int}]{init\+\_\+enable\+L\+\_\+\+Pin,  }\item[{int}]{init\+\_\+motor\+R\+\_\+\+Pin1,  }\item[{int}]{init\+\_\+motor\+R\+\_\+\+Pin2,  }\item[{int}]{init\+\_\+enable\+R\+\_\+\+Pin }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+Constructor of the \hyperlink{class_mobility}{Mobility} Class\textquotesingle{}
+
+
+\begin{DoxyParams}{Parameters}
+{\em init\+\_\+motor\+L\+\_\+\+Pin1} & \+: first pin of the left motor \\
+\hline
+{\em init\+\_\+motor\+L\+\_\+\+Pin2} & \+: second pin of the left motor \\
+\hline
+{\em init\+\_\+enable\+L\+\_\+\+Pin} & \+: pin to start or stop the left motor \\
+\hline
+{\em init\+\_\+motor\+R\+\_\+\+Pin1} & \+: first pin of the right motor \\
+\hline
+{\em init\+\_\+motor\+R\+\_\+\+Pin2} & \+: second pin of the right motor \\
+\hline
+{\em init\+\_\+enable\+R\+\_\+\+Pin} & \+: pin to start or stop the right motor \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_mobility_ae4069466d32ea90d59ab5cdbf97177b6}\label{class_mobility_ae4069466d32ea90d59ab5cdbf97177b6}} 
+\index{Mobility@{Mobility}!````~Mobility@{$\sim$\+Mobility}}
+\index{````~Mobility@{$\sim$\+Mobility}!Mobility@{Mobility}}
+\subsubsection{\texorpdfstring{$\sim$\+Mobility()}{~Mobility()}}
+{\footnotesize\ttfamily Mobility\+::$\sim$\+Mobility (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destructor. 
+
+Destructor of the \hyperlink{class_mobility}{Mobility} Class\textquotesingle{} 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_mobility_a201de04cf2f094283d20f77f2520a96f}\label{class_mobility_a201de04cf2f094283d20f77f2520a96f}} 
+\index{Mobility@{Mobility}!backward@{backward}}
+\index{backward@{backward}!Mobility@{Mobility}}
+\subsubsection{\texorpdfstring{backward()}{backward()}}
+{\footnotesize\ttfamily void Mobility\+::backward (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+change the old direction to backward 
+
+check the old direction and in each case aplly a diferent procedure to swap in backward \mbox{\Hypertarget{class_mobility_a287c595643b0ac17019ee9b875e96c72}\label{class_mobility_a287c595643b0ac17019ee9b875e96c72}} 
+\index{Mobility@{Mobility}!brake@{brake}}
+\index{brake@{brake}!Mobility@{Mobility}}
+\subsubsection{\texorpdfstring{brake()}{brake()}}
+{\footnotesize\ttfamily void Mobility\+::brake (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+enable brake 
+
+Here is the caller graph for this function\+:
+% FIG 0
+\mbox{\Hypertarget{class_mobility_a9208362074642bb10b5868e7cc75395c}\label{class_mobility_a9208362074642bb10b5868e7cc75395c}} 
+\index{Mobility@{Mobility}!disable@{disable}}
+\index{disable@{disable}!Mobility@{Mobility}}
+\subsubsection{\texorpdfstring{disable()}{disable()}}
+{\footnotesize\ttfamily void Mobility\+::disable (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+desables the rotation of the motor 
+
+\mbox{\Hypertarget{class_mobility_a6bb0a09af7f98a5ea18d9752e277de26}\label{class_mobility_a6bb0a09af7f98a5ea18d9752e277de26}} 
+\index{Mobility@{Mobility}!enable@{enable}}
+\index{enable@{enable}!Mobility@{Mobility}}
+\subsubsection{\texorpdfstring{enable()}{enable()}}
+{\footnotesize\ttfamily void Mobility\+::enable (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+allows the motor to ratote 
+
+enables the rotation of the motor \mbox{\Hypertarget{class_mobility_afc3f555847c7beaa9bdbef2217286406}\label{class_mobility_afc3f555847c7beaa9bdbef2217286406}} 
+\index{Mobility@{Mobility}!forward@{forward}}
+\index{forward@{forward}!Mobility@{Mobility}}
+\subsubsection{\texorpdfstring{forward()}{forward()}}
+{\footnotesize\ttfamily void Mobility\+::forward (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+change the old direction to forword 
+
+check the old direction and in each case aplly a diferent procedure to swap in forward \mbox{\Hypertarget{class_mobility_a88345203cab73996114673a780440048}\label{class_mobility_a88345203cab73996114673a780440048}} 
+\index{Mobility@{Mobility}!get\+Direction@{get\+Direction}}
+\index{get\+Direction@{get\+Direction}!Mobility@{Mobility}}
+\subsubsection{\texorpdfstring{get\+Direction()}{getDirection()}}
+{\footnotesize\ttfamily int Mobility\+::get\+Direction (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+return the direction of the robot 
+
+\begin{DoxyReturn}{Returns}
+the direction 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_mobility_a678e74e5f334b25f14a17ad611b6b655}\label{class_mobility_a678e74e5f334b25f14a17ad611b6b655}} 
+\index{Mobility@{Mobility}!move@{move}}
+\index{move@{move}!Mobility@{Mobility}}
+\subsubsection{\texorpdfstring{move()}{move()}}
+{\footnotesize\ttfamily void Mobility\+::move (\begin{DoxyParamCaption}\item[{int}]{new\+\_\+direction\+\_\+\+M1,  }\item[{int}]{new\+\_\+direction\+\_\+\+M2,  }\item[{int}]{new\+\_\+\+Speed\+\_\+\+M1,  }\item[{int}]{new\+\_\+\+Speed\+\_\+\+M2 }\end{DoxyParamCaption})}
+
+
+
+Control the new direction and the new speed of the \hyperlink{class_robot}{Robot}. 
+
+change the state of the deplacement of the robot and set the new speed
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+direction\+\_\+\+M1} & \+: the new direction of the left motor \\
+\hline
+{\em new\+\_\+direction\+\_\+\+M2} & \+: the new direction of the right motor \\
+\hline
+{\em new\+\_\+speed\+\_\+\+M1} & \+: the new speed of the left motor \\
+\hline
+{\em new\+\_\+speed\+\_\+\+M2} & \+: the new speed of the right motor \\
+\hline
+\end{DoxyParams}
+Here is the caller graph for this function\+:
+% FIG 1
+\mbox{\Hypertarget{class_mobility_a67abccf01ad4f50a3bd135a4f105cb6d}\label{class_mobility_a67abccf01ad4f50a3bd135a4f105cb6d}} 
+\index{Mobility@{Mobility}!set\+Direction@{set\+Direction}}
+\index{set\+Direction@{set\+Direction}!Mobility@{Mobility}}
+\subsubsection{\texorpdfstring{set\+Direction()}{setDirection()}}
+{\footnotesize\ttfamily void Mobility\+::set\+Direction (\begin{DoxyParamCaption}\item[{int}]{new\+\_\+direction }\end{DoxyParamCaption})}
+
+
+
+change the direction of the robot 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+direction} & \+: new direction \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_mobility_a781cf34ac40fc1a5a55063daa29f72a4}\label{class_mobility_a781cf34ac40fc1a5a55063daa29f72a4}} 
+\index{Mobility@{Mobility}!set\+Speed@{set\+Speed}}
+\index{set\+Speed@{set\+Speed}!Mobility@{Mobility}}
+\subsubsection{\texorpdfstring{set\+Speed()}{setSpeed()}}
+{\footnotesize\ttfamily void Mobility\+::set\+Speed (\begin{DoxyParamCaption}\item[{int}]{speed\+\_\+\+M1,  }\item[{int}]{speed\+\_\+\+M2 }\end{DoxyParamCaption})}
+
+
+
+change the motor speed rotation 
+
+speed\+\_\+\+M1 \+: the new value of speed for the left motor  speed\+\_\+\+M2 \+: the new value of speed for the right motor \mbox{\Hypertarget{class_mobility_a487708a29fef93b02a79efb466c44148}\label{class_mobility_a487708a29fef93b02a79efb466c44148}} 
+\index{Mobility@{Mobility}!standing\+Rotation@{standing\+Rotation}}
+\index{standing\+Rotation@{standing\+Rotation}!Mobility@{Mobility}}
+\subsubsection{\texorpdfstring{standing\+Rotation()}{standingRotation()}}
+{\footnotesize\ttfamily void Mobility\+::standing\+Rotation (\begin{DoxyParamCaption}\item[{int}]{new\+\_\+direction }\end{DoxyParamCaption})}
+
+
+
+change the old direction to a standing rotation 
+
+check the old direction and in each case aplly a diferent procedure to swap in standing rotation \mbox{\Hypertarget{class_mobility_a527a6fba662394c8e2d9ac5409b4f14a}\label{class_mobility_a527a6fba662394c8e2d9ac5409b4f14a}} 
+\index{Mobility@{Mobility}!stop\+Brake@{stop\+Brake}}
+\index{stop\+Brake@{stop\+Brake}!Mobility@{Mobility}}
+\subsubsection{\texorpdfstring{stop\+Brake()}{stopBrake()}}
+{\footnotesize\ttfamily void Mobility\+::stop\+Brake (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+desable brake 
+
+Here is the caller graph for this function\+:
+% FIG 2
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Xi0n\+Robot\+\_\+\+A\+R\+D\+U\+I\+N\+O/\hyperlink{_mobility_8h}{Mobility.\+h}\item 
+Xi0n\+Robot\+\_\+\+A\+R\+D\+U\+I\+N\+O/\hyperlink{_mobility_8cpp}{Mobility.\+cpp}\end{DoxyCompactItemize}
