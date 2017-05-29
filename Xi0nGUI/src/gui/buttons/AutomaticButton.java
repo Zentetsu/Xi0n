@@ -18,6 +18,7 @@ public class AutomaticButton extends UIButton {
 	private class StartButtonListener extends ClickListener {
 		@Override
 		public void clicked(InputEvent input, float x, float y) {
+			AutomaticButton.this.resetRobotInputs();
 			Xi0nSimulation.INSTANCE.setMode(Mode.AUTOMATIC);
 		}
 	}

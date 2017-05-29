@@ -34,7 +34,7 @@ public enum Xi0nSimulation implements ApplicationListener {
 
 	INSTANCE;
 	
-	private static boolean SIMULATION = false;
+	private static boolean SIMULATION = true;
 
 	private XbeeSerialCommunication xbeeCommunation;
 	private ShapeRenderer sr;
@@ -250,6 +250,7 @@ public enum Xi0nSimulation implements ApplicationListener {
 
 	public void restart() {
 		this.lockButton.lock();
+		this.room.getRobot().input.reset();
 	}
 	
 	public boolean getSimulation () {

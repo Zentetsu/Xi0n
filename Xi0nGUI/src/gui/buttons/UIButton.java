@@ -7,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import gui.Xi0nSimulation;
+
 public abstract class UIButton extends ImageButton {
 
 	private final static String DATA_PATH = "assets/ui/";
@@ -28,6 +30,10 @@ public abstract class UIButton extends ImageButton {
 		this.addListener(this.getButtonListener());
 	}
 
+	public void resetRobotInputs(){
+		Xi0nSimulation.INSTANCE.restart();
+	}
+	
 	protected void down(String fileName) {
 
 		this.style.checked = new TextureRegionDrawable(

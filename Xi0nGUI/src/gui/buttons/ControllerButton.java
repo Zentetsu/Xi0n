@@ -18,6 +18,7 @@ public class ControllerButton extends UIButton {
 	private class StartButtonListener extends ClickListener {
 		@Override
 		public void clicked(InputEvent input, float x, float y) {
+			ControllerButton.this.resetRobotInputs();
 			Xi0nSimulation.INSTANCE.setMode(Mode.CONTROLLER);
 		}
 	} 

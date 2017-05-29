@@ -25,6 +25,7 @@ public class KeyboardButton extends UIButton {
 
 		@Override
 		public void clicked(InputEvent input, float x, float y) {
+			KeyboardButton.this.resetRobotInputs();
 			Xi0nSimulation.INSTANCE.setMode(Mode.KEYBOARD);
 		}
 	}
