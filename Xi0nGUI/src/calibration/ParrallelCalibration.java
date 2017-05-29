@@ -132,7 +132,7 @@ public class ParrallelCalibration {
 		if ( !leaderWheel )
 			s += " |  [<<<]  | R: ";
 		else
-			s += " |  [>>>]  | R:";
+			s += " |  [>>>]  | R: ";
 		s += powerRight;
 		s += " |";
 		

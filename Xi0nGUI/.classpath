@@ -10,5 +10,8 @@
 	<classpathentry kind="lib" path="assets/lib/gdx-controllers.jar"/>
 	<classpathentry kind="lib" path="assets/lib/gdx-natives.jar"/>
 	<classpathentry kind="lib" path="assets/lib/gdx.jar"/>
+	<classpathentry kind="lib" path="assets/lib/core.jar"/>
+	<classpathentry kind="lib" path="assets/lib/jssc.jar"/>
+	<classpathentry kind="lib" path="assets/lib/serial.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

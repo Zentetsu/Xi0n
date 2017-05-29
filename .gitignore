@@ -35,3 +35,6 @@ lib/*
 
 # Project
 *classpath
+
+.metadata
+.recommenders

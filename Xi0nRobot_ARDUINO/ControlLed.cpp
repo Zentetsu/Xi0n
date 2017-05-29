@@ -4,7 +4,7 @@ using namespace std;
 
 
 ControlLed::ControlLed() {
-	Serial.println ("CREATE CONTROLLED");
+	//Serial.println ("CREATE CONTROLLED");
 		led_auto = new LED(1);
 		led_manual = new LED(1);
 
@@ -13,7 +13,7 @@ ControlLed::ControlLed() {
 }
 
 ControlLed::~ControlLed() {
-	Serial.println ("DELETE CONTROLLED");
+	//Serial.println ("DELETE CONTROLLED");
 	delete led_auto;
 	delete led_manual;
 }
